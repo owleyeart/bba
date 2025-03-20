@@ -205,7 +205,7 @@ function App() {
       >
         <div className="column next-col">
           <span className="arrow up">↑</span>
-          <span className="label next-label">Scroll</span>
+          <span className="label next-label">Hi Nick!</span>
           <span className="arrow down">↓</span>
         </div>
         <div className="column pan-col">

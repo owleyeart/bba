@@ -13,7 +13,7 @@ const images = [
   '/images/20250303_303_OWL4733.jpg',
   '/images/20240619_303_OWL8024.jpg',
   '/images/20240907_303_OWL0886.jpg',
-  '/images/20240619_303_OWL8027.jpg',
+
 
 
 ];
@@ -205,7 +205,7 @@ function App() {
       >
         <div className="column next-col">
           <span className="arrow up">↑</span>
-          <span className="label next-label">Next</span>
+          <span className="label next-label">Scroll</span>
           <span className="arrow down">↓</span>
         </div>
         <div className="column pan-col">

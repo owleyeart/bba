@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './App.css';
 
+// Example images
 const images = [
   '/images/20240907_303_OWL0880.jpg',
   '/images/20241013_303_OWL1733.jpg',
@@ -13,18 +14,43 @@ const images = [
   '/images/20250303_303_OWL4733.jpg',
   '/images/20240619_303_OWL8024.jpg',
   '/images/20240907_303_OWL0886.jpg',
-
-
-
 ];
+
+// Navigation items, now with "Home" at the top
+
+/*
+// Original opaque colors
+const navItems = [
+  { label: 'Home', color: '#000000' },
+  { label: 'Gallery', color: '#3B0B33' },
+  { label: 'Projects', color: '#481B48' },
+  { label: 'About', color: '#B00B69' },
+  { label: 'Contact', color: '#D4455E' },
+  { label: 'Purchase', color: '#FFAD76' },
+];
+*/
+
+// Semi-transparent versions
+const navItems = [
+  { label: 'Home',     color: 'rgba(0, 0, 0, 0.63)' },
+  { label: 'Gallery',  color: 'rgba(59, 11, 51, 0.81)' },   // #3B0B33 => (59, 11, 51)
+  { label: 'Projects', color: 'rgba(72, 27, 72, 0.81)' },  // #481B48 => (72, 27, 72)
+  { label: 'About',    color: 'rgba(176, 11, 105, 0.72)' },// #B00B69 => (176, 11, 105)
+  { label: 'Contact',  color: 'rgba(212, 69, 94, 0.81)' }, // #D4455E => (212, 69, 94)
+  { label: 'Purchase', color: 'rgba(255, 173, 118, 0.72)' },// #FFAD76 => (255, 173, 118)
+];
+
+
+
 
 function App() {
   const containerRef = useRef(null);
 
+  // Current image index & horizontal pan
   const [currentIndex, setCurrentIndex] = useState(0);
   const [bgPosX, setBgPosX] = useState(50);
 
-  // Pointer/drag state
+  // Drag state
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [startY, setStartY] = useState(0);
@@ -37,25 +63,21 @@ function App() {
   const DRAG_DIRECTION_THRESHOLD = 20;
   const VERTICAL_SWIPE_THRESHOLD = 50;
 
-  // --------------------------------
-  // FADE-IN/OUT LOGIC FOR CONTROLS
-  // --------------------------------
+  // Fade-in controls for Scroll & Pan
   const [controlsVisible, setControlsVisible] = useState(false);
   const hideTimerRef = useRef(null);
 
-  // Show controls and schedule them to hide after inactivity
+  // Show controls, then hide after 0.9s inactivity
   const showControls = () => {
     setControlsVisible(true);
     if (hideTimerRef.current) {
       clearTimeout(hideTimerRef.current);
     }
-    // Hide again after 2 seconds of no interaction
     hideTimerRef.current = setTimeout(() => {
       setControlsVisible(false);
     }, 900);
   };
 
-  // Cleanup any timer on unmount
   useEffect(() => {
     return () => {
       if (hideTimerRef.current) {
@@ -64,11 +86,63 @@ function App() {
     };
   }, []);
 
-  // ---------------------------
-  // Pointer Down
-  // ---------------------------
+  // ---------------------------------
+  // Hamburger Menu State
+  // ---------------------------------
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  // For mobile (and also desktop if user wants to close):
+  const handleHamburgerClick = () => {
+    showControls(); 
+    // Toggle open/close
+    setIsMenuOpen((prev) => !prev);
+  };
+
+  // For desktop hover-capable devices:
+  const handleHamburgerMouseEnter = () => {
+    // Check if device actually supports hover
+    if (window.matchMedia('(hover: hover)').matches) {
+      showControls();
+      setIsMenuOpen(true);
+    }
+  };
+
+  // ---------------------------------
+  // Keyboard Arrows (Inverted Scroll)
+  // ---------------------------------
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (
+        e.key === 'ArrowUp' ||
+        e.key === 'ArrowDown' ||
+        e.key === 'ArrowLeft' ||
+        e.key === 'ArrowRight'
+      ) {
+        e.preventDefault();
+        showControls();
+      }
+      if (e.key === 'ArrowUp') {
+        prevImage();
+      } else if (e.key === 'ArrowDown') {
+        nextImage();
+      } else if (e.key === 'ArrowLeft') {
+        // Pan left
+        setBgPosX((prev) => Math.max(0, prev - 5));
+      } else if (e.key === 'ArrowRight') {
+        // Pan right
+        setBgPosX((prev) => Math.min(100, prev + 5));
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  // ---------------------------------
+  // Pointer Events
+  // ---------------------------------
   const handlePointerDown = (e) => {
-    showControls(); // show controls on any pointer interaction
+    showControls();
     setIsDragging(true);
     setStartX(e.clientX);
     setStartY(e.clientY);
@@ -76,19 +150,15 @@ function App() {
     setDragDirection("none");
   };
 
-  // ---------------------------
-  // Pointer Move
-  // ---------------------------
   const handlePointerMove = (e) => {
-    showControls(); // show controls on pointer move
-
+    showControls();
     if (!containerRef.current) return;
 
     const containerWidth = containerRef.current.clientWidth;
     const deltaX = e.clientX - startX;
     const deltaY = e.clientY - startY;
 
-    // Hover logic (mouse-only) if not dragging
+    // Hover-based panning if not dragging
     if (!isDragging) {
       const ratio = e.clientX / containerWidth;
       let newPosX = ratio * 100;
@@ -97,7 +167,7 @@ function App() {
       return;
     }
 
-    // Drag logic with direction lock
+    // Drag direction lock
     if (dragDirection === "none") {
       if (
         Math.abs(deltaX) > Math.abs(deltaY) &&
@@ -120,58 +190,50 @@ function App() {
     }
   };
 
-  // ---------------------------
-  // Pointer Up / Leave
-  // ---------------------------
   const handlePointerUpOrLeave = (e) => {
     showControls();
-
     if (!isDragging) return;
     setIsDragging(false);
 
-    // If we ended a vertical drag, decide if we switch images
     if (dragDirection === "vertical") {
       const deltaY = e.clientY - startY;
       if (Math.abs(deltaY) > VERTICAL_SWIPE_THRESHOLD) {
         if (deltaY < 0) {
-          nextImage();
-        } else {
+          // Swiped up => prev image
           prevImage();
+        } else {
+          // Swiped down => next image
+          nextImage();
         }
       }
     }
     setDragDirection("none");
   };
 
-  // ---------------------------
-  // Wheel Event
-  // ---------------------------
+  // ---------------------------------
+  // Wheel (Inverted Scroll)
+  // ---------------------------------
   const handleWheel = (e) => {
-    showControls(); // show controls on wheel scroll
-
+    showControls();
     if (e.deltaY > 0) {
-      nextImage();
-    } else {
+      // Scrolling down => prev
       prevImage();
+    } else {
+      // Scrolling up => next
+      nextImage();
     }
   };
 
-  // ---------------------------
-  // Next / Prev Helpers
-  // ---------------------------
+  // ---------------------------------
+  // Next/Prev with Wraparound
+  // ---------------------------------
   const nextImage = () => {
-    setCurrentIndex((prev) => {
-      const next = prev + 1;
-      return next < images.length ? next : images.length - 1;
-    });
+    setCurrentIndex((prev) => (prev + 1) % images.length);
     setBgPosX(50);
   };
 
   const prevImage = () => {
-    setCurrentIndex((prev) => {
-      const next = prev - 1;
-      return next >= 0 ? next : 0;
-    });
+    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
     setBgPosX(50);
   };
 
@@ -190,30 +252,47 @@ function App() {
       }}
     >
       {/* Hamburger menu */}
-      <button className="hamburger-menu" aria-label="Open Menu">
+      <button
+        className="hamburger-menu"
+        aria-label="Open Menu"
+        onClick={handleHamburgerClick}       // For mobile & also desktop closing
+        onMouseEnter={handleHamburgerMouseEnter} // For desktop hover
+      >
         &#9776;
       </button>
 
-      {/* 
-        CONTROLS 
-        - Fade in/out via "opacity: controlsVisible ? 1 : 0"
-        - Transition set in CSS
-      */}
-      <div
-        className="controls"
-        style={{ opacity: controlsVisible ? 1 : 0 }}
-      >
-        <div className="column next-col">
-          <span className="arrow up">↑</span>
-          <span className="label next-label">Scroll</span>
-          <span className="arrow down">↓</span>
-        </div>
-        <div className="column pan-col">
-          <div className="pan-row">
-            <span className="arrow left">←</span>
-            <span className="label pan-label">Pan</span>
-            <span className="arrow right">→</span>
+      {/* Fullscreen Menu Overlay (stacks color blocks) */}
+      <div className={`menu-overlay ${isMenuOpen ? 'show' : ''}`}>
+        {navItems.map((item) => (
+          <div
+            key={item.label}
+            className="menu-item"
+            style={{ backgroundColor: item.color }}
+          >
+            {item.label}
           </div>
+        ))}
+      </div>
+
+      {/* Scroll Controls (left-middle) */}
+      <div
+  className="scroll-controls"
+  style={{ opacity: isMenuOpen ? 0 : (controlsVisible ? 1 : 0) }}
+>
+        <span className="arrow up">↑</span>
+        <span className="label scroll-label">Scroll</span>
+        <span className="arrow down">↓</span>
+      </div>
+
+      {/* Pan Controls (bottom-center) */}
+      <div
+  className="pan-controls"
+  style={{ opacity: isMenuOpen ? 0 : (controlsVisible ? 1 : 0) }}
+>
+        <div className="pan-row">
+          <span className="arrow left">←</span>
+          <span className="label pan-label">Pan</span>
+          <span className="arrow right">→</span>
         </div>
       </div>
     </div>

@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import Projects from './Projects.jsx';                // The main Projects page
-import FallingAway from './Projects/Falling-Away.jsx'; // Sub-page under /projects/falling-away
+import FallingAway from './Projects/Falling-Away.jsx'; // Sub-page under /Projects/falling-away
 
 import './App.css';
 
@@ -301,8 +301,8 @@ function Landing() {
   APP COMPONENT WITH ROUTES
   - We wrap everything in a Router and define:
     - "/" => Landing (home page)
-    - "/projects" => Projects.jsx
-    - "/projects/falling-away" => Falling-Away.jsx
+    - "/Projects" => Projects.jsx
+    - "/Projects/falling-away" => Falling-Away.jsx
 */
 function App() {
   return (

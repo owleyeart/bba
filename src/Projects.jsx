@@ -5,18 +5,18 @@ import './Projects.css';
 
 function Projects() {
   return (
-    <div className="projects-container">
+    <div className="Projects-container">
       <h1>Projects</h1>
       <ul>
         <li>
           <Link to="/" className="home-link">← Home</Link>
         </li><p></p>
         <li>
-          <Link to="/projects/falling-away" className="project-link">
+          <Link to="/Projects/falling-away" className="Project-link">
             Falling Away
           </Link>
         </li>
-        {/* Add more project links here if needed */}
+        {/* Add more Project links here if needed */}
       </ul>
     </div>
   );

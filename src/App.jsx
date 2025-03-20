@@ -28,7 +28,7 @@ const navItems = [
   { label: 'Home',     color: 'rgba(0, 0, 0, 0.63)' },
   { label: 'Gallery',  color: 'rgba(59, 11, 51, 0.81)' },
   { label: 'Projects', color: 'rgba(72, 27, 72, 0.81)' },
-  { label: 'About',    color: 'rgba(176, 11, 105, 0.72)' },
+  { label: 'About',    color: '#b00b69' },
   { label: 'Contact',  color: 'rgba(212, 69, 94, 0.81)' },
   { label: 'Purchase', color: 'rgba(255, 173, 118, 0.72)' },
 ];
@@ -89,8 +89,8 @@ function Landing() {
       // Navigate to root
       window.location.href = '/';
     } else if (item.label === 'Projects') {
-      // Navigate to /projects
-      window.location.href = '/projects';
+      // Navigate to /Projects
+      window.location.href = '/Projects';
     } else {
       // For other items, just close the menu (or handle differently)
       setIsMenuOpen(false);

@@ -1,4 +1,11 @@
+// src/App.jsx
+
 import React, { useState, useRef, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+import Projects from './Projects.jsx';                // The main Projects page
+import FallingAway from './Projects/Falling-Away.jsx'; // Sub-page under /projects/falling-away
+
 import './App.css';
 
 // Example images
@@ -16,34 +23,22 @@ const images = [
   '/images/20240907_303_OWL0886.jpg',
 ];
 
-// Navigation items, now with "Home" at the top
-
-/*
-// Original opaque colors
-const navItems = [
-  { label: 'Home', color: '#000000' },
-  { label: 'Gallery', color: '#3B0B33' },
-  { label: 'Projects', color: '#481B48' },
-  { label: 'About', color: '#B00B69' },
-  { label: 'Contact', color: '#D4455E' },
-  { label: 'Purchase', color: '#FFAD76' },
-];
-*/
-
-// Semi-transparent versions
+// Semi-transparent nav items
 const navItems = [
   { label: 'Home',     color: 'rgba(0, 0, 0, 0.63)' },
-  { label: 'Gallery',  color: 'rgba(59, 11, 51, 0.81)' },   // #3B0B33 => (59, 11, 51)
-  { label: 'Projects', color: 'rgba(72, 27, 72, 0.81)' },  // #481B48 => (72, 27, 72)
-  { label: 'About',    color: 'rgba(176, 11, 105, 0.72)' },// #B00B69 => (176, 11, 105)
-  { label: 'Contact',  color: 'rgba(212, 69, 94, 0.81)' }, // #D4455E => (212, 69, 94)
-  { label: 'Purchase', color: 'rgba(255, 173, 118, 0.72)' },// #FFAD76 => (255, 173, 118)
+  { label: 'Gallery',  color: 'rgba(59, 11, 51, 0.81)' },
+  { label: 'Projects', color: 'rgba(72, 27, 72, 0.81)' },
+  { label: 'About',    color: 'rgba(176, 11, 105, 0.72)' },
+  { label: 'Contact',  color: 'rgba(212, 69, 94, 0.81)' },
+  { label: 'Purchase', color: 'rgba(255, 173, 118, 0.72)' },
 ];
 
-
-
-
-function App() {
+/* 
+  LANDING COMPONENT
+  - All your existing logic for images, drag, hover menu, etc.
+  - This will serve as the "/" (home) route.
+*/
+function Landing() {
   const containerRef = useRef(null);
 
   // Current image index & horizontal pan
@@ -86,43 +81,38 @@ function App() {
     };
   }, []);
 
-  // ---------------------------------
   // Hamburger Menu State
-  // ---------------------------------
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  
+
   function handleNavItemClick(item) {
-    // If they clicked "Home," navigate to root
     if (item.label === 'Home') {
-      // This reloads or navigates to the root URL
+      // Navigate to root
       window.location.href = '/';
+    } else if (item.label === 'Projects') {
+      // Navigate to /projects
+      window.location.href = '/projects';
     } else {
-      // For other items, you could do something else:
-      // console.log(`Clicked ${item.label}`);
-      // or setIsMenuOpen(false) if you want to close the menu
+      // For other items, just close the menu (or handle differently)
       setIsMenuOpen(false);
     }
   }
   
-  // For mobile (and also desktop if user wants to close):
+
+  // For mobile & also desktop close
   const handleHamburgerClick = () => {
     showControls(); 
-    // Toggle open/close
     setIsMenuOpen((prev) => !prev);
   };
 
-  // For desktop hover-capable devices:
+  // For desktop hover-capable devices
   const handleHamburgerMouseEnter = () => {
-    // Check if device actually supports hover
     if (window.matchMedia('(hover: hover)').matches) {
       showControls();
       setIsMenuOpen(true);
     }
   };
 
-  // ---------------------------------
   // Keyboard Arrows (Inverted Scroll)
-  // ---------------------------------
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (
@@ -151,9 +141,7 @@ function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  // ---------------------------------
   // Pointer Events
-  // ---------------------------------
   const handlePointerDown = (e) => {
     showControls();
     setIsDragging(true);
@@ -223,9 +211,7 @@ function App() {
     setDragDirection("none");
   };
 
-  // ---------------------------------
   // Wheel (Inverted Scroll)
-  // ---------------------------------
   const handleWheel = (e) => {
     showControls();
     if (e.deltaY > 0) {
@@ -237,9 +223,7 @@ function App() {
     }
   };
 
-  // ---------------------------------
   // Next/Prev with Wraparound
-  // ---------------------------------
   const nextImage = () => {
     setCurrentIndex((prev) => (prev + 1) % images.length);
     setBgPosX(50);
@@ -268,32 +252,31 @@ function App() {
       <button
         className="hamburger-menu"
         aria-label="Open Menu"
-        onClick={handleHamburgerClick}       // For mobile & also desktop closing
-        onMouseEnter={handleHamburgerMouseEnter} // For desktop hover
+        onClick={handleHamburgerClick}       
+        onMouseEnter={handleHamburgerMouseEnter}
       >
         &#9776;
       </button>
 
-      {/* Fullscreen Menu Overlay (stacks color blocks) */}
+      {/* Fullscreen Menu Overlay */}
       <div className={`menu-overlay ${isMenuOpen ? 'show' : ''}`}>
-      {navItems.map((item) => (
-  <div
-    key={item.label}
-    className="menu-item"
-    style={{ backgroundColor: item.color }}
-    onClick={() => handleNavItemClick(item)}
-  >
-    {item.label}
-  </div>
-))}
-
+        {navItems.map((item) => (
+          <div
+            key={item.label}
+            className="menu-item"
+            style={{ backgroundColor: item.color }}
+            onClick={() => handleNavItemClick(item)}
+          >
+            {item.label}
+          </div>
+        ))}
       </div>
 
       {/* Scroll Controls (left-middle) */}
       <div
-  className="scroll-controls"
-  style={{ opacity: isMenuOpen ? 0 : (controlsVisible ? 1 : 0) }}
->
+        className="scroll-controls"
+        style={{ opacity: isMenuOpen ? 0 : (controlsVisible ? 1 : 0) }}
+      >
         <span className="arrow up">↑</span>
         <span className="label scroll-label">Scroll</span>
         <span className="arrow down">↓</span>
@@ -301,9 +284,9 @@ function App() {
 
       {/* Pan Controls (bottom-center) */}
       <div
-  className="pan-controls"
-  style={{ opacity: isMenuOpen ? 0 : (controlsVisible ? 1 : 0) }}
->
+        className="pan-controls"
+        style={{ opacity: isMenuOpen ? 0 : (controlsVisible ? 1 : 0) }}
+      >
         <div className="pan-row">
           <span className="arrow left">←</span>
           <span className="label pan-label">Pan</span>
@@ -311,6 +294,30 @@ function App() {
         </div>
       </div>
     </div>
+  );
+}
+
+/* 
+  APP COMPONENT WITH ROUTES
+  - We wrap everything in a Router and define:
+    - "/" => Landing (home page)
+    - "/projects" => Projects.jsx
+    - "/projects/falling-away" => Falling-Away.jsx
+*/
+function App() {
+  return (
+    <Router>
+      <Routes>
+        {/* Root: your "landing" logic */}
+        <Route path="/" element={<Landing />} />
+
+        {/* Projects page */}
+        <Route path="/projects" element={<Projects />} />
+
+        {/* Falling Away sub-page */}
+        <Route path="/projects/falling-away" element={<FallingAway />} />
+      </Routes>
+    </Router>
   );
 }
 

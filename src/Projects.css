@@ -1,0 +1,49 @@
+/* src/projects.css */
+
+/* 1) Import a nice font (Poppins) from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+/* 2) Global or body styles */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif; /* apply the new font to the entire page */
+}
+
+/* 3) Container for the Projects page */
+.projects-container {
+  padding: 2rem;
+}
+
+.projects-container h1 {
+  margin-bottom: 1rem;
+}
+
+/* 4) Basic list styling */
+.projects-container ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* 5) "← Home" link: smaller font size */
+.home-link {
+  font-size: 0.9rem;     /* slightly smaller text */
+  text-decoration: none; /* remove underline if desired */
+  color: #f889c8;           /* subtle color, adjust to taste */
+}
+
+/* 6) Other project links: larger or standard size */
+.project-link {
+  font-size: 1.1rem;     /* bigger than home-link */
+  text-decoration: none;
+  color: #a686da;
+  font-weight: 600;      /* optional: make it semi-bold */
+}
+
+/* Example hover effect */
+.project-link:hover,
+.home-link:hover {
+  text-decoration: underline;
+  color: #bfacdf;
+}

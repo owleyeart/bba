@@ -62,6 +62,7 @@ html, body {
   color: #fff;
   text-shadow: 2px 2px 0 #000;
   transition: transform 0.2s ease, filter 0.2s ease;
+  cursor: pointer;
 }
 
 .menu-item:hover {

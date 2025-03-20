@@ -90,7 +90,20 @@ function App() {
   // Hamburger Menu State
   // ---------------------------------
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+  
+  function handleNavItemClick(item) {
+    // If they clicked "Home," navigate to root
+    if (item.label === 'Home') {
+      // This reloads or navigates to the root URL
+      window.location.href = '/';
+    } else {
+      // For other items, you could do something else:
+      // console.log(`Clicked ${item.label}`);
+      // or setIsMenuOpen(false) if you want to close the menu
+      setIsMenuOpen(false);
+    }
+  }
+  
   // For mobile (and also desktop if user wants to close):
   const handleHamburgerClick = () => {
     showControls(); 
@@ -263,15 +276,17 @@ function App() {
 
       {/* Fullscreen Menu Overlay (stacks color blocks) */}
       <div className={`menu-overlay ${isMenuOpen ? 'show' : ''}`}>
-        {navItems.map((item) => (
-          <div
-            key={item.label}
-            className="menu-item"
-            style={{ backgroundColor: item.color }}
-          >
-            {item.label}
-          </div>
-        ))}
+      {navItems.map((item) => (
+  <div
+    key={item.label}
+    className="menu-item"
+    style={{ backgroundColor: item.color }}
+    onClick={() => handleNavItemClick(item)}
+  >
+    {item.label}
+  </div>
+))}
+
       </div>
 
       {/* Scroll Controls (left-middle) */}

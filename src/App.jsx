@@ -312,10 +312,10 @@ function App() {
         <Route path="/" element={<Landing />} />
 
         {/* Projects page */}
-        <Route path="/projects" element={<Projects />} />
+        <Route path="/Projects" element={<Projects />} />
 
         {/* Falling Away sub-page */}
-        <Route path="/projects/falling-away" element={<FallingAway />} />
+        <Route path="/Projects/Falling-Away" element={<FallingAway />} />
       </Routes>
     </Router>
   );

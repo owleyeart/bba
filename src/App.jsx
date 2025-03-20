@@ -10,7 +10,7 @@ const images = [
   '/images/20250304_303_OWL4775.jpg',
   '/images/20230814_303_OWL4849.jpg',
   '/images/20240701_303_OWL8456.jpg',
-  '/images/20160220_303_TIN3228.jpg',
+  '/images/20160220_303_NOV3228.jpg',
   '/images/20250303_303_OWL4733.jpg',
   '/images/20240619_303_OWL8024.jpg',
   '/images/20240907_303_OWL0886.jpg',

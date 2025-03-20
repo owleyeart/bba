@@ -1,7 +1,7 @@
 // src/Projects/Falling-Away.jsx
 
 import React, { useState, useRef } from 'react';
-import './falling-away.css';
+import './Falling-Away.css';
 
 function FallingAway() {
   // Paths to your two images

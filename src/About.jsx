@@ -14,11 +14,11 @@ function About() {
 
       </p>
       <ul>
-        <li>
+        <li>     &nbsp;&nbsp;&nbsp;&nbsp;
           <Link to="/" className="home-link">
-      &nbsp;&nbsp;&nbsp;&nbsp;
+ 
           { "{ \"Home\" }" }
-          </Link>
+          </Link><br></br><br></br>
         </li>
       </ul>
       <p>

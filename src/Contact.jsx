@@ -17,17 +17,17 @@ function Contact() {
       <p>
         If you have any questions or would like to get in touch, please email me at:
         <br />
-        <strong>bob.baker@example.com</strong>
+        <Link to="mailto:bob@bobbaker.art">bob@bobbaker.art</Link>
       </p>
 
       <p>
         Or find me on social media:
         <br />
-        <a href="https://twitter.com/YourProfile" target="_blank" rel="noreferrer">
-          Twitter
+        <a href="https://www.threads.net/@owleyeart" target="_blank" rel="noreferrer">
+          Threads
         </a>
         {' | '}
-        <a href="https://instagram.com/YourProfile" target="_blank" rel="noreferrer">
+        <a href="https://instagram.com/owleyeart" target="_blank" rel="noreferrer">
           Instagram
         </a>
       </p>

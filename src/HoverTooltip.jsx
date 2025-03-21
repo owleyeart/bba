@@ -36,8 +36,8 @@ function HoverTooltip({ text, tooltipText }) {
           style={{
             position: 'fixed',
             // Position the tooltip slightly above & right of the cursor
-            left: coords.x + 10,
-            top: coords.y - 20,
+            left: coords.x,
+            top: coords.y - 40,
 
             backgroundColor: '#1e1e1e', // Dark background like VS Code
             color: '#fff',

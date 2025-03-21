@@ -5,16 +5,16 @@ import { Link } from 'react-router-dom';
 import './About.css'; // We'll style it like code
 
 import HoverTooltip from './HoverTooltip';
-import LeftLineNumbers from './LeftLineNumbers'; // <-- import your line-number component
+import LineNumbersWithHighlight from './LineNumbersWithHighlight';
 
 function About() {
   return (
     <>
-      {/* 1) Add the line numbers on the left side */}
-      <LeftLineNumbers />
+      {/* 1) Render the line-number column on the left */}
+      <LineNumbersWithHighlight />
 
-      {/* 2) Shift the main content to the right, so it doesn't overlap the numbers */}
-      <div style={{ marginLeft: '3rem', padding: '1rem' }} className="about-container">
+      {/* 2) Shift the main content to the right, so it doesn’t overlap */}
+      <div style={{ marginLeft: '5rem', padding: '1rem' }} className="about-container">
         <h1>About()</h1>
         <p>
           <HoverTooltip
@@ -37,7 +37,8 @@ function About() {
               tooltipText="(Go Back Home) Return.(to: Home Page);"
             />
             <Link to="/" className="home-link"></Link>
-            <br /><br />
+            <br />
+            <br />
           </li>
         </ul>
 
@@ -51,8 +52,7 @@ function About() {
           <span style={{ color: 'lightblue' }}>{"strong"}</span>
           {">"}{" page! "}
           <br />
-          &nbsp;&nbsp;&nbsp;&nbsp;This is where you can describe your
-          background,
+          &nbsp;&nbsp;&nbsp;&nbsp;This is where you can describe your background,
           <br />
           &nbsp;&nbsp;&nbsp;your art journey, or anything else you'd like to share.
         </p>
@@ -65,8 +65,7 @@ function About() {
           {"code"}
           {"</"}
           <span style={{ color: 'lightblue' }}>{"em"}</span>
-          {">"}
-          —using a
+          {">"}—using a
           <br />
           &nbsp;&nbsp;&nbsp;&nbsp;monospaced font, dark background, and syntax-inspired colors.
         </p>
@@ -84,7 +83,7 @@ function About() {
           <HoverTooltip
             text={<span style={{ color: 'lightblue' }}>{"color: "}</span>}
             tooltipText="(property) StandardLonghandProperties<string | number, string & {}>.color?: Property.Color | undefined
-The color CSS property sets the foreground color value of an element's text and text decorations, and sets the currentcolor value..."
+The color CSS property sets the foreground color value..."
           />
 
           <span style={{ color: "#fc8b57" }}>{"'Violet' "}</span>
@@ -97,7 +96,8 @@ The color CSS property sets the foreground color value of an element's text and 
             text={<span style={{ color: 'lightskyblue' }}>{"</span>"}</span>}
             tooltipText="(property) React.JSX.IntrinsicElements.span: React.DetailedHTMLProps"
           />
-          <br /><br />
+          <br />
+          <br />
           <h3>
             <span style={{ color: 'Violet' }}>About the Artist</span>
           </h3>

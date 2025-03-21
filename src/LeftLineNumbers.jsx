@@ -7,6 +7,8 @@ function LeftLineNumbers() {
 
   return (
     <div style={styles.container}>
+
+
       {lines.map((num) => (
         <div key={num} style={styles.line}>
           {num}

@@ -15,11 +15,15 @@ function About() {
 
       {/* 2) Shift the main content to the right, so it doesn’t overlap */}
       <div style={{ marginLeft: '5rem', padding: '1rem' }} className="about-container">
-        <h1>About()</h1>
+      <h1>
+          <HoverTooltip
+            text={<span style={{ color: 'lightskyblue' }}>{"About()"}</span>}
+            tooltipText="This is an About page. (Information about the artist)."
+          /></h1><p></p>
         <p><Link to="/" className="home-link">
           <HoverTooltip
             text={<span style={{ color: 'Violet' }}>{"return ("}</span>}
-            tooltipText="(Go Back Home) Return.(to: Home Page);"
+            tooltipText="(Go Back Home) Return:(Home Page);"
           /></Link>
         </p>
 
@@ -101,7 +105,15 @@ The color CSS property sets the foreground color value..."
           <h3>
             <span style={{ color: 'Violet' }}>About the Artist</span>
           </h3>
-          <h1>Bob.Baker()</h1>
+          
+          <h1>
+          <HoverTooltip
+            text={<span style={{ color: 'lightskyblue' }}>{"Bob.Baker()"}</span>}
+            tooltipText="The main function."
+          /></h1><p></p>
+      
+
+
           "Just a time traveler remembering their way back home."
           <br />
           <br />

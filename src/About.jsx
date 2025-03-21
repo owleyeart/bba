@@ -1,7 +1,7 @@
 // src/About.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './about.css'; // We'll style it like code
+import './About.css'; // We'll style it like code
 
 function About() {
   return (

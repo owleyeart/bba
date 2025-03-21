@@ -7,6 +7,7 @@ import Projects from './Projects.jsx';                // The main Projects page
 import FallingAway from './Projects/Falling-Away.jsx'; // Sub-page under /Projects/falling-away
 
 import './App.css';
+import About from './About.jsx';
 
 // Example images
 const images = [
@@ -15,12 +16,13 @@ const images = [
   '/images/20250304_303_OWL4767.jpg',
   '/images/20230222_303_OWL6609.jpg',
   '/images/20250304_303_OWL4775.jpg',
+  '/images/20240907_303_OWL0886.jpg',
   '/images/20230814_303_OWL4849.jpg',
   '/images/20240701_303_OWL8456.jpg',
   '/images/20160220_303_NOV3228.jpg',
   '/images/20250303_303_OWL4733.jpg',
   '/images/20240619_303_OWL8024.jpg',
-  '/images/20240907_303_OWL0886.jpg',
+
 ];
 
 // Semi-transparent nav items
@@ -33,6 +35,32 @@ const navItems = [
   { label: 'Purchase', color: 'rgba(255, 173, 118, 0.72)' },
 ];
 
+/* 
+  APP COMPONENT WITH ROUTES
+  - We wrap everything in a Router and define:
+    - "/" => Landing (home page)
+    - "/Projects" => Projects.jsx
+    - "/Projects/falling-away" => Falling-Away.jsx
+*/
+function App() {
+  return (
+    <Router>
+      <Routes>
+        {/* Root: your "landing" logic */}
+        <Route path="/" element={<Landing />} />
+
+        {/* Projects page */}
+        <Route path="/Projects" element={<Projects />} />
+
+        {/* Falling Away sub-page */}
+        <Route path="/Projects/Falling-Away" element={<FallingAway />} />
+
+        {/* About page */}
+        <Route path="/About" element={<About />} />
+      </Routes>
+    </Router>
+  );
+}
 /* 
   LANDING COMPONENT
   - All your existing logic for images, drag, hover menu, etc.
@@ -86,11 +114,11 @@ function Landing() {
 
   function handleNavItemClick(item) {
     if (item.label === 'Home') {
-      // Navigate to root
       window.location.href = '/';
     } else if (item.label === 'Projects') {
-      // Navigate to /Projects
       window.location.href = '/Projects';
+    } else if (item.label === 'About') {
+      window.location.href = '/About';
     } else {
       // For other items, just close the menu (or handle differently)
       setIsMenuOpen(false);
@@ -297,28 +325,6 @@ function Landing() {
   );
 }
 
-/* 
-  APP COMPONENT WITH ROUTES
-  - We wrap everything in a Router and define:
-    - "/" => Landing (home page)
-    - "/Projects" => Projects.jsx
-    - "/Projects/falling-away" => Falling-Away.jsx
-*/
-function App() {
-  return (
-    <Router>
-      <Routes>
-        {/* Root: your "landing" logic */}
-        <Route path="/" element={<Landing />} />
 
-        {/* Projects page */}
-        <Route path="/Projects" element={<Projects />} />
-
-        {/* Falling Away sub-page */}
-        <Route path="/Projects/Falling-Away" element={<FallingAway />} />
-      </Routes>
-    </Router>
-  );
-}
 
 export default App;

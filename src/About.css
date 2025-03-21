@@ -1,0 +1,77 @@
+/* src/about.css */
+
+/* Use a monospaced font that feels code-like. 
+   If you like, use a specialized coding font, e.g. 'Fira Code'. 
+*/
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&display=swap');
+
+.about-container {
+  background-color: #3d3d3d; /* dark background, like VS Code */
+  color: #d4d4d4;           /* light gray text */
+  font-family: 'Fira Code', Consolas, monospace;
+  padding: 2rem;
+  min-height: 100vh;        /* ensure full vertical space if needed */
+}
+
+/* Header in a brighter color */
+.about-container h1 {
+  color: #569cd6;           /* a nice blue for headings */
+  margin-bottom: 1rem;
+}
+
+/* Make links stand out in a different hue */
+.home-link {
+  font-size: 0.9rem;        /* smaller, as before */
+  text-decoration: none;
+  color: #fc8b57;           /* a warm gold hue for links */
+  cursor: pointer;
+}
+
+.home-link:hover {
+  text-decoration: underline;
+}
+
+/* Basic text styling */
+.about-container p {
+  line-height: 1.6;
+  margin: 0.5rem 0;
+}
+
+/* If you want list items to appear in a certain color */
+.about-container ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.about-container li {
+  margin: 0.5rem 0;
+  color: #c586c0;           /* a purple for list items, if you like */
+}
+
+/* about.css or a global stylesheet */
+.word-red {
+    color: red;
+  }
+  .word-blue {
+    color: blue;
+  }
+  
+.h2 {
+    color: green;
+}
+
+.h3 {
+    color: "violet";
+}
+
+.link {
+    font-size: 0.9rem;        /* smaller, as before */
+    text-decoration: none;
+    color: #fc8b57;           /* a warm gold hue for links */
+    cursor: pointer;
+  }
+  
+  .link:hover {
+    text-decoration: underline;
+  }

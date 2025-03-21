@@ -105,15 +105,17 @@ The color CSS property sets the foreground color value..."
           "Just a time traveler remembering their way back home."
           <br />
           <br />
-
-          <span style={{ color: 'Orange' }}>Professional Organizations:</span>
-          <br />
-          <span style={{ color: 'Violet' }}>—KCSCP</span>{" "}
+          &nbsp;&nbsp;
+          
+          <HoverTooltip
+            text={<span style={{ color: 'Orange' }}>{"Professional Organizations "}</span>}
+            tooltipText="The Professional Organization the artist is involved in."
+          /><p></p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style={{ color: 'Violet'}}>—KCSCP</span>&nbsp;
           <span style={{ color: 'Yellow' }}>(Member, 2022-current) </span>
           <br />
-          Kansas City Society of Contemporary Photography
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Kansas City Society of Contemporary Photography
           <br />
-          &nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <HoverTooltip
             text={
               <span style={{ color: 'orange' }}>
@@ -127,13 +129,13 @@ The color CSS property sets the foreground color value..."
           <br />
           <br />
 
-          <span style={{ color: 'Violet' }}>—Images Art Gallery </span>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span style={{ color: 'Violet' }}>—Images Art Gallery </span>
           <span style={{ color: 'Yellow' }}>(Co-Op Member, 2024-current) </span>
           <br />
-          Member of local artist co-op —Images Art Gallery— with work on display,
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Member of local artist co-op —Images Art Gallery— with work on display,
           and for sale.
           <br />
-          &nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <HoverTooltip
             text={
               <span style={{ color: 'orange' }}>
@@ -147,9 +149,9 @@ The color CSS property sets the foreground color value..."
           <br />
           <br />
 
-          <span style={{ color: 'Violet' }}>—Exhibitions:</span>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span style={{ color: 'Violet' }}>—Exhibitions:</span>
           <br />
-          November 1 - December 20, 2024 — KCSCP "Current Works 2024" exhibit at
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;November 1 - December 20, 2024 — KCSCP "Current Works 2024" exhibit at
           the Leedy-Voulkos Art Center in the Crossroads District of downtown
           Kansas City. Bob has current work displayed at Images Art Gallery in
           downtown Overland Park, Kansas.

@@ -16,11 +16,11 @@ function About() {
       {/* 2) Shift the main content to the right, so it doesn’t overlap */}
       <div style={{ marginLeft: '5rem', padding: '1rem' }} className="about-container">
         <h1>About()</h1>
-        <p>
+        <p><Link to="/" className="home-link">
           <HoverTooltip
             text={<span style={{ color: 'Violet' }}>{"return ("}</span>}
             tooltipText="(Go Back Home) Return.(to: Home Page);"
-          />
+          /></Link>
         </p>
 
         <ul>

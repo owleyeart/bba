@@ -5,9 +5,10 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import Projects from './Projects.jsx';                // The main Projects page
 import FallingAway from './Projects/Falling-Away.jsx'; // Sub-page under /Projects/falling-away
+import About from './About.jsx';
+import Contact from './Contact.jsx'; // If you created a Contact page
 
 import './App.css';
-import About from './About.jsx';
 
 // Example images
 const images = [
@@ -22,45 +23,16 @@ const images = [
   '/images/20160220_303_NOV3228.jpg',
   '/images/20250303_303_OWL4733.jpg',
   '/images/20240619_303_OWL8024.jpg',
-
 ];
 
-// Semi-transparent nav items
+// Semi-transparent nav items (Removed Gallery & Purchase)
 const navItems = [
-  { label: 'Home',     color: 'rgba(0, 0, 0, 0.63)' },
-  { label: 'Gallery',  color: 'rgba(59, 11, 51, 0.81)' },
-  { label: 'Projects', color: 'rgba(72, 27, 72, 0.81)' },
-  { label: 'About',    color: 'rgba(178, 11, 105, 0.72)' },
-  { label: 'Contact',  color: 'rgba(212, 69, 94, 0.81)' },
-  { label: 'Purchase', color: 'rgba(255, 173, 118, 0.72)' },
+  { label: 'Home',     color: 'rgba(72, 27, 72, 0.81)' },
+  { label: 'Projects', color: 'rgba(178, 11, 105, 0.72)' },
+  { label: 'About',    color: 'rgba(212, 69, 94, 0.81)' },
+  { label: 'Contact',  color: 'rgba(255, 173, 118, 0.72)' },
 ];
 
-/* 
-  APP COMPONENT WITH ROUTES
-  - We wrap everything in a Router and define:
-    - "/" => Landing (home page)
-    - "/Projects" => Projects.jsx
-    - "/Projects/falling-away" => Falling-Away.jsx
-*/
-function App() {
-  return (
-    <Router>
-      <Routes>
-        {/* Root: your "landing" logic */}
-        <Route path="/" element={<Landing />} />
-
-        {/* Projects page */}
-        <Route path="/Projects" element={<Projects />} />
-
-        {/* Falling Away sub-page */}
-        <Route path="/Projects/Falling-Away" element={<FallingAway />} />
-
-        {/* About page */}
-        <Route path="/About" element={<About />} />
-      </Routes>
-    </Router>
-  );
-}
 /* 
   LANDING COMPONENT
   - All your existing logic for images, drag, hover menu, etc.
@@ -89,6 +61,10 @@ function Landing() {
   // Fade-in controls for Scroll & Pan
   const [controlsVisible, setControlsVisible] = useState(false);
   const hideTimerRef = useRef(null);
+
+  // SCROLL WHEEL COOLDOWN
+  const lastWheelTimeRef = useRef(0);
+  const SCROLL_COOLDOWN = 500; // ms: adjust to slow or speed up
 
   // Show controls, then hide after 0.9s inactivity
   const showControls = () => {
@@ -119,12 +95,13 @@ function Landing() {
       window.location.href = '/Projects';
     } else if (item.label === 'About') {
       window.location.href = '/About';
+    } else if (item.label === 'Contact') {
+      window.location.href = '/Contact';
     } else {
       // For other items, just close the menu (or handle differently)
       setIsMenuOpen(false);
     }
   }
-  
 
   // For mobile & also desktop close
   const handleHamburgerClick = () => {
@@ -239,9 +216,19 @@ function Landing() {
     setDragDirection("none");
   };
 
-  // Wheel (Inverted Scroll)
+  // Wheel (Inverted Scroll) with cooldown
   const handleWheel = (e) => {
     showControls();
+
+    // Check the cooldown
+    const now = Date.now();
+    if (now - lastWheelTimeRef.current < SCROLL_COOLDOWN) {
+      // Too soon, ignore this wheel event
+      return;
+    }
+    lastWheelTimeRef.current = now;
+
+    // If enough time has passed, do the usual logic
     if (e.deltaY > 0) {
       // Scrolling down => prev
       prevImage();
@@ -280,7 +267,7 @@ function Landing() {
       <button
         className="hamburger-menu"
         aria-label="Open Menu"
-        onClick={handleHamburgerClick}       
+        onClick={handleHamburgerClick}
         onMouseEnter={handleHamburgerMouseEnter}
       >
         &#9776;
@@ -325,6 +312,36 @@ function Landing() {
   );
 }
 
+/* 
+  APP COMPONENT WITH ROUTES
+  - We wrap everything in a Router and define:
+    - "/" => Landing (home page)
+    - "/Projects" => Projects
+    - "/Projects/falling-away" => FallingAway
+    - "/About" => About
+    - "/Contact" => Contact (if you created it)
+*/
+function App() {
+  return (
+    <Router>
+      <Routes>
+        {/* Root: your "landing" logic */}
+        <Route path="/" element={<Landing />} />
 
+        {/* Projects page */}
+        <Route path="/Projects" element={<Projects />} />
+
+        {/* Falling Away sub-page */}
+        <Route path="/Projects/Falling-Away" element={<FallingAway />} />
+
+        {/* About page */}
+        <Route path="/About" element={<About />} />
+
+        {/* Contact page (if desired) */}
+        <Route path="/Contact" element={<Contact />} />
+      </Routes>
+    </Router>
+  );
+}
 
 export default App;

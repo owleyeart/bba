@@ -8,15 +8,30 @@ function Projects() {
     <div className="Projects-container">
       <h1>Projects</h1>
       <ul>
+        {/* Home link */}
         <li>
           <Link to="/" className="home-link">← Home</Link>
-        </li><p></p>
+        </li>
+
+        {/* NEW: Portfolio link, above Falling Away */}
+        <li>
+          <p>
+
+        </p>
+          <Link to="https://www.owleyeart.com/artists/bob-baker" className="Project-link">
+            Portfolio
+          </Link>
+          <p>
+
+          </p>
+        </li>
+
+        {/* Existing: Falling Away link */}
         <li>
           <Link to="/Projects/falling-away" className="Project-link">
             Falling Away
           </Link>
         </li>
-        {/* Add more Project links here if needed */}
       </ul>
     </div>
   );

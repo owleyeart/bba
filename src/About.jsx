@@ -47,7 +47,7 @@ function About() {
         </ul>
 
         <p>
-          &nbsp;&nbsp;&nbsp;&nbsp;{"Welcome to the "}
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{"Welcome to the "}
           {"<"}
           <span style={{ color: 'lightblue' }}>{"strong"}</span>
           {">"}
@@ -55,14 +55,12 @@ function About() {
           {"</"}
           <span style={{ color: 'lightblue' }}>{"strong"}</span>
           {">"}{" page! "}
-          <br />
-          &nbsp;&nbsp;&nbsp;&nbsp;This is where you can describe your background,
-          <br />
-          &nbsp;&nbsp;&nbsp;your art journey, or anything else you'd like to share.
+
+          This is where you can describe your background, your art journey, or anything else you'd like to share.
         </p>
 
         <p>
-          &nbsp;&nbsp;&nbsp;&nbsp;{"Styled to look like "}
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{"Styled to look like "}
           {"<"}
           <span style={{ color: 'lightblue' }}>{"em"}</span>
           {">"}
@@ -71,7 +69,7 @@ function About() {
           <span style={{ color: 'lightblue' }}>{"em"}</span>
           {">"}—using a
           <br />
-          &nbsp;&nbsp;&nbsp;&nbsp;monospaced font, dark background, and syntax-inspired colors.
+          &nbsp;&nbsp;&nbsp;&nbsp;monospaced font, dark background, and syntax-inspired colors and other elements.
         </p>
 
         <p>
@@ -125,7 +123,7 @@ The color CSS property sets the foreground color value..."
           /><p></p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style={{ color: 'Violet'}}>—KCSCP</span>&nbsp;
           <span style={{ color: 'Yellow' }}>(Member, 2022-current) </span>
           <br />
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Kansas City Society of Contemporary Photography
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Kansas City Society of Contemporary Photography
           <br />
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <HoverTooltip
@@ -144,7 +142,7 @@ The color CSS property sets the foreground color value..."
           &nbsp;&nbsp;&nbsp;&nbsp;<span style={{ color: 'Violet' }}>—Images Art Gallery </span>
           <span style={{ color: 'Yellow' }}>(Co-Op Member, 2024-current) </span>
           <br />
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Member of local artist co-op —Images Art Gallery— with work on display,
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Member of local artist co-op —Images Art Gallery— with work on display,
           and for sale.
           <br />
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

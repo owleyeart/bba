@@ -31,6 +31,7 @@ const navItems = [
   { label: 'Projects', color: 'rgba(178, 11, 105, 0.72)' },
   { label: 'About',    color: 'rgba(212, 69, 94, 0.81)' },
   { label: 'Contact',  color: 'rgba(255, 173, 118, 0.72)' },
+  { label: '',  color: 'rgba(59, 11, 51, 0.27)' },
 ];
 
 /* 

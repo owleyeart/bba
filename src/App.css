@@ -37,16 +37,14 @@ html, body {
 /* Fullscreen menu overlay (initially hidden) */
 .menu-overlay {
   position: absolute;
-  top: 0; left: 0; width: 100%;
-  height: 100vh;
-  overflow-y: auto; 
-  -webkit-overflow-scrolling: touch;
-  display: none;
+  top: 0; 
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;         
   flex-direction: column;
-  z-index: 100;
-  /* rest of your styling: background, etc. */
+  z-index: 100; /* behind the hamburger, but above background */
 }
-
 
 .menu-overlay.show {
   display: flex;

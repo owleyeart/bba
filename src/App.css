@@ -18,13 +18,11 @@ html, body {
   user-select: none;
 }
 
-/* Hamburger menu in top-right corner */
 .hamburger-menu {
   position: absolute;
   top: 20px;
   right: 20px;
-  z-index: 9999; /* keep it above overlay */
-
+  z-index: 9999;
   font-size: 2rem;
   background: rgba(0, 0, 0, 0.3);
   color: #fff;
@@ -34,25 +32,37 @@ html, body {
   cursor: pointer;
 }
 
-/* Fullscreen menu overlay (initially hidden) */
 .menu-overlay {
   position: absolute;
   top: 0; 
   left: 0;
   width: 100%;
   height: 100%;
+
   display: none;         
   flex-direction: column;
-  z-index: 100; /* behind the hamburger, but above background */
+  z-index: 100; /* behind the hamburger but above background */
+
+  /* Allow vertical scrolling if content is taller than the screen */
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch; /* smooth scrolling on iOS */
+
+  /* Hide scrollbar in Firefox */
+  scrollbar-width: none;
 }
 
+/* Hide scrollbar in Chrome/Safari/Edge */
+.menu-overlay::-webkit-scrollbar {
+  display: none;
+}
+
+/* Show overlay when .show is added */
 .menu-overlay.show {
   display: flex;
 }
 
-/* Each color block in the menu */
 .menu-item {
-  flex: 1; /* each block takes equal vertical space */
+  flex: 1;
   width: 100%;
   display: flex;
   align-items: center;
@@ -70,7 +80,7 @@ html, body {
   filter: brightness(1.2);
 }
 
-/* Scroll controls (left-middle) */
+/* Scroll controls (right-middle) */
 .scroll-controls {
   position: absolute;
   top: 50%;
@@ -114,5 +124,17 @@ html, body {
   line-height: 1;
   margin: 0;
   font-weight: bold;
-  text-shadow: 2px 2px 0 #000; /* Crisp shadow */
+  text-shadow: 2px 2px 0 #000;
+}
+
+.landing-logo {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  z-index: 9999;
+  /* if you want a fade, you can do:
+     transition: opacity 0.3s ease;
+  */
 }

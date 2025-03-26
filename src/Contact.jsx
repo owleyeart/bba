@@ -15,13 +15,13 @@ function Contact() {
       </ul>
 
       <p>
-        If you have any questions or would like to get in touch, please email me at:
+        For purchasing options and other interests, please email Bob Baker at:
         <br />
         <Link to="mailto:bob@bobbaker.art">bob@bobbaker.art</Link>
       </p>
 
       <p>
-        Or find me on social media:
+        Or find Bob on social media:
         <br />
         <a href="https://www.threads.net/@owleyeart" target="_blank" rel="noreferrer">
           Threads

@@ -1,68 +1,79 @@
-// Example: Global approach
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 function LineNumbersWithHighlight() {
-  const totalLines = 50;
-  const [hoveredIndex, setHoveredIndex] = useState(null);
-  const LINE_HEIGHT = 20;
+  const LINE_HEIGHT_PX = 24; // Must match your CSS line-height
+  const [highlightLine, setHighlightLine] = useState(0);
+  const [totalLines, setTotalLines] = useState(81); // default fallback
 
   useEffect(() => {
-    function handleMouseMove(e) {
-      // Optionally add window.scrollY if you want to track scrolled position
-      const y = e.clientY; 
-      const index = Math.floor(y / LINE_HEIGHT);
-      if (index >= 0 && index < totalLines) setHoveredIndex(index);
-      else setHoveredIndex(null);
-    }
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    const updateLineCount = () => {
+      const lines = Math.floor((window.innerHeight * 2) / LINE_HEIGHT_PX);
+      setTotalLines(lines);
+    };
+
+    updateLineCount();
+    window.addEventListener('resize', updateLineCount);
+    return () => window.removeEventListener('resize', updateLineCount);
   }, []);
 
+  // 🎯 Scroll tracking effect
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const scrollHeight = document.body.scrollHeight - window.innerHeight;
+
+      const scrollPercent = scrollY / scrollHeight;
+      const newHighlight = Math.floor(scrollPercent * totalLines);
+
+      setHighlightLine(Math.min(newHighlight, totalLines - 1));
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // init on load
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [totalLines]);
+
+  const lines = Array.from({ length: totalLines }, (_, i) => {
+    const isHighlighted = i === highlightLine;
+
+    return (
+      <div
+        key={i}
+        style={{
+          paddingRight: '0.5rem',
+          color: isHighlighted ? '#fc8b57' : '#858585',
+          fontWeight: isHighlighted ? 'bold' : 'normal',
+          textShadow: isHighlighted ? '0 0 6px rgba(252, 139, 87, 0.7)' : 'none',
+        }}
+      >
+        {String(i + 1).padStart(2, ' ')}
+      </div>
+    );
+  });
+
   return (
-    <div style={styles.container}>
-      {Array.from({ length: totalLines }, (_, i) => i + 1).map((num, i) => {
-        const isHovered = i === hoveredIndex;
-        return (
-          <div key={num} style={{
-            ...styles.line,
-            backgroundColor: isHovered ? 'rgba(255,255,255,0.1)' : 'transparent'
-          }}>
-            {isHovered && <span style={styles.redDot}>●</span>}
-            <span style={{ marginLeft: isHovered ? 4 : 0 }}>{num}</span>
-          </div>
-        );
-      })}
+    <div
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '4rem',
+        height: '100vh',
+        backgroundColor: '#2d2d2d',
+        color: '#858585',
+        padding: '1rem 0',
+        fontFamily: 'Consolas, monospace',
+        fontSize: '0.9rem',
+        lineHeight: `${LINE_HEIGHT_PX}px`,
+        textAlign: 'right',
+        zIndex: 10,
+        overflow: 'hidden',
+      }}
+    >
+      {lines}
     </div>
   );
 }
-
-const styles = {
-  container: {
-    position: 'fixed',
-    left: 0,
-    top: 0,
-    bottom: 0,
-    width: '3rem',
-    backgroundColor: '#1e1e1e',
-    color: '#d4d4d4',
-    fontFamily: 'Consolas, monospace',
-    fontSize: '0.9rem',
-    textAlign: 'right',
-    userSelect: 'none',
-    overflow: 'hidden',
-    zIndex: 9999,
-  },
-  line: {
-    height: 20,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    paddingRight: '0.5rem',
-  },
-  redDot: {
-    color: 'red',
-    marginRight: 2,
-  },
-};
 
 export default LineNumbersWithHighlight;

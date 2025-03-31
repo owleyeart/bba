@@ -1,29 +1,22 @@
-/* src/about.css */
-
-/* Use a monospaced font that feels code-like. 
-   If you like, use a specialized coding font, e.g. 'Fira Code'. 
-*/
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&display=swap');
+/* src/About.css */
 
 .about-container {
-  background-color: #3d3d3d; /* dark background, like VS Code */
-  color: #d4d4d4;           /* light gray text */
-  font-family: 'Fira Code', Consolas, monospace;
+  background-color: #3d3d3d;
+  color: #d4d4d4;
+  font-family: Consolas, monospace;
   padding: 2rem;
-  min-height: 100vh;        /* ensure full vertical space if needed */
+  min-height: 200vh;
 }
 
-/* Header in a brighter color */
 .about-container h1 {
-  color: #569cd6;           /* a nice blue for headings */
+  color: #569cd6;
   margin-bottom: 1rem;
 }
 
-/* Make links stand out in a different hue */
 .home-link {
-  font-size: 0.9rem;        /* smaller, as before */
+  font-size: 0.9rem;
   text-decoration: none;
-  color: #fc8b57;           /* a warm gold hue for links */
+  color: #fc8b57;
   cursor: pointer;
 }
 
@@ -31,13 +24,11 @@
   text-decoration: underline;
 }
 
-/* Basic text styling */
 .about-container p {
   line-height: 1.6;
   margin: 0.5rem 0;
 }
 
-/* If you want list items to appear in a certain color */
 .about-container ul {
   list-style: none;
   padding: 0;
@@ -46,32 +37,124 @@
 
 .about-container li {
   margin: 0.5rem 0;
-  color: #c586c0;           /* a purple for list items, if you like */
+  color: #c586c0;
 }
 
-/* about.css or a global stylesheet */
 .word-red {
-    color: red;
-  }
-  .word-blue {
-    color: blue;
-  }
-  
+  color: red;
+}
+
+.word-blue {
+  color: blue;
+}
+
 .h2 {
-    color: green;
+  color: green;
 }
 
 .h3 {
-    color: "violet";
+  color: violet;
 }
 
 .link {
-    font-size: 0.9rem;        /* smaller, as before */
-    text-decoration: none;
-    color: #fc8b57;           /* a warm gold hue for links */
-    cursor: pointer;
+  font-size: 0.9rem;
+  text-decoration: none;
+  color: #fc8b57;
+  cursor: pointer;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+/* New Styles */
+.function-title {
+  color: #569cd6;
+  font-weight: bold;
+  text-shadow: 0 0 5px rgba(86, 156, 214, 0.6);
+}
+
+.main-function {
+  color: violet;
+  font-weight: bold;
+  font-size: 1.4rem;
+  text-shadow: 0 0 6px rgba(238, 130, 238, 0.4);
+}
+
+.console-log {
+  color: #6a9955;
+  font-style: italic;
+  margin: 1rem 0;
+}
+
+.syntax-tag {
+  color: #569cd6;
+}
+
+.syntax-purple {
+  color: #c586c0;
+}
+
+.syntax-orange {
+  color: #d19a66;
+}
+
+.syntax-yellow {
+  color: #dcdcaa;
+}
+
+.code-snippet {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.5rem 1rem;
+  border-left: 3px solid #569cd6;
+  color: #ce9178;
+  margin: 1rem 0;
+  font-style: italic;
+}
+
+.quote {
+  margin: 1rem 0;
+  padding-left: 1rem;
+  border-left: 4px solid #fc8b57;
+  color: #fc8b57;
+  font-style: italic;
+  font-family: Consolas, monospace;
+}
+
+.console-effect {
+  font-family: Consolas, monospace;
+  font-size: 1rem;
+  margin: 2rem 0;
+  color: #d4d4d4;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+  animation: typewriter 4s steps(60, end), blinkCaret 1s step-end infinite;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 2px solid #d4d4d4;
+  width: 56ch;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.syntax-quote {
+  color: #ce9178;
+  text-shadow: 0 0 3px rgba(255, 200, 200, 0.4);
+}
+
+@keyframes typewriter {
+  from { width: 0; }
+  to { width: 60ch; }
+}
+
+@keyframes blinkCaret {
+  from, to { border-color: transparent; }
+  50% { border-color: #d4d4d4; }
+}
+
+@media (max-width: 768px) {
+  .about-container {
+    margin-left: 0;
+    padding: 1rem;
   }
-  
-  .link:hover {
-    text-decoration: underline;
-  }
+}
+

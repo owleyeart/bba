@@ -33,36 +33,33 @@ html, body {
 }
 
 .menu-overlay {
-  position: absolute;
-  top: 0; 
+  position: fixed;
+  top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
 
-  display: none;         
+  display: none; /* ✅ Hidden by default */
   flex-direction: column;
-  z-index: 100; /* behind the hamburger but above background */
 
-  /* Allow vertical scrolling if content is taller than the screen */
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch; /* smooth scrolling on iOS */
-
-  /* Hide scrollbar in Firefox */
-  scrollbar-width: none;
+  z-index: 999;
+  background-color: rgba(0, 0, 0, 0.85);
 }
+
+.menu-overlay.show {
+  display: flex; /* ✅ Only shown when menu is toggled open */
+}
+
+
 
 /* Hide scrollbar in Chrome/Safari/Edge */
 .menu-overlay::-webkit-scrollbar {
   display: none;
 }
 
-/* Show overlay when .show is added */
-.menu-overlay.show {
-  display: flex;
-}
 
 .menu-item {
-  flex: 1;
+  flex: 1; /* 💥 Take up equal space vertically */
   width: 100%;
   display: flex;
   align-items: center;
@@ -74,6 +71,11 @@ html, body {
   transition: transform 0.2s ease, filter 0.2s ease;
   cursor: pointer;
 }
+
+
+
+
+
 
 .menu-item:hover {
   transform: scale(1.02);
@@ -138,3 +140,73 @@ html, body {
      transition: opacity 0.3s ease;
   */
 }
+
+/* Animate submenu container */
+.submenu {
+  display: flex;
+  flex-direction: column;
+  animation: slideDown 300ms ease-out;
+  overflow: hidden;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.submenu-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 1.5rem;
+  background-color: rgba(168, 109, 168, 0.5);
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+
+
+
+/* Gradient border on the left */
+.submenu-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 100%;
+  background: linear-gradient(to bottom, #fff, transparent);
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+}
+
+/* Hover effect */
+.submenu-item:hover {
+  background-color: rgba(168, 109, 168, 0.95);
+  transform: scale(1.02);
+  filter: brightness(1.2);
+}
+
+.submenu-item:hover::before {
+  opacity: 1;
+}
+
+.submenu-item:focus {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+  filter: brightness(1.25);
+}
+
+.submenu-icon {
+  width: 1.5rem;
+  text-align: center;
+}
+

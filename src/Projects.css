@@ -1,49 +1,56 @@
 /* src/Projects.css */
 
-/* 1) Import a nice font (Poppins) from Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&display=swap');
 
-/* 2) Global or body styles */
-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Poppins', sans-serif; /* apply the new font to the entire page */
-}
-
-/* 3) Container for the Projects page */
-.Projects-container {
+.projects-container {
+  background-color: #2d2d2d;
+  color: #d4d4d4;
+  font-family: 'Fira Code', Consolas, monospace;
   padding: 2rem;
+  min-height: 100vh;
 }
 
-.Projects-container h1 {
-  margin-bottom: 1rem;
+.function-title {
+  color: #569cd6;
+  font-weight: bold;
+  text-shadow: 0 0 5px rgba(86, 156, 214, 0.6);
 }
 
-/* 4) Basic list styling */
-.Projects-container ul {
-  list-style-type: none;
+.home-link,
+.project-link {
+  font-size: 0.9rem;
+  text-decoration: none;
+  color: #fc8b57;
+  cursor: pointer;
+}
+
+.home-link:hover,
+.project-link:hover {
+  text-decoration: underline;
+}
+
+.projects-container p {
+  line-height: 1.6;
+  margin: 0.5rem 0;
+}
+
+.projects-container ul {
+  list-style: none;
   padding: 0;
   margin: 0;
 }
 
-/* 5) "← Home" link: smaller font size */
-.home-link {
-  font-size: 0.9rem;     /* slightly smaller text */
-  text-decoration: none; /* remove underline if desired */
-  color: #f889c8;           /* subtle color, adjust to taste */
+.projects-container li {
+  margin: 0.5rem 0;
+  color: #c586c0;
 }
 
-/* 6) Other Project links: larger or standard size */
-.Project-link {
-  font-size: 1.1rem;     /* bigger than home-link */
-  text-decoration: none;
-  color: #a686da;
-  font-weight: 600;      /* optional: make it semi-bold */
+.console-log {
+  color: #6a9955;
+  font-style: italic;
+  margin-top: 1rem;
 }
 
-/* Example hover effect */
-.Project-link:hover,
-.home-link:hover {
-  text-decoration: underline;
-  color: #bfacdf;
+.syntax-yellow {
+  color: #dcdcaa;
 }

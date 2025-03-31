@@ -1,0 +1,28 @@
+/* src/LineNumbersWithHighlight.css */
+
+.line-numbers {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 4rem;
+    height: 100vh;
+    background: #2d2d2d;
+    padding-top: 2rem;
+    overflow: hidden;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.9rem;
+    color: #888;
+  }
+  
+  .line-number {
+    height: 1.5rem;
+    padding-left: 1rem;
+    transition: all 0.2s ease;
+  }
+  
+  .line-number.highlighted {
+    color: #fc8b57;
+    background: rgba(255, 255, 255, 0.05);
+    text-shadow: 0 0 3px #fc8b57;
+  }
+  

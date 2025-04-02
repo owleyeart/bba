@@ -36,7 +36,31 @@ html, body {
   user-select: none;
   -webkit-overflow-scrolling: touch;
   transition: background-image 0.6s ease-in-out;
+  touch-action: none;
+  user-select: none;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5); /* ✅ readability */
 }
+
+.landing-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.19); /* 100% - 81% = 19% darkness */
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  touch-action: none;
+  user-select: none;
+}
+
+.landing-container.first-block::before {
+  opacity: 1;
+  touch-action: none;
+  user-select: none;
+}
+
+
 
 /* Fade transition classes */
 .fade-out {
@@ -58,16 +82,18 @@ html, body {
   padding: 2rem;
   text-align: center;
   font-family: 'Fino Sans', serif;
-  background-color: #222;
   color: white;
+  background: transparent; /* ✅ remove the gray */
+  max-width: 90vw;          /* ✅ keep it from stretching edge-to-edge */
+  margin: 0 auto;
+  z-index: 2;
+position: relative;
+
 }
-.text-block h1 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-}
+
+.text-block h1,
 .text-block p {
-  font-size: 1.2rem;
-  max-width: 600px;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.85); /* ✅ readability */
 }
 
 /* Landing text overlay */

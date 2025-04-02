@@ -70,7 +70,7 @@ export default function ObservedLight() {
         <h2>In Print Now</h2><p />
         <h3>"Observed Light"</h3><p />
         <div className="book-author">a book by Bob Baker<br />
-        11&quot; x 8.5&quot;, 42 pages, full color<br /><br />Images Art Gallery or Online:
+        11&quot; x 8.5&quot;, 40 pages, full color<br /><br />Images Art Gallery or Online:
         </div>
 
       </div>

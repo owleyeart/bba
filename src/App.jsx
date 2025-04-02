@@ -12,6 +12,7 @@ import FallingAway from './Projects/Falling-Away.jsx';
 import About from './About.jsx';
 import Contact from './Contact.jsx';
 import ObservedLight from './ObservedLight';
+import Footer from './Footer';
 
 
 import './App.css';
@@ -128,30 +129,33 @@ function Landing({ isMenuOpen }) {
     setInitialPosX(bgPosX);
     setDragDirection('none');
   };
-
   const handlePointerMove = (e) => {
     showControls();
     if (!containerRef.current) return;
     const containerWidth = containerRef.current.clientWidth;
     const deltaX = e.clientX - startX;
     const deltaY = e.clientY - startY;
-    if (!isDragging) {
+  
+    if (isDragging) {
+      if (dragDirection === 'none') {
+        if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > DRAG_DIRECTION_THRESHOLD) {
+          setDragDirection('horizontal');
+        } else if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > DRAG_DIRECTION_THRESHOLD) {
+          setDragDirection('vertical');
+        }
+      }
+  
+      if (dragDirection === 'horizontal') {
+        const newPosX = initialPosX + (deltaX / containerWidth) * 100;
+        setBgPosX(Math.max(0, Math.min(100, newPosX)));
+      }
+    } else {
+      // 🔁 This ensures hover panning always works
       const ratio = e.clientX / containerWidth;
       setBgPosX(Math.max(0, Math.min(100, ratio * 100)));
-      return;
-    }
-    if (dragDirection === 'none') {
-      if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > DRAG_DIRECTION_THRESHOLD) {
-        setDragDirection('horizontal');
-      } else if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > DRAG_DIRECTION_THRESHOLD) {
-        setDragDirection('vertical');
-      }
-    }
-    if (dragDirection === 'horizontal') {
-      let newPosX = initialPosX + (deltaX / containerWidth) * 100;
-      setBgPosX(Math.max(0, Math.min(100, newPosX)));
     }
   };
+  
 
   const handlePointerUpOrLeave = (e) => {
     showControls();
@@ -172,28 +176,29 @@ function Landing({ isMenuOpen }) {
 
   return (
     <div
-      className={`landing-container ${fadeClass}`}
-      ref={containerRef}
-      onWheel={handleWheel}
-      onPointerDown={handlePointerDown}
-      onPointerMove={handlePointerMove}
-      onPointerUp={handlePointerUpOrLeave}
-      onPointerLeave={handlePointerUpOrLeave}
-      style={
-        images[currentIndex] === 'text-block'
-          ? {
-              backgroundColor: '#222',
-              backgroundImage: 'none',
-              color: 'white',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }
-          : {
-              backgroundImage: `url(${images[currentIndex]})`,
-              backgroundPosition: `${bgPosX}% center`,
-            }
-      }
-    >
+  className={`landing-container ${fadeClass} ${currentIndex === 0 ? 'first-block' : ''}`}
+  ref={containerRef}
+  onWheel={handleWheel}
+  onPointerDown={handlePointerDown}
+  onPointerMove={handlePointerMove}
+  onPointerUp={handlePointerUpOrLeave}
+  onPointerLeave={handlePointerUpOrLeave}
+  style={{
+    backgroundImage:
+      images[currentIndex] === 'text-block'
+        ? 'url(/images/20240907_303_OWL0880.jpg)'
+        : `url(${images[currentIndex]})`,
+    backgroundPosition: `${bgPosX}% center`,
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    width: '100vw',
+    height: '100vh',
+    overflow: 'hidden',
+    position: 'relative',
+    cursor: 'default',
+  }}
+>
+
       <img
         src="/images/Signature%20Logo.svg"
         alt="Signature Logo"
@@ -238,8 +243,6 @@ function Landing({ isMenuOpen }) {
         <div className="landing-text-block">
           {currentIndex === 1 && (
             <Link to="/observed-light" className="text-slide link-slide">
-              Bob Baker <br />
-              <small>presents→</small>
               <h2>"Observed Light"</h2>
               <p>an Exhibition</p>
             </Link>
@@ -257,7 +260,7 @@ function Landing({ isMenuOpen }) {
               <br />
               <div>Apr 16—May 10</div>
               <div style={{ fontSize: '1rem', marginTop: '0.25rem' }}>
-                Featured Opening Apr 18 5p—8p<br />OP/KS
+                Featured Opening<br /> Apr 18 5p—8p<br />OP/KS
               </div>
             </a>
           )}
@@ -356,6 +359,9 @@ function AppWrapper() {
         <Route path="/Contact" element={<Contact />} />
         <Route path="/observed-light" element={<ObservedLight />} />
       </Routes>
+
+            {/* ✅ Conditionally render footer */}
+            {location.pathname !== '/' && <Footer />}
     </>
   );
 }

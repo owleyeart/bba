@@ -112,6 +112,27 @@
   font-style: italic;
 }
 
+.code-button {
+  font-family: Consolas, monospace;
+  font-size: 1rem;
+  padding: 0.6rem 1.2rem;
+  background-color: #222;
+  color: #d4d4d4;
+  border: 1px solid #569cd6;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  display: inline-block;
+}
+
+.code-button:hover {
+  background-color: #2a2a2a;
+  box-shadow: 0 0 8px rgba(86, 156, 214, 0.6);
+  color: #ffffff;
+  cursor: pointer;
+}
+
+
 .quote {
   margin: 1rem 0;
   padding-left: 1rem;

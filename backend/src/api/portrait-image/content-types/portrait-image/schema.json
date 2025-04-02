@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "portrait_images",
+  "info": {
+    "singularName": "portrait-image",
+    "pluralName": "portrait-images",
+    "displayName": "Portrait Image"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "Order": {
+      "type": "biginteger"
+    },
+    "Title": {
+      "type": "string"
+    },
+    "Image": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
+    }
+  }
+}

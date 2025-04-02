@@ -1,18 +1,23 @@
 // src/App.jsx
 
+/////////////////////////////////////////////////////// 
+// Bob Baker - Owl Eye Art Institute, April 2025     //
+///////////////////////////////////////////////////////
+
 import React, { useState, useRef, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation, Link } from 'react-router-dom';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import Portraits from './Portraits';
 import Projects from './Projects.jsx';
 import FallingAway from './Projects/Falling-Away.jsx';
 import About from './About.jsx';
 import Contact from './Contact.jsx';
-import ObservedLight from './ObservedLight'; // adjust path if it's in a folder
+import ObservedLight from './ObservedLight';
+
 
 import './App.css';
 
 const images = [
+  'text-block',
   '/images/20250304_303_OWL4767.jpg',
   '/images/20250120_303_OWL4061.jpg',
   '/images/20250304_303_OWL4775.jpg',
@@ -30,17 +35,25 @@ const navItems = [
     ],
   },
   {
+    label: 'Gallery',
+    color: 'rgba(124, 19, 89, 0.63)',
+    submenu: [
+      { label: 'Portraits', link: '/Portraits' },
+      { label: 'All Galleries', link: '/Galleries' },
+    ],
+  },
+  {
     label: 'About',
     color: 'rgba(178, 11, 105, 0.63)',
     submenu: [
       { label: 'About Bob Baker', link: '/About' },
+      { label: 'Newsletter', link: '/Newsletter' },
       { label: 'Portfolio', link: 'https://www.owleyeart.com/artists/bob-baker' },
     ],
   },
   { label: 'Contact', color: 'rgba(212, 69, 94, 0.72)' },
 ];
 
-/* LANDING COMPONENT */
 function Landing({ isMenuOpen }) {
   const containerRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -50,6 +63,9 @@ function Landing({ isMenuOpen }) {
   const [startY, setStartY] = useState(0);
   const [initialPosX, setInitialPosX] = useState(50);
   const [dragDirection, setDragDirection] = useState('none');
+  const [fadeClass, setFadeClass] = useState('');
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [progress, setProgress] = useState(0);
   const DRAG_DIRECTION_THRESHOLD = 20;
   const VERTICAL_SWIPE_THRESHOLD = 50;
   const [controlsVisible, setControlsVisible] = useState(false);
@@ -63,18 +79,45 @@ function Landing({ isMenuOpen }) {
     hideTimerRef.current = setTimeout(() => setControlsVisible(false), 900);
   }
 
-  useEffect(() => () => clearTimeout(hideTimerRef.current), []);
+  useEffect(() => {
+    hideTimerRef.current = setTimeout(() => setControlsVisible(false), 900);
+    return () => clearTimeout(hideTimerRef.current);
+  }, []);
+
+  useEffect(() => {
+    let interval;
+    if (isPlaying) {
+      let start = Date.now();
+      interval = setInterval(() => {
+        const elapsed = Date.now() - start;
+        const percent = Math.min((elapsed / 9000) * 100, 100);
+        setProgress(percent);
+        if (percent === 100) {
+          triggerFade(() => setCurrentIndex((prev) => (prev + 1) % images.length));
+          start = Date.now();
+        }
+      }, 100);
+    }
+    return () => clearInterval(interval);
+  }, [isPlaying]);
+
+  const triggerFade = (updateFn) => {
+    setFadeClass('fade-out');
+    setTimeout(() => {
+      updateFn();
+      setFadeClass('fade-in');
+      setTimeout(() => setFadeClass(''), 1000);
+    }, 300);
+  };
 
   function handleWheel(e) {
     showControls();
     const now = Date.now();
     if (now - lastWheelTimeRef.current < SCROLL_COOLDOWN) return;
     lastWheelTimeRef.current = now;
-    if (e.deltaY > 0) {
-      setCurrentIndex((prev) => (prev + 1) % images.length);
-    } else {
-      setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
-    }
+    triggerFade(() =>
+      setCurrentIndex((prev) => (e.deltaY > 0 ? (prev + 1) % images.length : (prev - 1 + images.length) % images.length))
+    );
   }
 
   const handlePointerDown = (e) => {
@@ -94,8 +137,7 @@ function Landing({ isMenuOpen }) {
     const deltaY = e.clientY - startY;
     if (!isDragging) {
       const ratio = e.clientX / containerWidth;
-      let newPosX = Math.max(0, Math.min(100, ratio * 100));
-      setBgPosX(newPosX);
+      setBgPosX(Math.max(0, Math.min(100, ratio * 100)));
       return;
     }
     if (dragDirection === 'none') {
@@ -118,8 +160,10 @@ function Landing({ isMenuOpen }) {
     if (dragDirection === 'vertical') {
       const deltaY = e.clientY - startY;
       if (Math.abs(deltaY) > VERTICAL_SWIPE_THRESHOLD) {
-        setCurrentIndex((prev) =>
-          deltaY < 0 ? (prev - 1 + images.length) % images.length : (prev + 1) % images.length
+        triggerFade(() =>
+          setCurrentIndex((prev) =>
+            deltaY < 0 ? (prev - 1 + images.length) % images.length : (prev + 1) % images.length
+          )
         );
       }
     }
@@ -128,17 +172,27 @@ function Landing({ isMenuOpen }) {
 
   return (
     <div
-      className="landing-container"
+      className={`landing-container ${fadeClass}`}
       ref={containerRef}
       onWheel={handleWheel}
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUpOrLeave}
       onPointerLeave={handlePointerUpOrLeave}
-      style={{
-        backgroundImage: `url(${images[currentIndex]})`,
-        backgroundPosition: `${bgPosX}% center`,
-      }}
+      style={
+        images[currentIndex] === 'text-block'
+          ? {
+              backgroundColor: '#222',
+              backgroundImage: 'none',
+              color: 'white',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }
+          : {
+              backgroundImage: `url(${images[currentIndex]})`,
+              backgroundPosition: `${bgPosX}% center`,
+            }
+      }
     >
       <img
         src="/images/Signature%20Logo.svg"
@@ -147,64 +201,79 @@ function Landing({ isMenuOpen }) {
         style={{ display: isMenuOpen ? 'none' : 'block' }}
       />
 
-<div className="scroll-controls" style={{ opacity: controlsVisible ? 1 : 0 }}>
-  <span className="label scroll-label">Scroll</span>
-  <div className="arrow-group vertical">
-    <span className="arrow up">&#8593;</span>
-    <span className="arrow down">&#8595;</span>
-  </div>
-</div>
-
-<div className="pan-controls" style={{ opacity: controlsVisible ? 1 : 0 }}>
-  <span className="label pan-label">Pan</span>
-  <div className="arrow-group horizontal">
-    <span className="arrow left">&#8594;</span>
-    <span className="arrow right">&#8592;</span>
-  </div>
-</div>
-
-
-
-
-
-      {/* Centered Text Overlay with Scroll-Synced Transitions */}
-      <div className="landing-text-block">
-        {currentIndex === 0 && (
-          <Link to="/observed-light" className="text-slide link-slide">
-            Enter Exhibit →
-          </Link>
-        )}
-        {currentIndex === 1 && (
-          <a
-          href="https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=c3IyaG1rOXZ2NHBzMTFpdXM4ajVkNXFhOXNfMjAyNTA0MThUMjIwMDAwWiAwZjRkNDIyYzEzZTFmN2VhMjZiOGRiMDdmNDJlNWNmZmNlZmEzZmExZDBjZDM1MjNlMmUyMDNiMzU1NTgzYTlmQGc&tmsrc=0f4d422c13e1f7ea26b8db07f42e5cffcefa3fa1d0cd3523e2e203b355583a9f%40group.calendar.google.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-slide link-slide"
-        >
-          Add to Google Calendar
-            <div>Images</div>
-            <div>Art</div>
-            <div>Gallery</div>
-            <br />
-            <div>Apr 16—May 10</div>
-            <div style={{ fontSize: '1rem', marginTop: '0.25rem' }}>
-              Featured Opening Apr 18 5p—8p<br />OP/KS
-            </div>
-          </a>
-        )}
-        {currentIndex === 2 && (
-          <Link to="https://mixam.com/print-on-demand/67e8be655221ef3072d7944e" className="text-slide link-slide">
-            <div>ORDER</div>
-            <div>PRINTS</div>
-            <div>ONLINE</div>
-          </Link>
-        )}
+      <div className="scroll-controls" style={{ opacity: controlsVisible ? 1 : 0 }}>
+        <span className="label scroll-label">Scroll</span>
+        <div className="arrow-group vertical">
+          <span className="arrow up">↑</span>
+          <span className="arrow down">↓</span>
+        </div>
       </div>
+
+      <div className="pan-controls" style={{ opacity: controlsVisible ? 1 : 0 }}>
+        <span className="label pan-label">Pan</span>
+        <div className="arrow-group horizontal">
+          <span className="arrow left">→</span>
+          <span className="arrow right">←</span>
+        </div>
+      </div>
+
+      <button
+        className="play-pause-toggle"
+        onClick={() => setIsPlaying((prev) => !prev)}
+        aria-label="Toggle auto-play"
+      >
+        {isPlaying ? '⏸ Pause' : '▶ Play'}
+      </button>
+
+      <div className="progress-bar-wrapper">
+        <div className="progress-bar" style={{ width: `${progress}%`}}></div>
+      </div>
+
+      {images[currentIndex] === 'text-block' ? (
+        <div className="text-block">
+          <h1>Bob Baker</h1>
+          <p>Photographer | Visual Artist</p>
+        </div>
+      ) : (
+        <div className="landing-text-block">
+          {currentIndex === 1 && (
+            <Link to="/observed-light" className="text-slide link-slide">
+              Bob Baker <br />
+              <small>presents→</small>
+              <h2>"Observed Light"</h2>
+              <p>an Exhibition</p>
+            </Link>
+          )}
+          {currentIndex === 2 && (
+            <a
+              href="https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=c3IyaG..."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-slide link-slide"
+            >
+              <div>Images</div>
+              <div>Art</div>
+              <div>Gallery</div>
+              <br />
+              <div>Apr 16—May 10</div>
+              <div style={{ fontSize: '1rem', marginTop: '0.25rem' }}>
+                Featured Opening Apr 18 5p—8p<br />OP/KS
+              </div>
+            </a>
+          )}
+          {currentIndex === 3 && (
+            <Link to="https://mixam.com/print-on-demand/67e8be655221ef3072d7944e" className="text-slide link-slide">
+              <div>ORDER</div>
+              <div>PRINTS</div>
+              <div>ONLINE</div>
+            </Link>
+          )}
+        </div>
+      )}
     </div>
   );
 }
 
-/* APP WRAPPER WITH ROUTES */
 function AppWrapper() {
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -238,7 +307,7 @@ function AppWrapper() {
   return (
     <>
       <button className="hamburger-menu" onClick={handleHamburgerClick}>
-        {isMenuOpen ? '✕' : '\u2630'}
+        {isMenuOpen ? '✕' : '☰'}
       </button>
 
       <div className={`menu-overlay ${isMenuOpen ? 'show' : ''}`}>
@@ -257,9 +326,7 @@ function AppWrapper() {
                   <div
                     key={subitem.label}
                     className="submenu-item"
-                    style={{
-                      backgroundColor: `rgba(168, 109, 168, ${0.4 + i * 0.2})`,
-                    }}
+                    style={{ backgroundColor: `rgba(168, 109, 168, ${0.4 + i * 0.2})` }}
                     onClick={() => handleSubmenuClick(subitem)}
                     tabIndex={0}
                     onKeyDown={(e) => {
@@ -280,21 +347,15 @@ function AppWrapper() {
         ))}
       </div>
 
-      {/* Animated Page Transitions */}
-      <TransitionGroup component={null}>
-        <CSSTransition key={location.pathname} timeout={500} classNames="page">
-          <Routes location={location}>
-            <Route path="/" element={<Landing isMenuOpen={isMenuOpen} />} />
-            <Route path="/portraits" element={<Portraits />} />
-            <Route path="/Projects" element={<Projects />} />
-            <Route path="/Projects/falling-away" element={<FallingAway />} />
-            <Route path="/About" element={<About />} />
-            <Route path="/Contact" element={<Contact />} />
-            <Route path="/observed-light" element={<ObservedLight />} />
-
-          </Routes>
-        </CSSTransition>
-      </TransitionGroup>
+      <Routes location={location}>
+        <Route path="/" element={<Landing isMenuOpen={isMenuOpen} />} />
+        <Route path="/portraits" element={<Portraits />} />
+        <Route path="/Projects" element={<Projects />} />
+        <Route path="/Projects/falling-away" element={<FallingAway />} />
+        <Route path="/About" element={<About />} />
+        <Route path="/Contact" element={<Contact />} />
+        <Route path="/observed-light" element={<ObservedLight />} />
+      </Routes>
     </>
   );
 }
@@ -302,7 +363,9 @@ function AppWrapper() {
 export default function App() {
   return (
     <Router>
-      <AppWrapper />
+      <div className="app-wrapper">
+        <AppWrapper />
+      </div>
     </Router>
   );
 }

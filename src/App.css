@@ -1,16 +1,29 @@
+/* Fino Sans + slick carousel styles */
 @import "slick-carousel/slick/slick.css";
 @import "slick-carousel/slick/slick-theme.css";
 @import url('https://fonts.googleapis.com/css2?family=Fino+Sans&display=swap');
 
-/* Reset */
+/* App wrapper and reset */
+.app-wrapper {
+  width: 100vw;
+  height: 100vh;
+  overflow: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.app-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
 html, body {
   margin: 0;
   padding: 0;
   width: 100%;
   height: 100%;
+  overflow: hidden;
 }
 
-/* Landing */
+/* Landing styles */
 .landing-container {
   width: 100vw;
   height: 100vh;
@@ -21,8 +34,43 @@ html, body {
   background-position: 50% center;
   touch-action: none;
   user-select: none;
+  -webkit-overflow-scrolling: touch;
+  transition: background-image 0.6s ease-in-out;
 }
 
+/* Fade transition classes */
+.fade-out {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+.fade-in {
+  opacity: 1;
+  transition: opacity 1s ease-in-out;
+}
+
+/* Text block */
+.text-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 2rem;
+  text-align: center;
+  font-family: 'Fino Sans', serif;
+  background-color: #222;
+  color: white;
+}
+.text-block h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+.text-block p {
+  font-size: 1.2rem;
+  max-width: 600px;
+}
+
+/* Landing text overlay */
 .landing-text-block {
   position: absolute;
   top: 50%;
@@ -36,7 +84,7 @@ html, body {
   animation: fadeIn 1.2s ease-in-out both;
 }
 
-/* Text links */
+/* Link slide */
 .link-slide {
   pointer-events: auto;
   color: white !important;
@@ -47,14 +95,13 @@ html, body {
   transition: text-shadow 0.3s ease, transform 0.3s ease, text-decoration 0.3s ease;
   display: inline-block;
 }
-
 .link-slide:hover {
   color: white !important;
   text-shadow: 0 0 8px rgba(255, 255, 255, 0.85), 1px 1px 3px rgba(0, 0, 0, 0.85);
   text-decoration: underline;
 }
 
-/* Fade-in animation */
+/* FadeIn animation */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -66,7 +113,116 @@ html, body {
   }
 }
 
-/* Hamburger */
+/* Logo */
+.landing-logo {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  z-index: 9999;
+}
+
+/* Scroll / Pan controls */
+.scroll-controls {
+  position: absolute;
+  top: 50%;
+  right: 3rem;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: 'Fino Sans', sans-serif;
+  color: white;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.pan-controls {
+  position: absolute;
+  bottom: 2.5rem; /* shifted up to make room for play/pause */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Fino Sans', sans-serif;
+  color: white;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+.pan-controls .label {
+  margin-bottom: 2rem;
+  font-size: 1rem;
+  user-select: none;
+}
+.arrow-group.horizontal {
+  display: flex;
+  gap: 1.2rem;
+  pointer-events: auto;
+}
+.arrow-group.vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  pointer-events: auto;
+}
+
+.arrow {
+  font-size: 1.4rem;
+  color: white;
+  cursor: pointer;
+  user-select: none;
+  transition: opacity 0.2s ease;
+  padding: 0.3rem 0.4rem;
+}
+.arrow:hover {
+  opacity: 0.75;
+}
+
+/* Play / Pause toggle */
+.play-pause-toggle {
+  position: absolute;
+  bottom: 0.75rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: 1px solid white;
+  border-radius: 4px;
+  padding: 0.4rem 0.8rem;
+  font-size: 1rem;
+  font-family: 'Fino Sans', sans-serif;
+  cursor: pointer;
+  z-index: 10;
+  transition: background 0.3s ease;
+}
+
+.play-pause-toggle:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.progress-bar-wrapper {
+  position: absolute;
+  bottom: 3.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 2px;
+  overflow: hidden;
+  z-index: 10;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: rgba(212, 69, 94, 0.81);
+  transition: width 0.2s linear;
+}
+
+
+/* Hamburger Menu & Overlay */
 .hamburger-menu {
   position: absolute;
   top: 20px;
@@ -80,8 +236,6 @@ html, body {
   padding: 0.2em 0.4em;
   cursor: pointer;
 }
-
-/* Menu overlay */
 .menu-overlay {
   position: fixed;
   top: 0;
@@ -93,16 +247,9 @@ html, body {
   z-index: 999;
   background-color: rgba(0, 0, 0, 0.85);
 }
-
 .menu-overlay.show {
   display: flex;
 }
-
-.menu-overlay::-webkit-scrollbar {
-  display: none;
-}
-
-/* Menu items */
 .menu-item {
   flex: 1;
   width: 100%;
@@ -116,30 +263,16 @@ html, body {
   transition: transform 0.2s ease, filter 0.2s ease;
   cursor: pointer;
 }
-
 .menu-item:hover {
   transform: scale(1.02);
   filter: brightness(1.2);
 }
-
-/* Logo */
-.landing-logo {
-  position: absolute;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 120px;
-  z-index: 9999;
-}
-
-/* Submenu */
 .submenu {
   display: flex;
   flex-direction: column;
   animation: slideDown 300ms ease-out;
   overflow: hidden;
 }
-
 @keyframes slideDown {
   from {
     opacity: 0;
@@ -150,7 +283,6 @@ html, body {
     transform: translateY(0);
   }
 }
-
 .submenu-item {
   position: relative;
   display: flex;
@@ -163,7 +295,6 @@ html, body {
   cursor: pointer;
   transition: background-color 0.2s ease, transform 0.2s ease;
 }
-
 .submenu-item::before {
   content: "";
   position: absolute;
@@ -175,99 +306,20 @@ html, body {
   opacity: 0.6;
   transition: opacity 0.3s ease;
 }
-
 .submenu-item:hover {
   background-color: rgba(168, 109, 168, 0.95);
   transform: scale(1.02);
   filter: brightness(1.2);
 }
-
 .submenu-item:hover::before {
   opacity: 1;
 }
-
 .submenu-item:focus {
   outline: 2px solid #fff;
   outline-offset: 2px;
   filter: brightness(1.25);
 }
-
 .submenu-icon {
   width: 1.5rem;
   text-align: center;
-}
-
-/* Page transitions */
-.page-enter {
-  opacity: 0;
-  transform: translateX(100%);
-}
-.page-enter-active {
-  opacity: 1;
-  transform: translateX(0);
-  transition: all 500ms ease;
-}
-.page-exit {
-  opacity: 1;
-}
-.page-exit-active {
-  opacity: 0;
-  transform: translateX(-100%);
-  transition: all 500ms ease;
-}
-
-.scroll-controls {
-  position: absolute;
-  top: 50%;
-  right: 3rem;
-  transform: translateY(-50%);
-  display: flex;
-  align-items: center;
-  gap: 0.4rem; /* tightened gap */
-  font-family: 'Fino Sans', sans-serif;
-  color: white;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-}
-
-.pan-controls {
-  position: absolute;
-  bottom: 1rem;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-family: 'Fino Sans', sans-serif;
-  color: white;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-}
-
-.pan-controls .label {
-  margin-bottom: 2rem; /* ✅ More space below the label */
-  font-size: 1rem;
-  user-select: none;
-}
-
-.arrow-group.horizontal {
-  display: flex;
-  gap: 1.2rem;
-  pointer-events: auto;
-}
-
-
-
-
-.arrow {
-  font-size: 1.4rem;
-  color: white;
-  cursor: pointer;
-  user-select: none;
-  transition: opacity 0.2s ease;
-  padding: 0.3rem 0.4rem;
-}
-
-.arrow:hover {
-  opacity: 0.75;
 }

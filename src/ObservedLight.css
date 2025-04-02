@@ -109,3 +109,13 @@
     transform: scale(1.05);
   }
   
+  .more-link {
+    color: rgba(243, 116, 138, 0.81);
+    text-decoration: underline;
+    transition: color 0.2s;
+  }
+  
+  .more-link:hover {
+    color: white;
+  }
+  

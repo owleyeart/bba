@@ -39,13 +39,7 @@ function About() {
         </ul>
 
         <p>
-          Welcome to the <span className="syntax-tag">{'<strong>'}</span>About<span className="syntax-tag">{'</strong>'}</span> page!<br />
-          This is where you can describe your background, your art journey, or anything else you'd like to share.
-        </p>
-
-        <p>
-          Styled to look like <span className="syntax-tag">{'<em>'}</span>code<span className="syntax-tag">{'</em>'}</span>—using a
-          monospaced font, dark background, and syntax-inspired colors.
+          Welcome to the <span className="syntax-tag">{'<strong>'}</span>About<span className="syntax-tag">{'</strong>'}</span> page!
         </p>
 
         <p className="code-snippet">
@@ -53,7 +47,6 @@ function About() {
         </p>
 
         <h3 className="main-function">About the Artist</h3>
-
         <h1 className="function-title">
           <HoverTooltip
             text={<span>{'Bob.Baker()'}</span>}
@@ -71,7 +64,7 @@ function About() {
         </p>
 
         <p className="console-log">
-          Just a time traveler remembering their way back home.
+          ///Just a time traveler remembering their way back home.
         </p>
 
         <p>
@@ -99,7 +92,6 @@ function About() {
           <span className="syntax-yellow">{'}'}</span>
         </p>
 
-        {/* Optional Scroll-End Easter Egg */}
         <p style={{ marginTop: '40vh', fontStyle: 'italic', color: '#ffffff' }}></p>
 
         <span className="error-easter-egg">

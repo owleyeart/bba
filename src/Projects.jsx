@@ -11,13 +11,7 @@ function Projects() {
       <LineNumbersWithHighlight />
 
       <div className="projects-container" style={{ marginLeft: '5rem', padding: '1rem' }}>
-        <h1 className="function-title">
-          <HoverTooltip
-            text={<span style={{ color: 'lightskyblue' }}>Projects()</span>}
-            tooltipText="Function: Displays all current projects."
-          />
-        </h1>
-
+        {/* 🔁 Return block moved above header */}
         <p>
           <Link to="/" className="home-link">
             <HoverTooltip
@@ -31,34 +25,64 @@ function Projects() {
           <li>
             &nbsp;&nbsp;&nbsp;&nbsp;
             <HoverTooltip
-              text={<span style={{ color: 'orange' }}>
-                <Link to="/" className="home-link">{'{ "Home" }'}</Link>
-              </span>}
+              text={
+                <span style={{ color: 'orange' }}>
+                  <Link to="/" className="home-link">{'{ "Home" }'}</Link>
+                </span>
+              }
               tooltipText="Return to homepage."
             />
           </li>
+        </ul>
+
+        {/* 🔻 Projects() header appears after return-to-home block */}
+        <h1 className="function-title">
+          <HoverTooltip
+            text={<span style={{ color: 'lightskyblue' }}>Projects()</span>}
+            tooltipText="Function: Displays all current projects."
+          />
+        </h1>
+        <br /><br />
+        
+        The following projects are available to view:
+        
+        <br />
+        <ul>
+          <li>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <HoverTooltip
+  text={
+    <Link to="/observed-light" className="project-link">
+      {'{ "Observed Light" }'}
+    </Link>
+  }
+  tooltipText="View the Observed Light project."
+/> &nbsp; View the exhibit, order the book, "Observed Light"
+          </li><br />
 
           <li>
             &nbsp;&nbsp;&nbsp;&nbsp;
             <HoverTooltip
-              text={<span style={{ color: 'orange' }}>
-                <a href="https://www.owleyeart.com/artists/bob-baker" className="project-link" target="_blank" rel="noreferrer">
-                  {'{ "Portfolio" }'}
-                </a>
-              </span>}
-              tooltipText="External portfolio on OwlEyeArt.com"
-            />
-          </li>
+  text={
+    <Link to="/Projects/falling-away" className="project-link">
+      {'{ "Falling Away" }'}
+    </Link>
+  }
+  tooltipText="View the Falling Away project."
+/> &nbsp; A work in progress, puzzle-piece falling JavaScript.
+          </li><br />
 
           <li>
             &nbsp;&nbsp;&nbsp;&nbsp;
             <HoverTooltip
-              text={<span style={{ color: 'orange' }}>
-                <Link to="/Projects/falling-away" className="project-link">{'{ "Falling Away" }'}</Link>
-              </span>}
-              tooltipText="View the Falling Away project."
-            />
-          </li>
+  text={
+    <Link to="/About" className="project-link">
+      {'{ "About Page Code Project" }'}
+    </Link>
+  }
+  tooltipText="View the About Page project."
+/> &nbsp; First ever About page styled like a JSX code editor!
+          </li><br />
         </ul>
 
         <p className="console-log">// More projects coming soon...</p>

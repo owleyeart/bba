@@ -7,6 +7,12 @@ import PortraitCarousel from "./components/PortraitCarousel";
 import CallToAction from "./components/CallToAction";
 import "./About.css"; // ✅ Using shared styles
 
+console.log("⚠️ Portraits component is rendering");
+
+
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:1337";
+
+
 const Portraits = () => {
   const [pageData, setPageData] = useState(null);
   const [images, setImages] = useState([]);
@@ -36,13 +42,15 @@ const Portraits = () => {
 
           const formatted = sorted
             .map((img) => {
-              const imageUrl = img?.Image?.url;
-              if (!imageUrl) return null;
-              return {
-                id: img.id,
-                url: `http://localhost:1337${imageUrl}`,
-                alt: img.Title || "Portrait",
-              };
+              const imageUrl = img?.image?.url;
+if (!imageUrl) return null;
+
+return {
+  id: img.id,
+  url: `${API_URL}${imageUrl}`,
+  alt: img.title || "Portrait",
+};
+
             })
             .filter(Boolean);
 

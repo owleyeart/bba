@@ -6,12 +6,16 @@ import React, { useState, useEffect, useRef } from "react";
 import Slider from "react-slick";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import "./PortraitsCarousel.css";                // ✅ Your custom styling
+
 
 const PortraitCarousel = ({ images = [] }) => {
   const [open, setOpen] = useState(false);
   const [index, setIndex] = useState(0);
   const [currentSlide, setCurrentSlide] = useState(0);
-  const sliderRef = useRef(null); // ✅ Must be here at the top
+  const sliderRef = useRef(null);
 
   // ✅ Keyboard arrow navigation
   useEffect(() => {
@@ -43,33 +47,21 @@ const PortraitCarousel = ({ images = [] }) => {
   };
 
   return (
-    <div style={{ maxWidth: "700px", margin: "0 auto", padding: "1rem" }}>
-      <Slider ref={sliderRef} {...settings}>
-        {images.map((img, i) => (
-          <div key={i} onClick={() => { setOpen(true); setIndex(i); }}>
-            <img
-              src={img.url}
-              alt={img.alt || `Portrait ${i + 1}`}
-              style={{
-                width: "100%",
-                maxHeight: "65vh",
-                objectFit: "contain",
-                borderRadius: "12px",
-                cursor: "pointer",
-              }}
-            />
-          </div>
-        ))}
-      </Slider>
+    <div className="carousel-container">
+<Slider ref={sliderRef} {...settings}>
+  {images.map((img, i) => (
+    <div className="carousel-slide" key={i} onClick={() => { setOpen(true); setIndex(i); }}>
+      <img
+        className="carousel-image"
+        src={img.url}
+        alt={img.alt || `Portrait ${i + 1}`}
+      />
+    </div>
+  ))}
+</Slider>
 
       {/* 🔠 Caption below the dots */}
-      <p style={{
-        textAlign: "center",
-        marginTop: "1rem",
-        fontStyle: "italic",
-        fontSize: "1rem",
-        color: "#444",
-      }}>
+      <p className="carousel-caption">
         {images[currentSlide]?.alt}
       </p>
 

@@ -29,9 +29,7 @@ const navItems = [
   {
     label: 'Gallery',
     color: 'rgba(124, 19, 89, 0.63)',
-    submenu: [
-      { label: 'All Galleries', link: 'https://bobphotography9.zenfoliosite.com' },
-    ],
+    link: 'https://gallery.bobbaker.art',
   },
   {
     label: 'About',
@@ -39,7 +37,7 @@ const navItems = [
     submenu: [
       { label: 'About Bob Baker', link: '/About' },
       { label: 'Newsletter', link: '/Newsletter' },
-      { label: 'Portfolio', link: 'https://www.owleyeart.com/artists/bob-baker' },
+      { label: 'Portfolio', link: 'https://gallery.bobbaker.art' },
     ],
   },
   { label: 'Contact', color: 'rgba(212, 69, 94, 0.72)' },
@@ -52,13 +50,19 @@ function AppWrapper() {
 
   const handleNavItemClick = (item) => {
     if (item.submenu) {
+      // Toggle submenu only — don't close the whole menu
       setExpandedItem(expandedItem === item.label ? null : item.label);
+    } else if (item.link?.startsWith('http')) {
+      window.open(item.link, '_blank', 'noreferrer');
+      setIsMenuOpen(false);
+      setExpandedItem(null);
     } else {
       window.location.href = item.label === 'Home' ? '/' : `/${item.label}`;
       setIsMenuOpen(false);
       setExpandedItem(null);
     }
   };
+  
 
   const handleSubmenuClick = (subitem) => {
     if (subitem.link.startsWith('http')) {

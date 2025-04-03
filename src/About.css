@@ -97,6 +97,8 @@
 
 .syntax-orange {
   color: #d19a66;
+  font-weight: bolder;
+  font-size: 1.4rem;
 }
 
 .syntax-yellow {

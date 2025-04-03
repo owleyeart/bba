@@ -157,7 +157,7 @@ const Landing = ({ isMenuOpen }) => {
       }}
     >
       <img
-        src="/images/Signature%20Logo.svg"
+        src="/images/Signature%20Logo.png"
         alt="Signature Logo"
         className="landing-logo"
         style={{ display: isMenuOpen ? 'none' : 'block' }}

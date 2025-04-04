@@ -5,25 +5,28 @@ import './Newsletter.css';
 
 function Newsletter() {
   useEffect(() => {
-    // Prevent script from being added multiple times
     const existingScript = document.querySelector('script[src="https://assets.mailerlite.com/js/universal.js"]');
+  
+    const initializeMailerLite = () => {
+      if (window.ml) {
+        window.ml('account', '1410242');
+        window.ml('form', 'wpne7G'); // ⬅️ Force form initialization
+      }
+    };
+  
     if (!existingScript) {
       const script = document.createElement('script');
       script.src = 'https://assets.mailerlite.com/js/universal.js';
       script.async = true;
       script.onload = () => {
-        if (window.ml) {
-          window.ml('account', '1410242');
-        }
+        initializeMailerLite();
       };
       document.head.appendChild(script);
     } else {
-      // If script already exists, re-initialize the form
-      if (window.ml) {
-        window.ml('account', '1410242');
-      }
+      initializeMailerLite(); // Already exists, initialize again
     }
   }, []);
+  
 
   return (
     <div className="newsletter-page">

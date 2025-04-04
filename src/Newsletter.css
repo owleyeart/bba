@@ -17,4 +17,10 @@
     margin-bottom: 2rem;
     color: #aaa;
   }
+
+  .ml-embedded {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
   

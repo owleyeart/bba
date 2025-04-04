@@ -1,0 +1,21 @@
+/* src/PageBackgrounds.css */
+
+.projects-bg {
+    background-color: rgba(72, 27, 72, 0.72);
+  }
+  
+  .about-bg {
+    background-color: rgba(178, 11, 105, 0.63);
+  }
+  
+  .contact-bg {
+    background-color: rgba(212, 69, 94, 0.72);
+  }
+  
+  .page-container {
+    background-color: #272727;
+    color: #fff;
+    min-height: 100vh;
+    padding: 2rem;
+  }
+  

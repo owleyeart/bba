@@ -6,6 +6,7 @@
 
 import React, { useState } from 'react';
 import './ObservedLight.css';
+import Header from './Header';
 
 const TOTAL_PAGES = 42;
 
@@ -21,6 +22,8 @@ export default function ObservedLight() {
   };
 
   return (
+    <>
+          <Header />
     <div className="route-container observed-container">
       <h1 className="observed-header">Observed Light</h1>
       <p className="observed-description">
@@ -75,5 +78,6 @@ export default function ObservedLight() {
 
       </div>
     </div>
+    </>
   );
 }

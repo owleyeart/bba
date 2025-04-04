@@ -4,13 +4,15 @@ import { Link } from 'react-router-dom';
 import './Projects.css';
 import HoverTooltip from './HoverTooltip';
 import LineNumbersWithHighlight from './LineNumbersWithHighlight';
+import Header from './Header';
 
 function Projects() {
   return (
     <>
+          <Header />
       <LineNumbersWithHighlight />
 
-      <div className="projects-container" style={{ marginLeft: '5rem', padding: '1rem' }}>
+      <div className="page-container" style={{ marginLeft: '5rem', padding: '1rem' }}>
         {/* 🔁 Return block moved above header */}
         <p>
           <Link to="/" className="home-link">

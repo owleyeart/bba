@@ -11,8 +11,9 @@ import FallingAway from './Projects/Falling-Away.jsx';
 import About from './About.jsx';
 import Contact from './Contact.jsx';
 import ObservedLight from './ObservedLight';
+import Newsletter from './Newsletter.jsx';
 import Footer from './Footer';
-
+import './PageBackgrounds.css';
 import './App.css';
 
 const navItems = [
@@ -129,6 +130,7 @@ function AppWrapper() {
         <Route path="/About" element={<About />} />
         <Route path="/Contact" element={<Contact />} />
         <Route path="/observed-light" element={<ObservedLight />} />
+        <Route path="/Newsletter" element={<Newsletter />} />
       </Routes>
 
       {/* ✅ Conditionally render footer */}

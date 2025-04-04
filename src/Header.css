@@ -1,0 +1,23 @@
+/* src/Header.css */
+
+.global-header {
+  width: 100%;
+  background-color: transparent;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 0 1.5rem 0;
+  z-index: 2;
+}
+
+.header-logo {
+  height: 100px;
+  width: auto;
+  transition: transform 0.3s ease;
+  filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.3));
+}
+
+.header-logo:hover {
+  transform: scale(1.05);
+}

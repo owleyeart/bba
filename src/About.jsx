@@ -3,6 +3,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './About.css';
+import Header from './Header';
 
 import HoverTooltip from './HoverTooltip';
 import LineNumbersWithHighlight from './LineNumbersWithHighlight';
@@ -10,9 +11,10 @@ import LineNumbersWithHighlight from './LineNumbersWithHighlight';
 function About() {
   return (
     <>
+    <Header />
       <LineNumbersWithHighlight />
 
-      <div style={{ marginLeft: '5rem', padding: '1rem' }} className="about-container">
+      <div style={{ marginLeft: '5rem', padding: '1rem' }} className="page-container">
         
         {/* 🏠 Return Home Block - Moved Above About() */}
         <p>

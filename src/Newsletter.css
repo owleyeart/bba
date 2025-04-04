@@ -1,0 +1,20 @@
+.newsletter-page {
+    background-color: #272727;
+    color: #fff;
+    min-height: 100vh;
+    padding: 4rem 2rem;
+    text-align: center;
+  }
+  
+  .newsletter-title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: lightskyblue;
+  }
+  
+  .newsletter-description {
+    font-style: italic;
+    margin-bottom: 2rem;
+    color: #aaa;
+  }
+  

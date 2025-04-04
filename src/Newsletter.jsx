@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import './Newsletter.css'; 
+import Header from './Header';
 
 function Newsletter() {
   useEffect(() => {
@@ -17,13 +18,15 @@ function Newsletter() {
   }, []);
 
   return (
+    <>
+    <Header />
     <div className="newsletter-page">
-      <div className="newsletter-overlay">
+    <div className="newsletter-overlay">
     <div className="newsletter-container">
     <div className="newsletter-header">
-  <h1 className="newsletter-title">Newsletter()</h1>
-  <p className="newsletter-subtitle">Get occasional news, shows, and special releases.</p>
-</div>
+      <h1 className="newsletter-title">Newsletter()</h1>
+      <p className="newsletter-subtitle">Get occasional news, shows, and special releases.</p>
+    </div>
 
     <div className="ml-embedded" data-form="wpne7G"></div>
     <div id="mlb2-24393855" className="ml-form-embedContainer ml-subscribe-form ml-subscribe-form-24393855">
@@ -84,7 +87,7 @@ function Newsletter() {
       </div>
       </div>
       </div>
-
+</>
   );
 }
 

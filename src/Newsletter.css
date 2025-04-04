@@ -1,6 +1,18 @@
 /* Newsletter.css */
 
 /* Overlay and layout */
+
+:root {
+  --header-height: 140px;
+}
+
+.newsletter-page {
+  padding-top: 140px; /* match the header height exactly */
+}
+
+
+
+
 .newsletter-overlay {
   min-height: 100vh;
   background-image: url('/images/observed-light/07.jpg'); /* ✅ Add your image path here */
@@ -24,18 +36,23 @@
   color: #fff;
 }
 
+:root {
+  --header-height: 140px;
+}
+
 .newsletter-header {
   position: absolute;
-  top: 2rem;
-  left: 2rem;
+  top: calc(var(--header-height) + 24px); /* Below header with extra space */
+  left: 24px; /* Padding from the left */
   z-index: 2;
-  max-width: 400px;
+  max-width: 420px;
   text-align: left;
-  padding: 1rem;
+  padding: 1rem 1.25rem;
   background: rgba(72, 27, 72, 0.27); /* Optional glassy backdrop */
   border-radius: 0.75rem;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
 }
+
 
 .newsletter-title {
   font-family: 'Courier New', Courier, monospace;

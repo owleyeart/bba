@@ -289,17 +289,27 @@ position: relative;
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100vh;
+
+  /* Fix viewport issue */
+  height: 100dvh;
+  height: 100vh; /* fallback for older browsers */
+
   display: none;
   flex-direction: column;
   z-index: 999;
   background-color: rgba(0, 0, 0, 0.85);
+
+  /* Allow scroll on smaller screens */
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
+
 .menu-overlay.show {
   display: flex;
 }
 .menu-item {
-  flex: 1;
+  flex: 1 1 auto;
+  max-height: 80px;
   width: 100%;
   display: flex;
   align-items: center;

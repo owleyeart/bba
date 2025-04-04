@@ -14,7 +14,8 @@ function About() {
       <Header />
       <LineNumbersWithHighlight />
 
-      <div style={{ marginLeft: '5rem', padding: '1rem' }} className="page-container">
+      <div className="about-container">
+
         {/* 🏠 Return Home Block */}
         <p>
           <Link to="/" className="home-link">

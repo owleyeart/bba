@@ -11,12 +11,11 @@ import LineNumbersWithHighlight from './LineNumbersWithHighlight';
 function About() {
   return (
     <>
-    <Header />
+      <Header />
       <LineNumbersWithHighlight />
 
       <div style={{ marginLeft: '5rem', padding: '1rem' }} className="page-container">
-        
-        {/* 🏠 Return Home Block - Moved Above About() */}
+        {/* 🏠 Return Home Block */}
         <p>
           <Link to="/" className="home-link">
             <HoverTooltip
@@ -47,7 +46,33 @@ function About() {
           />
         </h1>
 
+        {/* ✍️ Modular Bio Blocks */}
+        <p className="console-log">// One-liner</p>
+        <p className="syntax-quote">"Bob Baker is an experimental photographer exploring light as language to evoke story, mood, and meditation."</p>
+        <br />
 
+        <p className="console-log">// Short Bio</p>
+        <p>
+          Based in Overland Park, Kansas, Bob Baker is an experimental photographer who bends and shapes light to tell stories and spark daydreams.
+          Inspired by the greats of street and abstract art alike, his work serves as both meditation and message.
+        </p>
+        <br />
+
+        <p className="console-log">// Full Bio</p>
+        <p>
+          Bob Baker is an experimental photographer based in Overland Park, Kansas, seeking ways to bend and shape light to form stories and evoke daydreams.
+          His work draws from a wide spectrum of influences—Henri Cartier-Bresson's decisive moments, Daido Moriyama’s gritty candor, Vivian Maier’s quiet brilliance,
+          Rothko’s emotional color fields, Matisse and Van Gogh’s expressive lines, and the immersive soundscapes of Tool, Glass Beams, and Carbon Based Lifeforms.
+        </p>
+        <p>
+          Bob approaches photography as both a meditation and a therapeutic practice—a means of observing the world with intention and offering back moments of insight,
+          mystery, and connection. He is deeply interested in physics, philosophy, art history, and spirituality, and weaves these threads through his images and process.
+          Whether capturing fleeting human gestures or abstract textures of light, Bob’s work invites viewers into a layered dialogue—between self and subject,
+          moment and memory, observer and the observed.
+        </p>
+        <br />
+
+        {/* 🕰️ Console Quote */}
         <p className="console-effect">
           <span className="syntax-purple">console</span>
           <span className="syntax-yellow">.</span>
@@ -60,6 +85,8 @@ function About() {
         <p className="console-log">
           ///Just a time traveler remembering their way back home.
         </p>
+
+        {/* 📌 Other Info */}
         <br /><br /><br />
         <p>
           <span className="syntax-orange">Professional Organizations</span><br />
@@ -83,17 +110,20 @@ function About() {
           <br />Bob currently has work on display at Images Art Gallery in downtown Overland Park, Kansas.
         </p>
 
+        {/* 📦 Closing */}
         <p>
           <span className="syntax-tag">{'</div>'}</span><br />
           <span className="syntax-purple">{');'}</span><br />
           <span className="syntax-yellow">{'}'}</span>
         </p>
 
-        <p style={{ marginTop: '40vh', fontStyle: 'italic', color: '#ffffff' }}></p>
-
-        <span className="error-easter-egg">
+        <div className='error-easter-egg'>
+        <span>
           <pre>
-{`> run timeline.sh
+{`Windoors TurtleShell
+Copyright (C) Bob Baker. All right reserved.
+
+TS D:\\OneDrive - BobBakerArt\\frontend> run timeline.sh
 
 [ ██████████████████████████████ ] 99%
 
@@ -104,6 +134,7 @@ Trace: reality/index.js → dimension.jsx → soul.log
 🕳️ Recursive meaning loop detected.`}
           </pre>
         </span>
+      </div>
       </div>
     </>
   );

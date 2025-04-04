@@ -1,67 +1,127 @@
 /* Newsletter.css */
 
-.newsletter-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 4rem 1rem;
+/* Overlay and layout */
+.newsletter-overlay {
   min-height: 100vh;
-  background-color: #272727;
-  color: white;
+  background-image: url('/images/observed-light/07.jpg'); /* ✅ Add your image path here */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
 }
 
-.newsletter-container h1 {
-  font-family: 'Fira Code', monospace;
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
+.newsletter-card {
+  background: rgba(0, 0, 0, 0.18);
+  padding: 3rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+  max-width: 600px;
+  width: 100%;
   text-align: center;
-  color: violet;
+  color: #fff;
 }
 
-.newsletter-container p {
-  font-size: 1.1rem;
-  text-align: center;
-  margin-bottom: 2rem;
-  color: #ccc;
+.newsletter-header {
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  z-index: 2;
+  max-width: 400px;
+  text-align: left;
+  padding: 1rem;
+  background: rgba(72, 27, 72, 0.27); /* Optional glassy backdrop */
+  border-radius: 0.75rem;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
 }
 
+.newsletter-title {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 2rem;
+  color: rgb(255, 255, 255);
+  margin-bottom: 0.5rem;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7); /* 🔮 Shadow */
+}
+
+.newsletter-subtitle {
+  font-size: 1rem;
+  color: #ffffff;
+  margin: 0;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6); /* 🔮 Shadow */
+}
+
+/* Form container from MailerLite */
 .ml-form-embedContainer {
-  width: 100%;
-  max-width: 500px;
-  background-color: #1e1e1e !important;
-  padding: 2rem !important;
-  border-radius: 8px;
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+  display: flex;
+  justify-content: center;
 }
 
-.ml-form-embedContainer input,
-.ml-form-embedContainer button {
+.ml-form-embedWrapper {
+  background: rgba(72, 27, 72, 0.18) !important;
+  padding: 2.5rem 2rem !important;
+  border-radius: 1rem !important;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Headings and Paragraphs */
+.ml-form-embedWrapper h4,
+.ml-form-embedWrapper p {
+  color: #eee !important;
   font-family: 'Poppins', sans-serif;
-}
-
-.ml-form-embedContainer input {
-  background-color: #fff !important;
-  color: #000 !important;
-  border: none !important;
-  padding: 0.75rem !important;
-  font-size: 1rem !important;
-  border-radius: 4px !important;
   margin-bottom: 1rem;
 }
 
-.ml-form-embedContainer button {
-  background-color: #6e2c6b !important;
-  color: #fff !important;
-  padding: 0.75rem !important;
+/* Input fields */
+.ml-form-fieldRow input,
+.ml-form-fieldRow textarea {
+  background-color: #ffffff !important;
+  color: #111 !important;
+  border-radius: 6px !important;
+  padding: 0.75rem 1rem !important;
   font-size: 1rem !important;
-  border: none !important;
-  border-radius: 4px !important;
-  cursor: pointer;
-  width: 100%;
-  transition: background-color 0.3s;
+  font-family: 'Poppins', sans-serif;
+  border: none;
 }
 
-.ml-form-embedContainer button:hover {
+/* Checkbox row */
+.ml-form-checkboxRow {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem;
+  color: #ddd !important;
+  margin: 1rem 0 !important;
+}
+
+/* Recaptcha */
+.ml-form-recaptcha {
+  margin-bottom: 1rem;
+}
+
+/* Subscribe button */
+.ml-form-embedSubmit button.primary {
+  background-color: #8a3e86 !important;
+  color: #fff !important;
+  border: none !important;
+  font-size: 1rem;
+  padding: 0.75rem !important;
+  border-radius: 6px !important;
+  width: 100% !important;
+  transition: background-color 0.3s ease;
+}
+
+.ml-form-embedSubmit button.primary:hover {
   background-color: #ab579d !important;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .newsletter-card {
+    padding: 2rem;
+  }
+
+  .ml-form-embedWrapper {
+    padding: 2rem 1rem !important;
+  }
 }

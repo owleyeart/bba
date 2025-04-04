@@ -17,9 +17,14 @@ function Newsletter() {
   }, []);
 
   return (
+    <div className="newsletter-page">
+      <div className="newsletter-overlay">
     <div className="newsletter-container">
-          <h1>Newsletter()</h1>
-    <p>Get occasional news, shows, and special releases.</p>
+    <div className="newsletter-header">
+  <h1 className="newsletter-title">Newsletter()</h1>
+  <p className="newsletter-subtitle">Get occasional news, shows, and special releases.</p>
+</div>
+
     <div className="ml-embedded" data-form="wpne7G"></div>
     <div id="mlb2-24393855" className="ml-form-embedContainer ml-subscribe-form ml-subscribe-form-24393855">
       <div className="ml-form-align-center">
@@ -75,8 +80,11 @@ function Newsletter() {
           </div>
         </div>
       </div>
-    </div>
-    </div>
+      </div>
+      </div>
+      </div>
+      </div>
+
   );
 }
 

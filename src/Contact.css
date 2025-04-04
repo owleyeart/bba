@@ -10,11 +10,15 @@ body {
   font-family: 'Poppins', sans-serif; /* apply the new font to the entire page */
 }
 
-/* 3) Container for the Contact page */
-.Contact-container {
-  /* Enough padding so it isn’t tight to the side */
-  padding: 2rem;
+/*Container for the Contact page */
+:root {
+  --header-height: 140px;
 }
+
+.Contact-container {
+  padding: calc(var(--header-height) + 2rem) 2rem 2rem 2rem;
+}
+
 
 /* Heading spacing */
 .Contact-container h1 {

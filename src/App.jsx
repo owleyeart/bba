@@ -9,7 +9,6 @@ import Landing from './Landing';
 import Projects from './Projects.jsx';
 import FallingAway from './Projects/Falling-Away.jsx';
 import About from './About.jsx';
-import Contact from './Contact.jsx';
 import ObservedLight from './ObservedLight';
 import Newsletter from './Newsletter.jsx';
 import Footer from './Footer';
@@ -41,7 +40,7 @@ const navItems = [
       { label: 'Portfolio', link: 'https://gallery.bobbaker.art' },
     ],
   },
-  { label: 'Contact', color: 'rgba(212, 69, 94, 0.72)' },
+  { label: 'Contact', link: 'https://gallery.bobbaker.art/contact-me', color: 'rgba(212, 69, 94, 0.72)' },
 ];
 
 function AppWrapper() {
@@ -128,7 +127,6 @@ function AppWrapper() {
         <Route path="/Projects" element={<Projects />} />
         <Route path="/Projects/falling-away" element={<FallingAway />} />
         <Route path="/About" element={<About />} />
-        <Route path="/Contact" element={<Contact />} />
         <Route path="/observed-light" element={<ObservedLight />} />
         <Route path="/Newsletter" element={<Newsletter />} />
       </Routes>

@@ -2,9 +2,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Contact.css'; // We'll style it similarly to Projects
+import Header from './Header';
 
 function Contact() {
   return (
+    <>      <Header />
     <div className="Contact-container">
       <h1>Contact</h1>
       <ul>
@@ -32,6 +34,7 @@ function Contact() {
         </a>
       </p>
     </div>
+    </>
   );
 }
 

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import './Newsletter.css'; // Optional: style overrides if needed
+import './Newsletter.css'; 
 
 function Newsletter() {
   useEffect(() => {
@@ -17,6 +17,10 @@ function Newsletter() {
   }, []);
 
   return (
+    <div className="newsletter-container">
+          <h1>Newsletter()</h1>
+    <p>Get occasional news, shows, and special releases.</p>
+    <div className="ml-embedded" data-form="wpne7G"></div>
     <div id="mlb2-24393855" className="ml-form-embedContainer ml-subscribe-form ml-subscribe-form-24393855">
       <div className="ml-form-align-center">
         <div className="ml-form-embedWrapper embedForm">
@@ -71,6 +75,7 @@ function Newsletter() {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 }

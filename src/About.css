@@ -9,7 +9,7 @@
   color: #d4d4d4;
   font-family: Consolas, monospace;
   padding: calc(var(--header-height) + 2rem) 2rem 2rem 2rem;
-  min-height: 200vh;
+  min-height: 300vh;
   margin-left: 5rem;
 }
 

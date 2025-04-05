@@ -1,8 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-console.log("✅ Landing component is rendering");
-
 const images = [
   'text-block',
   '/images/20250304_303_OWL4767.jpg',
@@ -11,7 +9,6 @@ const images = [
 ];
 
 const Landing = ({ isMenuOpen }) => {
-  console.log('✅ Landing is rendering');
 
   const containerRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -227,7 +224,7 @@ const Landing = ({ isMenuOpen }) => {
               className="text-slide link-slide"
             >
               <div>ORDER</div>
-              <div>PRINTS</div>
+              <div>A COPY</div>
               <div>ONLINE</div>
             </Link>
           )}

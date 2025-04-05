@@ -12,7 +12,9 @@ function Projects() {
           <Header />
       <LineNumbersWithHighlight />
 
-      <div className="page-container" style={{ marginLeft: '5rem', padding: '1rem' }}>
+      <div className="projects-container" style={{ marginLeft: '5rem' }}>
+
+
         {/* 🔁 Return block moved above header */}
         <p>
           <Link to="/" className="home-link">

@@ -42,8 +42,10 @@ html, body {
   font-family: 'Poppins', sans-serif;
   width: 100%;
   height: 100%;
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto; /* Don’t use hidden here */
 }
+
 
 /* Landing styles */
 .landing-container {

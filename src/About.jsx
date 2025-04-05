@@ -8,6 +8,7 @@ import Header from './Header';
 import HoverTooltip from './HoverTooltip';
 import LineNumbersWithHighlight from './LineNumbersWithHighlight';
 
+
 function About() {
   return (
     <>
@@ -17,14 +18,14 @@ function About() {
       <div className="about-container">
 
         {/* 🏠 Return Home Block */}
-        <p>
-          <Link to="/" className="home-link">
+        <span className="inline-block">
+        <Link to="/" className="home-link">
             <HoverTooltip
               text={<span>{'return ('}</span>}
               tooltipText="(Go Back Home) Return:(Home Page);"
             />
           </Link>
-        </p>
+        </span>
 
         <ul>
           <li>

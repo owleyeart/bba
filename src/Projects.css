@@ -2,13 +2,18 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&display=swap');
 
+:root {
+  --header-height: 140px;
+}
+
 .projects-container {
   background-color: #2d2d2d;
   color: #d4d4d4;
   font-family: 'Fira Code', Consolas, monospace;
-  padding: 2rem;
+  padding: calc(var(--header-height) + 2rem) 2rem 2rem 2rem;
   min-height: 100vh;
 }
+
 
 .function-title {
   color: #569cd6;

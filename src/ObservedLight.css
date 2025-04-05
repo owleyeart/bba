@@ -1,9 +1,11 @@
 .observed-container {
-    text-align: center;
-    padding: 2rem;
-    color: white;
-    font-family: 'Fino Sans', sans-serif;
-  }
+  text-align: center;
+  padding: 2rem;
+  margin-top: 6rem; /* Adjust this to space it further below the header */
+  color: white;
+  font-family: 'Fino Sans', sans-serif;
+}
+
   
   .observed-header {
     font-size: 2.5rem;
@@ -17,12 +19,20 @@
   }
   
   .slider {
-    position: relative;
     height: 50vh;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
+  }
+  
+  .slider-inner {
+    position: relative;
+    height: 100%;
+    width: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   
   .slider-image {
@@ -39,25 +49,27 @@
     top: 50%;
     transform: translateY(-50%);
     font-size: 2rem;
-    background: none;
+    background: rgba(0, 0, 0, 0.3);
     border: none;
     color: white;
-    padding: 0 1rem;
+    padding: 0.5rem 1rem;
     cursor: pointer;
-    z-index: 10;
-    transition: transform 0.2s;
+    z-index: 2;
+    transition: transform 0.2s, background 0.3s;
+    border-radius: 50%;
   }
   
   .arrow:hover {
     transform: translateY(-50%) scale(1.2);
+    background: rgba(0, 0, 0, 0.5);
   }
   
   .arrow.left {
-    left: 0;
+    left: 1rem;
   }
   
   .arrow.right {
-    right: 0;
+    right: 1rem;
   }
   
   .page-number {

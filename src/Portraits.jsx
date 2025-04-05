@@ -7,9 +7,6 @@ import PortraitCarousel from "./components/PortraitCarousel";
 import CallToAction from "./components/CallToAction";
 import "./About.css"; // ✅ Using shared styles
 
-console.log("⚠️ Portraits component is rendering");
-
-
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:1337";
 
 

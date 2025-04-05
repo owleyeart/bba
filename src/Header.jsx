@@ -1,14 +1,17 @@
 // src/Header.jsx
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './Header.css';
 
 const Header = () => (
   <header className="global-header">
-    <img
-      src="/images/SignatureLogo.png"
-      alt="Bob Baker Logo"
-      className="header-logo"
-    />
+    <Link to="/">
+      <img
+        src="/images/SignatureLogo.png"
+        alt="Bob Baker Logo"
+        className="header-logo"
+      />
+    </Link>
   </header>
 );
 

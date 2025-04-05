@@ -50,8 +50,9 @@ html, body {
 /* Landing styles */
 .landing-container {
   width: 100vw;
-  height: 100dvh;
-  overflow: hidden;
+  height: 100vh;         /* fallback for older browsers */
+  height: 100svh;        /* small viewport height for mobile */
+  overflow: visible;     /* allow bottom controls to show */
   position: relative;
   background-size: auto 100%;
   background-repeat: no-repeat;

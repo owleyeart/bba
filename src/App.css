@@ -384,3 +384,12 @@ position: relative;
   width: 1.5rem;
   text-align: center;
 }
+
+@media (max-width: 768px) {
+  .landing-container {
+    height: auto;
+    min-height: 100svh;
+    overflow: visible;
+    padding-bottom: 5rem; /* just to be safe */
+  }
+}

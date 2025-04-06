@@ -41,18 +41,15 @@ html, body {
   padding: 0;
   font-family: 'Poppins', sans-serif;
   width: 100%;
-  height: 100dvh;
-  overflow-x: hidden;
-  overflow-y: auto; /* Don’t use hidden here */
+  height: 100%;
+  overflow: auto;
 }
-
 
 /* Landing styles */
 .landing-container {
   width: 100vw;
-  height: 100vh;         /* fallback for older browsers */
-  height: 100svh;        /* small viewport height for mobile */
-  overflow: visible;     /* allow bottom controls to show */
+  height: 100vh;
+  overflow: hidden;
   position: relative;
   background-size: auto 100%;
   background-repeat: no-repeat;
@@ -234,9 +231,8 @@ position: relative;
 /* Play / Pause toggle */
 .play-pause-toggle {
   position: absolute;
-  bottom: 0.75rem;
-  left: 50%;
-  transform: translateX(-50%);
+  top: 1.5rem;
+  left: 1.5rem;
   background: rgba(0, 0, 0, 0.5);
   color: white;
   border: 1px solid white;
@@ -245,7 +241,7 @@ position: relative;
   font-size: 1rem;
   font-family: 'Fino Sans', sans-serif;
   cursor: pointer;
-  z-index: 10;
+  z-index: 1000;
   transition: background 0.3s ease;
 }
 
@@ -255,15 +251,14 @@ position: relative;
 
 .progress-bar-wrapper {
   position: absolute;
-  bottom: 3.25rem;
-  left: 50%;
-  transform: translateX(-50%);
+  top: 4rem; /* Just below the pause button */
+  left: 1.5rem;
   width: 90px;
   height: 4px;
   background: rgba(255, 255, 255, 0.15);
   border-radius: 2px;
   overflow: hidden;
-  z-index: 10;
+  z-index: 1000;
 }
 
 .progress-bar {
@@ -271,6 +266,7 @@ position: relative;
   background-color: rgba(212, 69, 94, 0.81);
   transition: width 0.2s linear;
 }
+
 
 
 /* Hamburger Menu & Overlay */
@@ -383,13 +379,4 @@ position: relative;
 .submenu-icon {
   width: 1.5rem;
   text-align: center;
-}
-
-@media (max-width: 768px) {
-  .landing-container {
-    height: auto;
-    min-height: 100svh;
-    overflow: visible;
-    padding-bottom: 5rem; /* just to be safe */
-  }
 }

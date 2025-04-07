@@ -607,14 +607,18 @@ html, body {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: white;
+  background-color: white !important;
   opacity: 0.1;
   animation: floatDot 24s ease-in-out infinite;
   transition: transform 0.3s ease, filter 0.3s ease, opacity 0.3s ease, background-color 0.3s ease;
   filter: drop-shadow(0 0 2px rgba(255, 255, 255, 1)) !important;
+  -webkit-filter: none !important;
+  mix-blend-mode: normal !important;
+  isolation: isolate !important;
   pointer-events: auto;
   cursor: pointer;
 }
+
 
 .floating-dots .dot:hover {
   transform: scale(1.6);
@@ -667,12 +671,12 @@ html, body {
 }
 
 /* Custom placement and color per dot */
-.dot-1  { top: 9%; left: 15%; animation-delay: 0s; background: rgba(255, 255, 255, 0.6) !important; }
-.dot-2  { top: 39%; left: 70%; animation-delay: 2s; background: rgba(255, 255, 255, 0.6) !important; }
-.dot-3  { top: 57%; left: 25%; animation-delay: 4s; background: rgba(255, 255, 255, 0.6) !important; }
-.dot-4  { top: 70%; left: 80%; animation-delay: 6s; background: rgba(255, 255, 255, 0.6) !important; }
-.dot-5  { top: 27%; left: 45%; animation-delay: 1.2s; background: rgba(255, 255, 255, 0.6) !important; }
-.dot-6  { top: 60%; left: 10%; animation-delay: 3.5s; background: rgba(255, 255, 255, 0.6) !important; }
-.dot-7  { top: 40%; left: 50%; animation-delay: 5.1s; background: rgba(255, 255, 255, 0.6) !important; }
-.dot-8  { top: 80%; left: 35%; animation-delay: 7.3s; background: rgba(255, 255, 255, 0.6) !important; }
-.dot-9  { top: 25%; left: 85%; animation-delay: 0.5s; background: rgba(255, 255, 255, 0.6) !important; }
+.dot-1  { top: 9%; left: 15%; animation-delay: 0s; background-color: rgba(255, 255, 255, 0.6) !important; }
+.dot-2  { top: 39%; left: 70%; animation-delay: 2s; background-color: rgba(255, 255, 255, 0.6) !important; }
+.dot-3  { top: 57%; left: 25%; animation-delay: 4s; background-color: rgba(255, 255, 255, 0.6) !important; }
+.dot-4  { top: 70%; left: 80%; animation-delay: 6s; background-color: rgba(255, 255, 255, 0.6) !important; }
+.dot-5  { top: 27%; left: 45%; animation-delay: 1.2s; background-color: rgba(255, 255, 255, 0.6) !important; }
+.dot-6  { top: 60%; left: 10%; animation-delay: 3.5s; background-color: rgba(255, 255, 255, 0.6) !important; }
+.dot-7  { top: 40%; left: 50%; animation-delay: 5.1s; background-color: rgba(255, 255, 255, 0.6) !important; }
+.dot-8  { top: 80%; left: 35%; animation-delay: 7.3s; background-color: rgba(255, 255, 255, 0.6) !important; }
+.dot-9  { top: 25%; left: 85%; animation-delay: 0.5s; background-color: rgba(255, 255, 255, 0.6) !important; }

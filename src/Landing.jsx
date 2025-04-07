@@ -2,14 +2,12 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 const images = [
-  'text-block',
   '/images/20250304_303_OWL4767.jpg',
   '/images/20250120_303_OWL4061.jpg',
   '/images/20250304_303_OWL4775.jpg',
 ];
 
 const Landing = ({ isMenuOpen }) => {
-
   const containerRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [bgPosX, setBgPosX] = useState(50);
@@ -19,8 +17,6 @@ const Landing = ({ isMenuOpen }) => {
   const [initialPosX, setInitialPosX] = useState(50);
   const [dragDirection, setDragDirection] = useState('none');
   const [fadeClass, setFadeClass] = useState('');
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [progress, setProgress] = useState(0);
   const DRAG_DIRECTION_THRESHOLD = 20;
   const VERTICAL_SWIPE_THRESHOLD = 50;
   const [controlsVisible, setControlsVisible] = useState(false);
@@ -38,23 +34,6 @@ const Landing = ({ isMenuOpen }) => {
     hideTimerRef.current = setTimeout(() => setControlsVisible(false), 900);
     return () => clearTimeout(hideTimerRef.current);
   }, []);
-
-  useEffect(() => {
-    let interval;
-    if (isPlaying) {
-      let start = Date.now();
-      interval = setInterval(() => {
-        const elapsed = Date.now() - start;
-        const percent = Math.min((elapsed / 9000) * 100, 100);
-        setProgress(percent);
-        if (percent === 100) {
-          triggerFade(() => setCurrentIndex((prev) => (prev + 1) % images.length));
-          start = Date.now();
-        }
-      }, 100);
-    }
-    return () => clearInterval(interval);
-  }, [isPlaying]);
 
   const triggerFade = (updateFn) => {
     setFadeClass('fade-out');
@@ -139,10 +118,7 @@ const Landing = ({ isMenuOpen }) => {
       onPointerUp={handlePointerUpOrLeave}
       onPointerLeave={handlePointerUpOrLeave}
       style={{
-        backgroundImage:
-          images[currentIndex] === 'text-block'
-            ? 'url(/images/20240907_303_OWL0880.jpg)'
-            : `url(${images[currentIndex]})`,
+        backgroundImage: `url(${images[currentIndex]})`,
         backgroundPosition: `${bgPosX}% center`,
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
@@ -153,6 +129,12 @@ const Landing = ({ isMenuOpen }) => {
         cursor: 'default',
       }}
     >
+      <div className="floating-dots">
+        {[...Array(12)].map((_, i) => (
+          <div key={i} className="dot" style={{ animationDelay: `${i * 0.5}s` }}></div>
+        ))}
+      </div>
+
       <img
         src="/images/SignatureLogo.png"
         alt="Signature Logo"
@@ -176,60 +158,77 @@ const Landing = ({ isMenuOpen }) => {
         </div>
       </div>
 
-      <button
-        className="play-pause-toggle"
-        onClick={() => setIsPlaying((prev) => !prev)}
-        aria-label="Toggle auto-play"
-      >
-        {isPlaying ? '⏸ Pause' : '▶ Play'}
-      </button>
+      <div className="landing-text-block">
+        {currentIndex === 0 && (
+          <Link to="/observed-light" className="text-slide link-slide">
+            <div><h3>"Observed Light"</h3></div>
+            <div>an Exhibition</div>
+          </Link>
+        )}
 
-      <div className="progress-bar-wrapper">
-        <div className="progress-bar" style={{ width: `${progress}%` }}></div>
+        {currentIndex === 1 && (
+          <a
+            href="https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=c3IyaG..."
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-slide link-slide"
+          >
+            <h3>Images Art Gallery</h3>
+            <p>Apr 16—May 10</p>
+            <p style={{ fontSize: '1rem', marginTop: '0.25rem' }}>
+              Featured Opening<br /> Apr 18 5p–8p<br />OP/KS
+            </p>
+          </a>
+        )}
+
+        {currentIndex === 2 && (
+          <Link
+            to="https://mixam.com/print-on-demand/67e8be655221ef3072d7944e"
+            className="text-slide link-slide"
+          >
+            <h3>"Observed Light"</h3>
+            <p>—the book—</p>      
+            <p>Order your copy online</p>
+          </Link>
+        )}
       </div>
 
-      {images[currentIndex] === 'text-block' ? (
-        <div className="text-block">
-          <h1>Bob Baker</h1>
-          <p>Photographer | Visual Artist</p>
-        </div>
+      <div className="quote-block">
+        <p>
+          {currentIndex < 2
+            ? 'It is said that light behaves differently when it knows it’s being observed...'
+            : 'So I set out to discover the answer myself.'}
+        </p>
+      </div>
+
+      {currentIndex < 2 ? (
+        <svg className="sine-wave" viewBox="0 0 1440 100" preserveAspectRatio="none">
+          <path
+            d="M0,50 C240,0 480,100 720,50 C960,0 1200,100 1440,50"
+            fill="none"
+            stroke="white"
+            strokeWidth="2"
+          />
+        </svg>
       ) : (
-        <div className="landing-text-block">
-          {currentIndex === 1 && (
-            <Link to="/observed-light" className="text-slide link-slide">
-              <h2>"Observed Light"</h2>
-              <p>an Exhibition</p>
-            </Link>
-          )}
-          {currentIndex === 2 && (
-            <a
-              href="https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=c3IyaG..."
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-slide link-slide"
-            >
-              <div>Images</div>
-              <div>Art</div>
-              <div>Gallery</div>
-              <br />
-              <div>Apr 16—May 10</div>
-              <div style={{ fontSize: '1rem', marginTop: '0.25rem' }}>
-                Featured Opening<br /> Apr 18 5p—8p<br />OP/KS
-              </div>
-            </a>
-          )}
-          {currentIndex === 3 && (
-            <Link
-              to="https://mixam.com/print-on-demand/67e8be655221ef3072d7944e"
-              className="text-slide link-slide"
-            >
-              <div>ORDER</div>
-              <div>A COPY</div>
-              <div>ONLINE</div>
-            </Link>
-          )}
-        </div>
+        <svg className="flat-line" viewBox="0 0 1440 100" preserveAspectRatio="none">
+          <line
+            x1="0"
+            y1="50"
+            x2="1440"
+            y2="50"
+            stroke="white"
+            strokeWidth="2"
+          />
+        </svg>
       )}
+
+<div className="floating-dots">
+  {Array.from({ length: 18 }).map((_, i) => (
+    <div key={i} className={`dot dot-${i + 1}`} />
+  ))}
+</div>
+
     </div>
   );
 };

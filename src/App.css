@@ -188,7 +188,7 @@ position: relative;
 
 .pan-controls {
   position: absolute;
-  bottom: 2.5rem; /* shifted up to make room for play/pause */
+  bottom: 1vh; /* 10% of viewport height */
   left: 50%;
   transform: translateX(-50%);
   display: flex;

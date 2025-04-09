@@ -22,6 +22,12 @@ export default function ObservedLight() {
   const [animatePrint, setAnimatePrint] = useState(false);
 
   useEffect(() => {
+
+    window.scrollTo(0, 0);
+    setTimeout(() => {
+      window.dispatchEvent(new Event('resize'));
+    }, 100);
+    
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -79,6 +85,7 @@ export default function ObservedLight() {
         <a
           href="https://mixam.com/print-on-demand/67e8be655221ef3072d7944e"
           target="_blank"
+          id="exhibiting"
           rel="noopener noreferrer"
           className="buy-button"
         >
@@ -90,7 +97,7 @@ export default function ObservedLight() {
           ref={exhibitingRef}
         >
           <div className="book-info">
-            <h2 id="exhibiting">Exhibiting</h2>
+            <h2>Exhibiting</h2>
             <p><strong>Images Art Gallery</strong><br />
               April 16 through May 10</p>
             <p><strong>Opening Reception:</strong><br /> Friday, April 18, 5–8 p.m.<br />

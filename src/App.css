@@ -1,51 +1,85 @@
-/* Fino Sans + slick carousel styles */
+/* ---------------------------------------------------------
+   📁 Bob Baker Art | Landing Page Styles
+   Fonts: Fino Sans (Adobe), Minion Pro (Adobe)
+   Author: Scribe | April 2025
+---------------------------------------------------------- */
+
+/* ---------------------------------------------------------
+   ✨ Imports: Carousel + Fonts
+---------------------------------------------------------- */
 @import "slick-carousel/slick/slick.css";
 @import "slick-carousel/slick/slick-theme.css";
-@import url('https://fonts.googleapis.com/css2?family=Fino+Sans&display=swap');
 
-/* App wrapper and reset */
+/* ---------------------------------------------------------
+   🌐 Base Styles
+---------------------------------------------------------- */
+html, body {
+  background-color: #272727;
+  color: white;
+  margin: 0;
+  padding: 0;
+  font-family: "minion-pro", serif;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+/* ---------------------------------------------------------
+   📷 Logo Positioning and Sizing
+---------------------------------------------------------- */
+.landing-logo {
+  position: absolute;
+  top: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  max-width: 25vw;
+  height: auto;
+  z-index: 10;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ---------------------------------------------------------
+   🔄 Reset + Wrapper
+---------------------------------------------------------- */
 .app-wrapper {
   width: 100vw;
   height: 100vh;
+  min-height: 100vh;
   overflow: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  min-height: 100vh;
   background-color: transparent;
 }
 .app-wrapper::-webkit-scrollbar {
   display: none;
 }
 
+/* ---------------------------------------------------------
+   ✏️ Form Elements
+---------------------------------------------------------- */
 button, input, textarea, select {
   background-color: #272727;
   color: #fff;
   border: 1px solid #444;
 }
 
+/* ---------------------------------------------------------
+   🔗 Links
+---------------------------------------------------------- */
 a {
   color: #a8d0ff;
   text-decoration: none;
 }
-
 a:hover {
   color: #fff;
   text-decoration: underline;
 }
 
-
-html, body {
-  background-color: #272727; /* Your dark grey */
-  color: white;
-  margin: 0;
-  padding: 0;
-  font-family: 'Poppins', sans-serif;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-}
-
-/* Landing styles */
+/* ---------------------------------------------------------
+   🪞 Landing Page Container
+---------------------------------------------------------- */
 .landing-container {
   width: 100vw;
   height: 100vh;
@@ -56,61 +90,48 @@ html, body {
   background-position: 50% center;
   touch-action: none;
   user-select: none;
-  -webkit-overflow-scrolling: touch;
   transition: background-image 0.6s ease-in-out;
-  touch-action: none;
-  user-select: none;
-  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5); /* ✅ readability */
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
 }
 
 .landing-container::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.19); /* 100% - 81% = 19% darkness */
+  background: rgba(0, 0, 0, 0.19);
   pointer-events: none;
   z-index: 1;
   opacity: 0;
   transition: opacity 0.3s ease;
-  touch-action: none;
-  user-select: none;
 }
 
 .landing-container.first-block::before {
   opacity: 1;
-  touch-action: none;
-  user-select: none;
 }
 
-
-
-/* Fade transition classes */
-.fade-out {
-  opacity: 0;
-  transition: opacity 0.3s ease-in-out;
-}
-.fade-in {
-  opacity: 1;
-  transition: opacity 1s ease-in-out;
-}
-
+/* ---------------------------------------------------------
+   🌫 Fade Transitions
+---------------------------------------------------------- */
+.fade-out,
 .landing-content.fade-out {
   opacity: 0;
   transition: opacity 0.3s ease-in-out;
 }
-
+.fade-in,
 .landing-content.fade-in {
   opacity: 1;
   transition: opacity 1s ease-in-out;
 }
 
-
-/* Text block */
+/* ---------------------------------------------------------
+   📝 Text Blocks
+---------------------------------------------------------- */
 .text-block,
 .landing-text-block {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 300;
+  font-family: "fino-sans", sans-serif;
   font-size: 1rem;
+  font-weight: 400;
+  font-style: normal;
   line-height: 1.4;
   letter-spacing: 0.3px;
   text-align: center;
@@ -131,96 +152,39 @@ html, body {
   pointer-events: none;
 }
 
-.text-block,
-.landing-text-block {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 300;
-  font-size: 1rem;
-  line-height: 1.4;
-  letter-spacing: 0.3px;
-  text-align: center;
-  padding: 1.5rem 2rem;
-  background: rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(8px) saturate(180%);
-  -webkit-backdrop-filter: blur(8px) saturate(180%);
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  max-width: 90vw;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-  color: white;
-  z-index: 5;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-}
-
+/* Override text styles inside the block */
 .text-block h1,
 .landing-text-block h1,
 .landing-text-block h2,
 .landing-text-block h3 {
+  font-family: "fino-sans", sans-serif;
   margin: 0;
   font-size: 2rem;
-  line-height: 1.2;
   font-weight: 400;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 1.0);
+  line-height: 1.2;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 1);
 }
 
 .text-block p,
 .landing-text-block p,
 .landing-text-block div {
+  font-family: "minion-pro", serif;
   font-size: 1rem;
-  font-weight: 300;
+  font-style: normal;
+  font-weight: 400;
   margin: 0.5rem 0;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
+/* Hero slide links */
 .link-slide {
-  font-family: 'Poppins', sans-serif;
+  font-family: "fino-sans", sans-serif;
   font-size: 1.2rem;
   line-height: 1.4;
   font-weight: 400;
-}
-
-
-
-
-
-.text-block h1,
-.text-block p {
-  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.85); /* ✅ readability */
-}
-
-/* Landing text overlay */
-.landing-text-block {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 5;
-  pointer-events: none;
-  animation: fadeIn 1.2s ease-in-out both;
-
-  /* ✅ Glass styling */
-  background: rgba(72, 27, 72, 0.25);
-  backdrop-filter: blur(8px) saturate(120%);
-  -webkit-backdrop-filter: blur(8px) saturate(120%);
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  padding: 2rem;
-  max-width: 90vw;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-}
-
-
-/* Link slide */
-.link-slide {
   pointer-events: auto;
   color: white !important;
   text-decoration: none;
-  font-size: 2rem;
-  line-height: 2.2rem;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.85);
   transition: text-shadow 0.3s ease, transform 0.3s ease, text-decoration 0.3s ease;
   display: inline-block;
@@ -231,7 +195,17 @@ html, body {
   text-decoration: underline;
 }
 
-/* FadeIn animation */
+/* ---------------------------------------------------------
+   🖼 Landing Image + Overlay Effects
+---------------------------------------------------------- */
+.landing-text-block {
+  animation: fadeIn 1.2s ease-in-out both;
+  background: rgba(72, 27, 72, 0.25);
+  backdrop-filter: blur(8px) saturate(120%);
+  -webkit-backdrop-filter: blur(8px) saturate(120%);
+}
+
+/* Fade-in animation */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -243,19 +217,19 @@ html, body {
   }
 }
 
-/* Logo */
-.landing-logo {
-  position: absolute;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 120px;
-  z-index: 9999;
+/* ---------------------------------------------------------
+   🎛 Scroll + Pan Controls
+---------------------------------------------------------- */
+.scroll-controls,
+.pan-controls {
+  display: none !important;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  color: white;
+  font-family: 'Fino Sans', sans-serif;
 }
 
-/* Scroll / Pan controls */
 .scroll-controls {
-  display: none !important;
   position: absolute;
   top: 50%;
   right: 3rem;
@@ -263,41 +237,34 @@ html, body {
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  font-family: 'Fino Sans', sans-serif;
-  color: white;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
 }
 
 .pan-controls {
-  display: none !important;
   position: absolute;
-  bottom: 1vh; /* 10% of viewport height */
+  bottom: 1vh;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-family: 'Fino Sans', sans-serif;
-  color: white;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
 }
 .pan-controls .label {
   margin-bottom: 2rem;
   font-size: 1rem;
   user-select: none;
 }
-.arrow-group.horizontal {
-  display: flex;
-  gap: 1.2rem;
-  pointer-events: auto;
-}
+
+.arrow-group.horizontal,
 .arrow-group.vertical {
   display: flex;
+  pointer-events: auto;
+}
+.arrow-group.horizontal {
+  gap: 1.2rem;
+}
+.arrow-group.vertical {
   flex-direction: column;
   gap: 0.5rem;
-  pointer-events: auto;
 }
 
 .arrow {
@@ -312,7 +279,9 @@ html, body {
   opacity: 0.75;
 }
 
-/* Play / Pause toggle */
+/* ---------------------------------------------------------
+   ⏯ Play / Pause & Progress
+---------------------------------------------------------- */
 .play-pause-toggle {
   position: absolute;
   top: 1.5rem;
@@ -328,14 +297,13 @@ html, body {
   z-index: 1000;
   transition: background 0.3s ease;
 }
-
 .play-pause-toggle:hover {
   background: rgba(255, 255, 255, 0.1);
 }
 
 .progress-bar-wrapper {
   position: absolute;
-  top: 4rem; /* Just below the pause button */
+  top: 4rem;
   left: 1.5rem;
   width: 90px;
   height: 4px;
@@ -344,12 +312,16 @@ html, body {
   overflow: hidden;
   z-index: 1000;
 }
-
 .progress-bar {
   height: 100%;
   background-color: rgba(212, 69, 94, 0.81);
   transition: width 0.2s linear;
 }
+
+/* ---------------------------------------------------------
+   🍔 Hamburger Menu + Overlay
+---------------------------------------------------------- */
+/* These blocks are great as-is — let me know if you’d like these cleaned too or themed more! */
 
 
 

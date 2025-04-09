@@ -110,6 +110,7 @@
 .book-section {
   opacity: 0;
   transform: translateY(40px);
+  min-height: 30vh; /* ⬅️ ensures space is accounted for before animation */
 
   /* ✅ Force full width */
   width: 100vw;
@@ -187,4 +188,16 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.observed-container {
+  min-height: 150vh; /* ✅ Force vertical space for full layout */
+  padding-top: 4.5rem; /* Adjust to your header height */
+  overflow-y: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+
+.observed-container::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
 }

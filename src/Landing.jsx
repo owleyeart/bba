@@ -183,7 +183,7 @@ const Landing = ({ isMenuOpen }) => {
 
         <div className="landing-text-block">
           {currentIndex === 0 && (
-            <Link to="/observed-light" className="text-slide link-slide">
+            <Link to="/observed" className="text-slide link-slide">
               <div><h3>"Observed Light"</h3></div>
               <div>an Exhibition</div>
             </Link>

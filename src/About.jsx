@@ -137,7 +137,9 @@ Trace: reality/index.js → dimension.jsx → soul.log
           </pre>
         </span>
       </div>
+      <div style={{ height: "6rem" }} />
       </div>
+
     </>
   );
 }

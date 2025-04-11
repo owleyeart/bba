@@ -40,6 +40,7 @@
   opacity: 0;
   pointer-events: none;
   transition: transform 0.5s ease, opacity 0.5s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
 }
 
 .menu-overlay.show {

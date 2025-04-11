@@ -13,10 +13,12 @@ import About from './About.jsx';
 import Observed from './Observed';
 import Newsletter from './Newsletter.jsx';
 import Footer from './Footer';
+import Transfix from './Projects/Transfix';
 import './PageBackgrounds.css';
 import './styles/App.css';
 import './styles/Landing.css';
 import './styles/Menu.css';
+
 
 const navItems = [
   { label: 'Home', color: 'rgba(59, 11, 51, 0.72 )' },
@@ -25,6 +27,7 @@ const navItems = [
     color: 'rgba(72, 27, 72, 0.72)',
     submenu: [
       { label: 'Observed Light', link: '/Observed' },
+      { label: 't_r_a_n_s_f_i_x', link: '/Transfix' },
       { label: 'Falling Away', link: '/Projects/falling-away' },
       { label: 'All Projects', link: '/Projects' },
     ],
@@ -178,6 +181,8 @@ function AppWrapper() {
         <Route path="/About" element={<About />} />
         <Route path="/Observed" element={<Observed />} />
         <Route path="/Newsletter" element={<Newsletter />} />
+        <Route path="/Transfix" element={<Transfix />} />
+
       </Routes>
 
       {location.pathname !== '/' && <Footer />}

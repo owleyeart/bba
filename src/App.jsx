@@ -145,16 +145,16 @@ function AppWrapper() {
 
 <div className={`menu-social-icons ${(isMenuReady || isMenuExiting) ? 'show-icons' : ''}`}>
 
-          <a href="https://www.threads.net/yourprofile" target="_blank" rel="noopener noreferrer">
+          <a href="https://www.threads.net/@owleyeart" target="_blank" rel="noopener noreferrer">
             <img src="/images/threads-icon.png" alt="Threads" />
           </a>
-          <a href="https://www.linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer">
+          <a href="https://www.linkedin.com/in/bob-baker-owleye/" target="_blank" rel="noopener noreferrer">
             <img src="/images/linkedin-icon.png" alt="LinkedIn" />
           </a>
-          <a href="https://www.instagram.com/yourprofile" target="_blank" rel="noopener noreferrer">
+          <a href="https://www.instagram.com/owleyeart" target="_blank" rel="noopener noreferrer">
             <img src="/images/instagram-icon.png" alt="Instagram" />
           </a>
-          <a href="mailto:you@example.com">
+          <a href="mailto:bob@bobbaker.art">
             <img src="/images/email-icon.png" alt="Email" />
           </a>
         </div>

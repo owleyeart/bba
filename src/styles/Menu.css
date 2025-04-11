@@ -1,9 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;400&display=swap');
 
 /* ---------------------------------------------------------
    🍔 Hamburger Menu + Overlay
 ---------------------------------------------------------- */
 
 .hamburger-menu {
+  font-family: 'Inter', sans-serif;
+  font-weight: 100;
+  letter-spacing: 1px;
   position: absolute;
   top: 5px;
   left: 5px;
@@ -18,6 +22,9 @@
 }
 
 .menu-overlay {
+  font-family: 'Inter', sans-serif;
+  font-weight: 100;
+  letter-spacing: 1px;
   position: fixed;
   top: 0;
   left: 0;
@@ -105,7 +112,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
+  font-size: 1rem;
   font-weight: bold;
   color: #fff;
   text-shadow: 2px 2px 0 #000;
@@ -165,12 +172,16 @@
 }
 
 .submenu-item {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+
+  letter-spacing: 0.5px;
   position: relative;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  font-size: 1.5rem;
+  gap: 0rem;
+  padding: 0.5rem 0rem;
+  font-size: 1rem;
   background-color: rgba(168, 109, 168, 0.5);
   color: #fff;
   cursor: pointer;

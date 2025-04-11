@@ -108,13 +108,13 @@ function AppWrapper() {
         {navItems.map((item, index) => (
           <React.Fragment key={item.label}>
             <div
-              className="menu-item"
-              style={{
-                backgroundColor: item.color,
-              }}
-            >
-              {item.label}
-            </div>
+  className="menu-item"
+  style={{ backgroundColor: item.color }}
+  onClick={() => handleNavItemClick(item)}
+>
+  {item.label}
+</div>
+
             {item.submenu && expandedItem === item.label && (
               <div className="submenu">
                 {item.submenu.map((subitem, i) => (

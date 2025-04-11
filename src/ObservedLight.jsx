@@ -22,12 +22,11 @@ export default function ObservedLight() {
   const [animatePrint, setAnimatePrint] = useState(false);
 
   useEffect(() => {
-
     window.scrollTo(0, 0);
     setTimeout(() => {
       window.dispatchEvent(new Event('resize'));
     }, 100);
-    
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -52,13 +51,7 @@ export default function ObservedLight() {
     <>
       <Header />
       <main className="route-container observed-container">
-        <h1 className="observed-header">Observed Light</h1>
-        <p className="observed-description">
-          A visual study of perception, presence, and the curious behavior of light when it knows it's being watched.
-          <br /><br />
-          An exhibit by Bob Baker <small><a href="#exhibiting" className="more-link">(more below)</a></small>
-        </p>
-
+        {/* Image Slider Section */}
         <div className="slider">
           <div className="slider-inner">
             <button className="arrow left" onClick={handlePrev} aria-label="Previous page">
@@ -77,9 +70,18 @@ export default function ObservedLight() {
           </div>
         </div>
 
+        {/* Page Number Section */}
         <div className="page-number">
           Page {currentPage + 1} of {TOTAL_PAGES}
         </div>
+
+        {/* Moved Header and Description */}
+        <h1 className="observed-header">Observed Light</h1>
+        <p className="observed-description">
+          A visual study of perception, presence, and the curious behavior of light when it knows it's being watched.
+          <br /><br />
+          An exhibit by Bob Baker <small><a href="#exhibiting" className="more-link">(more below)</a></small>
+        </p>
 
         <br /><br />
         <a
@@ -98,10 +100,18 @@ export default function ObservedLight() {
         >
           <div className="book-info">
             <h2>Exhibiting</h2>
-            <p><strong>Images Art Gallery</strong><br />
-              April 16 through May 10</p>
-            <p><strong>Opening Reception:</strong><br /> Friday, April 18, 5–8 p.m.<br />
-              Historic Downtown Overland Park, Kansas</p>
+            <p>
+              <strong>Images Art Gallery</strong>
+              <br />
+              April 16 through May 10
+            </p>
+            <p>
+              <strong>Opening Reception:</strong>
+              <br />
+              Friday, April 18, 5–8 p.m.
+              <br />
+              Historic Downtown Overland Park, Kansas
+            </p>
           </div>
         </section>
 
@@ -113,7 +123,8 @@ export default function ObservedLight() {
             <h2>In Print Now</h2>
             <h3>"Observed Light"</h3>
             <div className="book-author">
-              a book by Bob Baker<br />
+              a book by Bob Baker
+              <br />
               11&quot; x 8.5&quot;, 40 pages, full color
             </div>
             <p>Find the NEW book at Images Art Gallery or Online:</p>

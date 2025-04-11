@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import './styles/Landing.css';
 
 const images = [
   '/images/20250304_303_OWL4767.jpg',

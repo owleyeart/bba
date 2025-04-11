@@ -1,6 +1,7 @@
-/////////////////////////////////////////////////////// 
-// Bob Baker - Owl Eye Art Institute, April 2025     //
-///////////////////////////////////////////////////////
+// ///////////////////////////////////////////////////////
+// Bob Baker - Owl Eye Art Institute, April 2025         //
+// Smooth animated hamburger menu open/close transitions  //
+// ///////////////////////////////////////////////////////
 
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
@@ -13,7 +14,9 @@ import ObservedLight from './ObservedLight';
 import Newsletter from './Newsletter.jsx';
 import Footer from './Footer';
 import './PageBackgrounds.css';
-import './App.css';
+import './styles/App.css';
+import './styles/Landing.css';
+import './styles/Menu.css';
 
 const navItems = [
   { label: 'Home', color: 'rgba(59, 11, 51, 0.72 )' },
@@ -47,11 +50,13 @@ const navItems = [
 function AppWrapper() {
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMenuAnimating, setIsMenuAnimating] = useState(false);
+  const [isMenuExiting, setIsMenuExiting] = useState(false);
+  const [isMenuReady, setIsMenuReady] = useState(false);
   const [expandedItem, setExpandedItem] = useState(null);
 
   const handleNavItemClick = (item) => {
     if (item.submenu) {
-      // Toggle submenu only — don't close the whole menu
       setExpandedItem(expandedItem === item.label ? null : item.label);
     } else if (item.link?.startsWith('http')) {
       window.open(item.link, '_blank', 'noreferrer');
@@ -63,7 +68,6 @@ function AppWrapper() {
       setExpandedItem(null);
     }
   };
-  
 
   const handleSubmenuClick = (subitem) => {
     if (subitem.link.startsWith('http')) {
@@ -76,8 +80,18 @@ function AppWrapper() {
   };
 
   const handleHamburgerClick = () => {
-    setIsMenuOpen((prev) => !prev);
-    if (isMenuOpen) setExpandedItem(null);
+    if (isMenuOpen) {
+      setIsMenuExiting(true);
+      setTimeout(() => {
+        setIsMenuOpen(false);
+        setIsMenuReady(false);
+        setIsMenuExiting(false);
+        setExpandedItem(null);
+      }, 500);
+    } else {
+      setIsMenuOpen(true);
+      setTimeout(() => setIsMenuReady(true), 100); // slight delay to allow overlay to appear first
+    }
   };
 
   return (
@@ -86,13 +100,18 @@ function AppWrapper() {
         {isMenuOpen ? '✕' : '☰'}
       </button>
 
-      <div className={`menu-overlay ${isMenuOpen ? 'show' : ''}`}>
-        {navItems.map((item) => (
+      <div className={`menu-overlay 
+  ${isMenuOpen ? 'show' : ''} 
+  ${isMenuReady && !isMenuExiting ? 'menu-ready' : ''} 
+  ${isMenuExiting ? 'menu-exiting' : ''}`}>
+
+        {navItems.map((item, index) => (
           <React.Fragment key={item.label}>
             <div
               className="menu-item"
-              style={{ backgroundColor: item.color }}
-              onClick={() => handleNavItemClick(item)}
+              style={{
+                backgroundColor: item.color,
+              }}
             >
               {item.label}
             </div>
@@ -102,7 +121,9 @@ function AppWrapper() {
                   <div
                     key={subitem.label}
                     className="submenu-item"
-                    style={{ backgroundColor: `rgba(168, 109, 168, ${0.4 + i * 0.2})` }}
+                    style={{
+                      backgroundColor: `rgba(168, 109, 168, ${0.4 + i * 0.2})`,
+                    }}
                     onClick={() => handleSubmenuClick(subitem)}
                     tabIndex={0}
                     onKeyDown={(e) => {
@@ -121,6 +142,22 @@ function AppWrapper() {
             )}
           </React.Fragment>
         ))}
+
+<div className={`menu-social-icons ${(isMenuReady || isMenuExiting) ? 'show-icons' : ''}`}>
+
+          <a href="https://www.threads.net/yourprofile" target="_blank" rel="noopener noreferrer">
+            <img src="/images/threads-icon.png" alt="Threads" />
+          </a>
+          <a href="https://www.linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer">
+            <img src="/images/linkedin-icon.png" alt="LinkedIn" />
+          </a>
+          <a href="https://www.instagram.com/yourprofile" target="_blank" rel="noopener noreferrer">
+            <img src="/images/instagram-icon.png" alt="Instagram" />
+          </a>
+          <a href="mailto:you@example.com">
+            <img src="/images/email-icon.png" alt="Email" />
+          </a>
+        </div>
       </div>
 
       <Routes location={location}>
@@ -132,7 +169,6 @@ function AppWrapper() {
         <Route path="/Newsletter" element={<Newsletter />} />
       </Routes>
 
-      {/* ✅ Conditionally render footer */}
       {location.pathname !== '/' && <Footer />}
     </>
   );

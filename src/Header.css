@@ -1,17 +1,17 @@
 /* src/Header.css */
 
 .global-header {
-  position: fixed; /* or absolute if that's what you're using */
+  position: fixed; 
   top: 0;
   left: 0;
   width: 100%;
-  background-color: #272727;
+  background-color: rgba(27, 27, 27, 0.3);
   color: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 1rem 0 1.5rem 0;
-  height: 100px; /* 👈 set this explicitly */
+  padding: 0 0 0 0;
+  height: 100px; 
   z-index: 1000;
 }
 
@@ -20,8 +20,4 @@
   width: auto;
   transition: transform 0.3s ease;
   filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.3));
-}
-
-.header-logo:hover {
-  transform: scale(1.05);
 }

@@ -1,0 +1,176 @@
+.observed-wrapper {
+    padding-top: 6.9rem;
+}
+
+.observed-title {
+    font-size: 2.5rem;
+    margin-top: 1.5rem; /* was 2rem */
+    font-size: 2.5rem;
+    margin-top: 2rem;
+    text-align: center;
+    color: white;
+    font-family: 'Fino Sans', serif;
+  }
+  
+  .observed-description {
+    max-width: 800px;
+    margin: 1rem auto 3rem auto;
+    text-align: center;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #ddd;
+    font-family: Georgia, serif;
+  }
+  
+  .byline {
+    display: block;
+    margin-top: 1rem;
+    font-style: italic;
+    color: #aaa;
+  }
+
+  .carousel {
+    position: relative;
+    max-width: 1000px;
+    width: 100%;
+    height: 60vh; /* ✅ Restricts height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  
+  .carousel-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+  }
+  
+  .page-counter {
+    text-align: center;
+    font-size: 1rem;
+    letter-spacing: 0.05em;
+    margin-top: 1rem; /* ✅ Adds top padding */
+    color: #ccc;
+  }
+
+  .scroll-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1.5rem;
+    animation: fadeInScroll 2s ease 1s forwards;
+    opacity: 0;
+    text-decoration: none;
+    color: rgba(243, 116, 138, 0.81);
+    transition: color 0.3s ease;
+  }
+  
+  .scroll-cta:hover {
+    color: white;
+  }
+  
+  .scroll-text {
+    font-family: 'Fino Sans', serif;
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  }
+  
+  .scroll-arrow {
+    font-size: 1.5rem;
+    animation: bounceArrow 1.4s infinite;
+    text-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
+  }
+  
+  @keyframes bounceArrow {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(6px);
+    }
+  }
+  
+  @keyframes fadeInScroll {
+    to {
+      opacity: 1;
+    }
+  }
+
+  .button-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin: 2rem auto;
+  }
+  
+  .action-button {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 8px;
+    color: white;
+    transition: background 0.3s, transform 0.2s;
+    width: fit-content;
+    min-width: 220px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  }
+  
+  .book-button {
+    background-color: rgba(72, 27, 72, 0.8); /* deep plum */
+    border: 1px solid rgba(178, 11, 105, 0.5);
+  }
+  
+  .book-button:hover {
+    background-color: rgba(72, 27, 72, 1);
+    transform: scale(1.05);
+  }
+  
+  .print-button {
+    background-color: rgba(124, 19, 89, 0.8); /* rich magenta */
+    border: 1px solid rgba(243, 116, 138, 0.6);
+  }
+  
+  .print-button:hover {
+    background-color: rgba(124, 19, 89, 1);
+    transform: scale(1.05);
+  }
+  
+  .info-section {
+    max-width: 800px;
+    margin: 3rem auto;
+    padding: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+    color: white;
+  }
+  
+  .section-header {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    font-family: 'Fino Sans', serif;
+    color: rgba(243, 116, 138, 0.9); /* soft pink highlight */
+  }
+  
+  .info-subheader {
+    font-size: 1.4rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.9);
+  }
+  
+  .info-text {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #ccc;
+  }
+  

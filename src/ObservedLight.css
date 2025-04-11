@@ -1,10 +1,16 @@
 .observed-container {
   text-align: center;
-  padding: 2rem 0; /* ✅ Remove horizontal padding */
-  margin-top: 6rem;
+  padding: 2rem 0;
+  padding-top: 12rem; /* margin-top becomes padding-top */
+  min-height: 100vh; /* exaggerate for scroll testing */
   color: white;
   font-family: 'Fino Sans', sans-serif;
-  overflow-x: hidden; /* ✅ Prevent accidental horizontal scroll */
+  overflow-x: hidden;
+  overflow-y: visible; /* ✅ this enables scroll on <body>, not container */
+}
+
+.observed-container::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
 }
 
 .observed-header {
@@ -16,6 +22,40 @@
   font-size: 1.2rem;
   max-width: 700px;
   margin: 0 auto 2rem auto;
+}
+
+/* Updated background image styling (debug styles removed) */
+.observed-background-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 150vh;
+  display: block;
+  content: '';
+  z-index: -1;
+
+  background-image: url('/images/observed-light/01.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  opacity: 0.3;  /* Use desired opacity */
+  filter: blur(8px) saturate(130%) brightness(0.9);
+  transform: translateY(0);
+  will-change: transform;
+  pointer-events: none;
+}
+
+.observed-background-wrapper {
+  position: relative;
+  z-index: 0;
+  overflow: visible;
+}
+
+footer {
+  position: relative;
+  z-index: 0;
 }
 
 .slider {
@@ -111,31 +151,23 @@
   opacity: 0;
   transform: translateY(40px);
   min-height: 30vh; /* ⬅️ ensures space is accounted for before animation */
-
-  /* ✅ Force full width */
   width: 100vw;
   margin-left: calc(-50vw + 50%);
   position: relative;
-
-  /* Optional: Separate them more clearly */
   border-top: 1px solid rgba(255, 255, 255, 0.05);
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
-
 
 .book-section.animate {
   animation-name: fadeInSlide;
   animation-duration: 0.9s;
   animation-timing-function: ease-out;
   animation-fill-mode: forwards;
-
-  /* Optional: subtle background fade */
   transition: background 0.6s ease;
 }
 
-
 .exhibiting-section {
-  background: rgba(72, 27, 72, 0.72); /* deep plum */
+  background: rgba(72, 27, 72, 0.72);
   padding: 3rem 1rem;
   width: 100%;
   margin-top: 4rem;
@@ -146,7 +178,7 @@
 }
 
 .print-section {
-  background: rgba(124, 19, 89, 0.72); /* rich magenta */
+  background: rgba(124, 19, 89, 0.72);
   padding: 3rem 1rem;
   width: 100%;
   margin-top: 3rem;
@@ -155,8 +187,6 @@
 .print-section.animate {
   animation-delay: 0.5s;
 }
-
-
 
 .book-info {
   max-width: 700px;
@@ -190,14 +220,46 @@
   }
 }
 
-.observed-container {
-  min-height: 150vh; /* ✅ Force vertical space for full layout */
-  padding-top: 4.5rem; /* Adjust to your header height */
-  overflow-y: auto;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE 10+ */
+.scroll-down-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1rem;
+  animation: fadeInScroll 2s ease 1s forwards;
+  opacity: 0;
+  text-decoration: none;
+  color: rgba(243, 116, 138, 0.81);
+  transition: color 0.3s ease;
 }
 
-.observed-container::-webkit-scrollbar {
-  display: none; /* Chrome, Safari */
+.scroll-down-cta:hover {
+  color: white;
+}
+
+.scroll-text {
+  font-family: 'Fino Sans', sans-serif;
+  font-size: 1.1rem;
+  margin-bottom: 0.25rem;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.scroll-arrow {
+  font-size: 1.5rem;
+  animation: bounceArrow 1.4s infinite;
+  text-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
+}
+
+@keyframes bounceArrow {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(6px);
+  }
+}
+
+@keyframes fadeInScroll {
+  to {
+    opacity: 1;
+  }
 }

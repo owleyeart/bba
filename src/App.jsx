@@ -10,7 +10,7 @@ import Landing from './Landing';
 import Projects from './Projects.jsx';
 import FallingAway from './Projects/Falling-Away.jsx';
 import About from './About.jsx';
-import ObservedLight from './ObservedLight';
+import Observed from './Observed';
 import Newsletter from './Newsletter.jsx';
 import Footer from './Footer';
 import './PageBackgrounds.css';
@@ -24,7 +24,7 @@ const navItems = [
     label: 'Projects',
     color: 'rgba(72, 27, 72, 0.72)',
     submenu: [
-      { label: 'Observed Light', link: '/observed-light' },
+      { label: 'Observed Light', link: '/Observed' },
       { label: 'Falling Away', link: '/Projects/falling-away' },
       { label: 'All Projects', link: '/Projects' },
     ],
@@ -111,9 +111,20 @@ function AppWrapper() {
   className="menu-item"
   style={{ backgroundColor: item.color }}
   onClick={() => handleNavItemClick(item)}
+  tabIndex={0}
+  role="button"
+  aria-haspopup={!!item.submenu}
+  aria-expanded={expandedItem === item.label}
+  onKeyDown={(e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault(); // prevent page scroll on Space
+      handleNavItemClick(item);
+    }
+  }}
 >
   {item.label}
 </div>
+
 
             {item.submenu && expandedItem === item.label && (
               <div className="submenu">
@@ -165,7 +176,7 @@ function AppWrapper() {
         <Route path="/Projects" element={<Projects />} />
         <Route path="/Projects/falling-away" element={<FallingAway />} />
         <Route path="/About" element={<About />} />
-        <Route path="/observed-light" element={<ObservedLight />} />
+        <Route path="/Observed" element={<Observed />} />
         <Route path="/Newsletter" element={<Newsletter />} />
       </Routes>
 

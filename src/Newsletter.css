@@ -1,18 +1,5 @@
 /* Newsletter.css */
 
-/* Overlay and layout */
-
-:root {
-  --header-height: 140px;
-}
-
-.newsletter-page {
-  padding-top: 140px; /* match the header height exactly */
-}
-
-
-
-
 .newsletter-overlay {
   min-height: 100vh;
   background-image: url('/images/observed-light/07.jpg'); /* ✅ Add your image path here */
@@ -27,7 +14,7 @@
 
 .newsletter-card {
   background: rgba(0, 0, 0, 0.18);
-  padding: 3rem;
+  padding: 3.5rem;
   border-radius: 1rem;
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
   max-width: 600px;

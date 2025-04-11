@@ -23,7 +23,8 @@ export default function Observed() {
   return (
     <>
     <Header />
-      <div className="observed-wrapper">
+    <div className="observed-wrapper">
+    <div className="glass-panel">
         <div className="carousel">
           <button className="arrow left" onClick={handlePrev} aria-label="Previous">&#10094;</button>
           <img
@@ -110,6 +111,7 @@ export default function Observed() {
 
         </div>
 
+      </div>
       </div>
     </>
   );

@@ -1,5 +1,5 @@
 # Logs
-logs
+logs/
 *.log
 npm-debug.log*
 yarn-debug.log*
@@ -7,26 +7,46 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
+# Dependency directories
+node_modules/
 
-# Editor directories and files
-.vscode/*
+# Build output
+dist/
+dist-ssr/
+.build/
+.cache/
+.vite/
+
+# Local environment settings
+*.local
+.env
+.env.*
+!.env.example  # Keep a safe example template (optional)
+
+# Editor directories and workspace settings
+.vscode/
 !.vscode/extensions.json
-.idea
+.idea/
 .DS_Store
+
+# Windows development
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
 
-# ChatGPT
+# Python (if you're using it for backend scripts)
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.pkl
+*.egg-info/
+*.sqlite3
 
-.env
-.env.local
-.env.development
-.env.production
-
+# Temporary files
+*.bak
+*.tmp
+*.swp

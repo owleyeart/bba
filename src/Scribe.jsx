@@ -1,7 +1,6 @@
 ///////////////////////////////////////////////////////
 // Bob Baker - Bob Baker Art, April 2025             
-// Scribe Station Page - Login = Exhibit Mode        
-// Includes audio feedback, form glow, and auto-logout
+// Scribe Station Page - Context-Aware Response Popup
 ///////////////////////////////////////////////////////
 
 import React, { useState, useRef, useEffect } from 'react';
@@ -23,7 +22,16 @@ const initializeRecognition = () => {
   return recognition;
 };
 
+const IMAGE_COUNT = 42;
+const isImageRequest = (text) => {
+  return /(show|example|image|photo|pictures?|visual|see)\b/i.test(text);
+};
 
+const getRandomImagePath = () => {
+  const index = Math.floor(Math.random() * IMAGE_COUNT) + 1;
+  const padded = index.toString().padStart(2, '0');
+  return `images/scribe-gallery/${padded}.jpg`;
+};
 
 
 export default function Scribe() {
@@ -37,8 +45,11 @@ export default function Scribe() {
   const [bioContent, setBioContent] = useState('');
   const [useMic, setUseMic] = useState(false);
   const [shouldSpeakResponse, setShouldSpeakResponse] = useState(false);
+  const [showLightbox, setShowLightbox] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [triggeredImage, setTriggeredImage] = useState(null);
 
-  
+
   const recognitionRef = useRef(null);
   const passwordRef = useRef(null);
   const inactivityTimeoutId = useRef(null);
@@ -51,64 +62,48 @@ export default function Scribe() {
       .then(data => setBioContent(data))
       .catch(err => console.error("Failed to load bio:", err));
   }, []);
-  
 
-  // Focus password input when login modal opens
   useEffect(() => {
     if (showLoginModal && passwordRef.current) {
       passwordRef.current.focus();
     }
   }, [showLoginModal]);
 
-  // Play audio feedback and trigger form glow on login (Exhibit Mode)
   useEffect(() => {
     if (isLoggedIn) {
-      setUseMic(true); // Default ON in Exhibit Mode
-      // Play audio. Make sure /audio/login.mp3 exists in your public folder.
+      setUseMic(true);
       const audio = new Audio('/audio/login.mp3');
       audio.play().catch((error) => console.error("Audio play error:", error));
 
-      // Trigger glow effect on form, then clear after 2 seconds.
       setShowGlow(true);
-      const glowTimer = setTimeout(() => {
-        setShowGlow(false);
-      }, 2000);
-
+      const glowTimer = setTimeout(() => setShowGlow(false), 2000);
       return () => clearTimeout(glowTimer);
     } else {
-      setUseMic(false); // Default OFF in Audience
+      setUseMic(false);
     }
   }, [isLoggedIn]);
 
-  // Auto-logout after 5 minutes of inactivity when logged in
   useEffect(() => {
     if (isLoggedIn) {
       const resetInactivityTimer = () => {
-        if (inactivityTimeoutId.current) {
-          clearTimeout(inactivityTimeoutId.current);
-        }
+        if (inactivityTimeoutId.current) clearTimeout(inactivityTimeoutId.current);
         inactivityTimeoutId.current = setTimeout(() => {
           alert("Session timed out due to inactivity.");
           handleLogout();
-        }, 300000); // 300,000 ms = 5 minutes
+        }, 300000);
       };
 
-      // List of events that constitute activity.
-      const activityEvents = ['mousemove', 'keypress', 'mousedown', 'touchstart'];
-      activityEvents.forEach(event =>
+      ['mousemove', 'keypress', 'mousedown', 'touchstart'].forEach(event =>
         window.addEventListener(event, resetInactivityTimer)
       );
 
-      // Start the timer immediately.
       resetInactivityTimer();
 
       return () => {
-        activityEvents.forEach(event =>
+        ['mousemove', 'keypress', 'mousedown', 'touchstart'].forEach(event =>
           window.removeEventListener(event, resetInactivityTimer)
         );
-        if (inactivityTimeoutId.current) {
-          clearTimeout(inactivityTimeoutId.current);
-        }
+        if (inactivityTimeoutId.current) clearTimeout(inactivityTimeoutId.current);
       };
     }
   }, [isLoggedIn]);
@@ -138,14 +133,14 @@ export default function Scribe() {
   const handleMicToggle = () => {
     const recognition = recognitionRef.current || initializeRecognition();
     if (!recognition) return;
-  
+
     if (!useMic) {
       recognition.start();
       recognition.onresult = (event) => {
         const transcript = event.results[0][0].transcript;
-        setShouldSpeakResponse(true); // Tell the app to speak the reply
+        setShouldSpeakResponse(true);
         setPrompt(transcript);
-        setTimeout(() => handleSubmit(new Event('submit')), 500); // Fake submit
+        setTimeout(() => handleSubmit(new Event('submit')), 500);
       };
       recognition.onerror = (event) => {
         console.error('Speech recognition error:', event.error);
@@ -155,7 +150,7 @@ export default function Scribe() {
     } else {
       recognition.stop();
     }
-  
+
     setUseMic(!useMic);
   };
 
@@ -163,7 +158,11 @@ export default function Scribe() {
     e.preventDefault();
     setLoading(true);
     setResponse('');
-
+    setTriggeredImage(null); // Reset any previous image
+    setShowLightbox(false);
+  
+    const userRequestedImage = isImageRequest(prompt);
+  
     try {
       const res = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
@@ -177,8 +176,7 @@ export default function Scribe() {
             {
               role: 'system',
               content: `You are Scribe, the poetic and thoughtful digital assistant of Bob Baker from Bob Baker Art. You respond briefly and insightfully to questions from exhibit guests, using Bob's background info below. Respond like you're speaking at a gallery opening. Limit responses to **3 sentences or fewer**. Keep it under **400 characters** when possible.\n\n${bioContent}`,
-            }
-            ,
+            },
             {
               role: 'user',
               content: prompt,
@@ -187,20 +185,27 @@ export default function Scribe() {
           temperature: 0.7,
         }),
       });
-
+  
       if (!res.ok) {
         const errorText = await res.text();
         console.error('OpenAI error:', errorText);
         setResponse('OpenAI error: ' + errorText);
         return;
       }
-
+  
       const data = await res.json();
       const reply = data.choices[0].message.content;
       setResponse(reply);
-      
+  
+      // 🎯 Trigger image *only* if user clearly asked for one
+      if (userRequestedImage) {
+        const randomIndex = Math.floor(Math.random() * IMAGE_COUNT);
+        setCurrentImageIndex(randomIndex);
+        setTriggeredImage(`images/scribe-gallery/${(randomIndex + 1).toString().padStart(2, '0')}.jpg`);
+      }
+  
+      // 🗣 Optional speech output
       if (shouldSpeakResponse) {
-        console.log("🔊 Speaking:", reply);
         const utterance = new SpeechSynthesisUtterance(reply);
         utterance.rate = 0.95;
         utterance.pitch = 1;
@@ -208,6 +213,16 @@ export default function Scribe() {
         speechSynthesis.speak(utterance);
         setShouldSpeakResponse(false);
       }
+  
+      // 💫 Auto-scroll to results
+      setTimeout(() => {
+        const responseEl = document.querySelector('.scribe-response');
+        if (responseEl) {
+          const yOffset = -40;
+          const y = responseEl.getBoundingClientRect().top + window.pageYOffset + yOffset;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+      }, 100);
       
     } catch (err) {
       console.error('Request failed:', err);
@@ -216,10 +231,10 @@ export default function Scribe() {
       setLoading(false);
     }
   };
+  
 
   return (
     <>
-      <Header />
 
       <div className={`scribe-wrapper ${isLoggedIn ? 'exhibit-bg' : 'audience-bg'}`}>
         <div className="scribe-header">
@@ -238,13 +253,7 @@ export default function Scribe() {
 
         {showLoginModal && (
           <div className="login-modal">
-            <form
-              className="login-content"
-              onSubmit={(e) => {
-                e.preventDefault();
-                handleLogin();
-              }}
-            >
+            <form className="login-content" onSubmit={(e) => { e.preventDefault(); handleLogin(); }}>
               <h2>Enter Password</h2>
               <input
                 type="password"
@@ -255,13 +264,7 @@ export default function Scribe() {
               />
               <div className="scribe-button-row">
                 <button type="submit" className="scribe-button">Submit</button>
-                <button
-                  type="button"
-                  className="scribe-button"
-                  onClick={() => setShowLoginModal(false)}
-                >
-                  Cancel
-                </button>
+                <button type="button" className="scribe-button" onClick={() => setShowLoginModal(false)}>Cancel</button>
               </div>
             </form>
           </div>
@@ -276,29 +279,66 @@ export default function Scribe() {
             className="scribe-input"
           />
           <div className="scribe-button-row">
-  <button type="submit" className="scribe-button" disabled={loading || useMic}>
-    {loading ? 'Researching...' : 'Search'}
-  </button>
-
-  <button
-    type="button"
-    className={`scribe-button ${useMic ? 'active' : ''}`}
-    onClick={handleMicToggle}
-  >
-    {useMic ? '🎤 Listening...' : 'Ask'}
-  </button>
-</div>
+            <button type="submit" className="scribe-button" disabled={loading || useMic}>
+              {loading ? 'Researching...' : 'Search'}
+            </button>
+            <button
+              type="button"
+              className={`scribe-button ${useMic ? 'active' : ''}`}
+              onClick={handleMicToggle}
+            >
+              {useMic ? '🎤 Listening...' : 'Ask'}
+            </button>
+          </div>
         </form>
 
         {response && (
-          <div className="scribe-response">
-            <p>{response}</p>
-          </div>
-        )}
+  <>
+    <div className="scribe-response">
+      <p>{response}</p>
+    </div>
 
-        {/* Exhibit banner appears only when logged in */}
+    {triggeredImage && (
+      <div className="info-popup">
+        <p>
+          <strong>Learn More:</strong>{' '}
+          <a href="/observed" target="_blank" rel="noopener noreferrer">
+            Observed Light Exhibit →
+          </a>
+        </p>
+        <img
+          src={triggeredImage}
+          alt="Example artwork"
+          className="popup-thumbnail"
+          onClick={() => setShowLightbox(true)}
+        />
+      </div>
+    )}
+
+    {showLightbox && (
+      <div className="lightbox-overlay" onClick={() => setShowLightbox(false)}>
+        <button className="lightbox-close" onClick={() => setShowLightbox(false)}>✖</button>
+        <img
+          src={`images/scribe-gallery/${(currentImageIndex + 1).toString().padStart(2, '0')}.jpg`}
+          className="lightbox-image"
+          alt={`Slide ${currentImageIndex + 1}`}
+        />
+        <button className="lightbox-arrow left" onClick={(e) => {
+          e.stopPropagation();
+          setCurrentImageIndex((prev) => (prev - 1 + IMAGE_COUNT) % IMAGE_COUNT);
+        }}>←</button>
+        <button className="lightbox-arrow right" onClick={(e) => {
+          e.stopPropagation();
+          setCurrentImageIndex((prev) => (prev + 1) % IMAGE_COUNT);
+        }}>→</button>
+      </div>
+    )}
+  </>
+)}
+
+
         {isLoggedIn && (
-          <div className={`exhibit-banner show`}>
+          <div className="exhibit-banner show">
             🎤 Exhibit Mode Active
           </div>
         )}

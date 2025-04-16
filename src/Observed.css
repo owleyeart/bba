@@ -3,8 +3,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 0rem;
-    min-height: 100vh;
+    padding: 1.2rem;
+    min-height: 90vh;
     background-image: url('/images/observed-light/22.jpg');
     background-size: cover;
     background-position: center;
@@ -14,13 +14,13 @@
   }
 
   .glass-panel {
-    width: 100%;
-    max-width: 1000px;
+    width: 90%;
+    max-width: 800px;
     background: rgba(33, 65, 102, 0.6); /* semi-transparent dark overlay */
     backdrop-filter: blur(12px) saturate(140%);
     -webkit-backdrop-filter: blur(12px) saturate(140%);
     border-radius: 16px;
-    padding: 2rem;
+    padding: 1rem;
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
     z-index: 1;
     opacity: 0;
@@ -37,9 +37,8 @@
 
 .observed-title {
     font-size: 2.5rem;
-    margin-top: 1.5rem; /* was 2rem */
     font-size: 2.5rem;
-    margin-top: 2rem;
+    margin-top: 1rem;
     text-align: center;
     color: white;
     font-family: 'Fino Sans', serif;
@@ -66,8 +65,8 @@
     position: relative;
     max-width: 1000px;
     width: 100%;
-    padding-top: 6rem;
-    height: 60vh; /* ✅ Restricts height */
+    padding-top: 2rem;
+    height: 50vh; /* ✅ Restricts height */
     display: flex;
     align-items: center;
     justify-content: center;

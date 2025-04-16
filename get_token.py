@@ -1,5 +1,5 @@
 #######################################################
-### Bob Baker - Owl Eye Art Institute, March 2025   ###
+### Bob Baker - Bob Baker Art, March 2025   ###
 #######################################################
 
 import msal

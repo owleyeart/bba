@@ -1,5 +1,5 @@
 // ///////////////////////////////////////////////////////
-// Bob Baker - Owl Eye Art Institute, April 2025         //
+// Bob Baker - Bob Baker Art, April 2025         //
 // Smooth animated hamburger menu open/close transitions  //
 // ///////////////////////////////////////////////////////
 
@@ -8,7 +8,6 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 
 import Landing from './Landing';
 import Projects from './Projects.jsx';
-import FallingAway from './Projects/Falling-Away.jsx';
 import About from './About.jsx';
 import Observed from './Observed';
 import Newsletter from './Newsletter.jsx';
@@ -32,8 +31,6 @@ const navItems = [
       { label: 'Observed Light', link: '/Observed' },
       { label: 'Scribe', link: '/Scribe' },
       { label: 't_r_a_n_s_f_i_x', link: '/Transfix' },
-      { label: 'Falling Away', link: '/Projects/falling-away' },
-      { label: 'All Projects', link: '/Projects' },
     ],
   },
   {
@@ -181,7 +178,6 @@ function AppWrapper() {
       <Routes location={location}>
         <Route path="/" element={<Landing isMenuOpen={isMenuOpen} />} />
         <Route path="/Projects" element={<Projects />} />
-        <Route path="/Projects/falling-away" element={<FallingAway />} />
         <Route path="/About" element={<About />} />
         <Route path="/Observed" element={<Observed />} />
         <Route path="/Newsletter" element={<Newsletter />} />

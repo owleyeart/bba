@@ -92,8 +92,14 @@ function About() {
         <br /><br /><br />
         <p>
           <span className="syntax-orange">Professional Organizations</span><br />
-          <span className="syntax-purple">—KCSCP</span> <span className="syntax-yellow">(Member, 2022–current)</span><br />
-          Kansas City Society of Contemporary Photography<br />
+          <span className="syntax-purple">—Summit Art Photographers</span> <span className="syntax-yellow">(Member, 2025–current)</span><br />
+          Summit Art's Photographers & Friends member.<br />
+          <Link to="https://summitart.org/member-benefits-new-2/photographers-friends/" className="home-link">https://www.summitart.org/ ...</Link>
+        </p>
+        <br />
+        <p>
+        <span className="syntax-purple">—KCSCP</span> <span className="syntax-yellow">(Member, 2022–current)</span><br />
+          Kansas City Society of Contemporary Photography member.<br />
           <Link to="https://www.kcscp.org" className="home-link">https://www.kcscp.org</Link>
         </p>
         <br />

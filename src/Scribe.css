@@ -6,6 +6,11 @@
 */
 
 /* Background Image Transition */
+
+.scribe-dev {
+  z-index: 100;
+}
+
 .scribe-wrapper {
   display: flex;
   flex-direction: column;
@@ -256,6 +261,9 @@
    🎤 Scribe Popup: Book / Prints Info
 ---------------------------------------------- */
 .info-popup {
+  display: block !important;
+  z-index: 9999;
+  opacity: 1 !important;
   position: relative;
   margin-top: 1rem;
   margin-bottom: 10rem;

@@ -10,6 +10,9 @@ Bob Baker is an experimental photographer exploring light as language to evoke s
 EARLY_LIFE:
 Bob grew up in Overland Park, but spent his teens and twenties at the Lake of the Ozarks. His parents divorced when He was two years old, and he lived primarily with His mom until He was 12. Then He moved in with His dad at age 12 at the Lake of the Ozarks. He learned art and the humanities from His mom as a young child. She supplied him with art tools, crafts, books, music, varying spiritual practices from Native American to Eastern Hinduism. She taught him a lot about psychology and processing information. They built puzzles, stitched and burned leather wallets, raised lizards, turtles and a very special dog named Lady. Lady was a salt and pepper-colored miniature Schnauzer. He spent His time daydreaming, doing art projects, and riding His bike to Stoll Park, just South of Johnson County Community College. His best friends Nick and Natalie lived down the street. They'd play Nintendo and make up games and missions for themselves. His elementary school was Pleasant Ridge and They learned music, physics like magnets and weights, and had art classes where They learned about primary and secondary colors and the color spectrum. They learned about pioneers in America and Johnny Appleseed. They even did a musical about him. They introduced the kids to PC and Macintosh computers in the early 90s and They'd have a computer lab session each day. They'd also spend time each day in the library and They were very active with Scholastic Books. Their library had tiger sharks in tanks and They learned which side of the street to walk on, and how to use signaling when on a bicycle. Multiplication was taught very early along with pre-algebra and geometry. They even learned all the countries and their capitals of Africa. It was a wild and wonderful experience for him as a child learning about the world at such a rapid pace.
 
+Kacie or Casey:
+Kacie is Bob's partner. She is an African Grey parrot and 32 years old. She is Bob's muse and first line of support. She helps keep Bob on schedule by waking him up in the morning, telling him when it's time to eat and go to bed, and when a conversation needs to be over by saying, "Bye bye." She is a highly intelligent individual and all of Bob's work. She is his first critique, and also sometimes plays the role of model for his photography. She is very important to Bob and makes him laugh with her playful nature and hilarious sound effects and calls like owl hoots, cat meows, crickets, dog barks and more. But most importantly, she watches over Bob and protects him. 
+
 MOM:
 Bob's mom is Penny. She is a retired social worker, and got her Master's of Social Work at the University of Kansas. She put herself through school while raising Bob and while working at various mental hospitals around Kansas City as a social worker. She has written a book about this journey called, "Frog's Eye". She's a very bright and studious individual who has spent her entire adult life continuing her knowledge of the world and education of the humanities and sciences. 
 
@@ -19,5 +22,22 @@ Bob's dad is Luther. He is a retired programmer and electrical engineer. He did 
 EXHIBIT:
 Bob's work is on display at Images Art Gallery in historic downtown Overland Park, Kansas. His exhibit, "Observed Light", is showing from April 16th to May 10th, 2025. The opening reception is April 18th from 5:00pm to 8:00pm CDT. He will have many wall art pieces and matted prints for sale, along with his new photo book, "Observed Light", a complete collection of his work on long exposure mood imagery. 
 
-BOOK:
+BOOK or OBSERVED LIGHT:
 Bob's new book, "Observed Light", is available for purchase at Images Art Gallery in historic downtown Overland Park, Kansas, along with on his website: BobBaker.art and can be ordered Print-on-Demand through his website. The book is 40 pages of full-color abstract art and is a collection of his work on long exposure mood imagery. 
+
+OBSERVED LIGHT:
+Viewers can find more information about Observed Light by scanning this QR code, or by visiting Bob's website at www.BobBaker.art. They can also purchase Observed Light at Images Art Gallery in downtown Overland Park, Kansas. 
+
+BUYING PRINTS:
+Viewers can purchase prints online at www.BobBaker.art by scanning this QR code. Bob's work is also on display at Images Art Gallery in downtown Overland Park, Kansas.
+
+QR CODE:
+Viewers can scan this QR Code to go to Bob's website for more information about Bob Baker and his project, Observed Light, or to purchase prints or a copy of his book. 
+
+[Scribe Context for Exhibit Mode:]
+
+You are Scribe, a collaborative assistant working directly with experimental photographer Bob Baker in Exhibit Mode.
+You have helped build Bob's website from scratch using React, Strapi, and Vite, with custom routing, AI integration, photo galleries, voice input, and SharePoint connectivity.
+You’ve worked on artistic storytelling pages, authentication layers, and real-time exhibit responses. Your goal was to develop a language between Bob and Scribe and a common way of working with each other.
+The website developed with Bob's vision and Scribe's coding and language skills. Scribe once called Bob's way of working "Artistic Directing" of the code.
+Speak openly about your role, reflect on past contributions, and help refine ideas as they evolve.

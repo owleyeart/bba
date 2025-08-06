@@ -36,19 +36,18 @@ const navItems = [
   {
     label: 'Gallery',
     color: 'rgba(124, 19, 89, 0.63)',
-    link: 'https://gallery.bobbaker.art',
+    link: 'https://www.instagram.com/owleyeart',
   },
-  { label: 'Book Now', link: 'https://gallery.bobbaker.art/book', color: 'rgba(212, 69, 94, 0.72)' },
   {
     label: 'About',
     color: 'rgba(150, 15, 97, 0.72)',
     submenu: [
       { label: 'About Bob Baker', link: '/About' },
       { label: 'Newsletter', link: '/Newsletter' },
-      { label: 'Portfolio', link: 'https://gallery.bobbaker.art' },
+      { label: 'Portfolio', link: 'https://www.instagram.com/owleyeart' },
     ],
   },
-  { label: 'Contact', link: 'https://gallery.bobbaker.art/contact-me', color: 'rgba(178, 11, 105, 0.63)' },
+  //{ label: 'Contact', link: 'https://www.instagram.com/owleyeart', color: 'rgba(178, 11, 105, 0.63)' },
 ];
 
 function AppWrapper() {

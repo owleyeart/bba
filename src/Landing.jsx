@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom';
 import './styles/Landing.css';
 
 const images = [
-  '/images/20250304_303_OWL4767.jpg',
-  '/images/20250120_303_OWL4061.jpg',
-  '/images/20250304_303_OWL4775.jpg',
+
+  '/images/20240902_303_OWL0639.jpg',
+  '/images/20240725_303_OWL9909.jpg',
+  '/images/20240725_303_OWL9897.jpg',
+  
 ];
 
 const Landing = ({ isMenuOpen }) => {
@@ -158,12 +160,7 @@ const Landing = ({ isMenuOpen }) => {
           ))}
         </div>
 
-        <img
-          src="/images/SignatureLogo.png"
-          alt="Signature Logo"
-          className="landing-logo"
-          style={{ display: isMenuOpen ? 'none' : 'block' }}
-        />
+
 
         <div className="scroll-controls" style={{ opacity: controlsVisible ? 1 : 0 }}>
           <span className="label scroll-label">Scroll</span>
@@ -183,46 +180,27 @@ const Landing = ({ isMenuOpen }) => {
 
         <div className="landing-text-block">
           {currentIndex === 0 && (
-            <Link to="/Observed" className="text-slide link-slide">
-              <div><h3>"Observed Light"</h3></div>
-              <div>an Exhibition</div>
-            </Link>
+          <div>
+              <div><h3>Bob Baker</h3></div>
+              <div>Artist</div>
+            </div>
           )}
 
           {currentIndex === 1 && (
-            <a
-              href="https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=c3IyaG..."
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-slide link-slide"
-            >
-              <h3>Images Art Gallery</h3>
-              <p>Apr 16—May 10</p>
-              <p style={{ fontSize: '1rem', marginTop: '0.25rem' }}>
-                Featured Opening<br /> Apr 18 5p–8p<br />OP/KS
-              </p>
-            </a>
+          <div>
+              <div><h3>Exploring light</h3></div>
+              <div>to evoke emotion</div>
+            </div>
           )}
 
           {currentIndex === 2 && (
-            <Link
-              to="https://mixam.com/print-on-demand/67e8be655221ef3072d7944e"
-              className="text-slide link-slide"
-            >
-              <h3>"Observed Light"</h3>
-              <p>—the book—</p>      
-              <p>Order your copy online</p>
-            </Link>
+           <div>
+              <div><h3>Journeying and Learning</h3></div>
+              <div>Through hard work, to the stars.</div>
+            </div>
           )}
         </div>
 
-        <div className="quote-block">
-          <p>
-            {currentIndex < 2
-              ? 'It is said that light behaves differently when it knows it’s being observed...'
-              : 'So I set out to discover the answer myself.'}
-          </p>
-        </div>
 
         {currentIndex < 2 ? (
           <svg className="sine-wave" viewBox="0 0 1440 100" preserveAspectRatio="none">

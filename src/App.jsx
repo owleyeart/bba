@@ -13,7 +13,7 @@ import Observed from './Observed';
 import Newsletter from './Newsletter.jsx';
 import Footer from './Footer';
 import Transfix from './Projects/Transfix';
-import Scribe from './Scribe';
+
 
 
 import './PageBackgrounds.css';
@@ -29,7 +29,6 @@ const navItems = [
     color: 'rgba(72, 27, 72, 0.72)',
     submenu: [
       { label: 'Observed Light', link: '/Observed' },
-      { label: 'Scribe', link: '/Scribe' },
       { label: 't_r_a_n_s_f_i_x', link: '/Transfix' },
     ],
   },
@@ -38,16 +37,7 @@ const navItems = [
     color: 'rgba(124, 19, 89, 0.63)',
     link: 'https://www.instagram.com/owleyeart',
   },
-  {
-    label: 'About',
-    color: 'rgba(150, 15, 97, 0.72)',
-    submenu: [
-      { label: 'About Bob Baker', link: '/About' },
-      { label: 'Newsletter', link: '/Newsletter' },
-      { label: 'Portfolio', link: 'https://www.instagram.com/owleyeart' },
-    ],
-  },
-  //{ label: 'Contact', link: 'https://www.instagram.com/owleyeart', color: 'rgba(178, 11, 105, 0.63)' },
+    //{ label: 'Contact', link: 'https://www.instagram.com/owleyeart', color: 'rgba(178, 11, 105, 0.63)' },
 ];
 
 function AppWrapper() {
@@ -181,7 +171,6 @@ function AppWrapper() {
         <Route path="/Observed" element={<Observed />} />
         <Route path="/Newsletter" element={<Newsletter />} />
         <Route path="/Transfix" element={<Transfix />} />
-        <Route path="/scribe" element={<Scribe />} />
 
 
       </Routes>

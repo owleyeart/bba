@@ -5,12 +5,8 @@ import './Header.css';
 
 const Header = () => (
   <header className="global-header">
-    <Link to="/">
-      <img
-        src="/images/SignatureLogo.png"
-        alt="Bob Baker Logo"
-        className="header-logo"
-      />
+    <Link to="/Landing">
+
     </Link>
   </header>
 );

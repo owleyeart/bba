@@ -1,15 +1,14 @@
 /* src/Header.css */
 
 .global-header {
-  position: fixed; 
+  position: absolute; 
   top: 0;
   left: 0;
   width: 100%;
   background-color: rgba(27, 27, 27, 0.3);
   color: #fff;
-  display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   padding: 0 0 0 0;
   height: 100px; 
   z-index: 1000;

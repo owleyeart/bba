@@ -81,6 +81,7 @@ export default function Transfix() {
             </p>
           </div>
         </div>
+        <br></br>
       </div>
     </>
   );

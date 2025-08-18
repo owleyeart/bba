@@ -6,8 +6,13 @@ const images = [
 
   '/images/20240902_303_OWL0639.jpg',
   '/images/20240725_303_OWL9909.jpg',
+  '/images/20250324_303_OWL5570.jpg',
+  '/images/20250429_303_OWL6695.jpg',
   '/images/20240725_303_OWL9897.jpg',
-  
+  '/images/20240720_303_OWL9829.jpg',
+  '/images/20240704_303_OWL8744.jpg',
+  '/images/20240627_303_OWL8355.jpg',
+  '/images/20240615_303_OWL7727.jpg',
 ];
 
 const Landing = ({ isMenuOpen }) => {
@@ -147,76 +152,7 @@ const Landing = ({ isMenuOpen }) => {
         cursor: 'default',
       }}
     >
-      <div className={`landing-content ${fadeClass}`}>
-        <div className="floating-dots">
-          {Array.from({ length: 9 }).map((_, i) => (
-            <div
-              key={i}
-              id={`dot-${i}`}
-              className={`dot dot-${i + 1}`}
-              onClick={() => handleDotClick(i)}
-              aria-current={i === currentIndex ? 'true' : undefined}
-            />
-          ))}
-        </div>
 
-
-
-        <div className="scroll-controls" style={{ opacity: controlsVisible ? 1 : 0 }}>
-          <span className="label scroll-label">Scroll</span>
-          <div className="arrow-group vertical">
-            <span className="arrow up">↑</span>
-            <span className="arrow down">↓</span>
-          </div>
-        </div>
-
-        <div className="pan-controls" style={{ opacity: controlsVisible ? 1 : 0 }}>
-          <span className="label pan-label">Pan</span>
-          <div className="arrow-group horizontal">
-            <span className="arrow left">→</span>
-            <span className="arrow right">←</span>
-          </div>
-        </div>
-
-        <div className="landing-text-block">
-          {currentIndex === 0 && (
-          <div>
-              <div><h3>Bob Baker</h3></div>
-              <div>Artist</div>
-            </div>
-          )}
-
-          {currentIndex === 1 && (
-          <div>
-              <div><h3>Exploring light</h3></div>
-              <div>to evoke emotion</div>
-            </div>
-          )}
-
-          {currentIndex === 2 && (
-           <div>
-              <div><h3>Journeying and Learning</h3></div>
-              <div>Through hard work, to the stars.</div>
-            </div>
-          )}
-        </div>
-
-
-        {currentIndex < 2 ? (
-          <svg className="sine-wave" viewBox="0 0 1440 100" preserveAspectRatio="none">
-            <path
-              d="M0,50 C240,0 480,100 720,50 C960,0 1200,100 1440,50"
-              fill="none"
-              stroke="white"
-              strokeWidth="2"
-            />
-          </svg>
-        ) : (
-          <svg className="flat-line" viewBox="0 0 1440 100" preserveAspectRatio="none">
-            <line x1="0" y1="50" x2="1440" y2="50" stroke="white" strokeWidth="2" />
-          </svg>
-        )}
-      </div>
     </div>
   );
 };

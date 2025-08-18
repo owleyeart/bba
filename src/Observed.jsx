@@ -61,16 +61,7 @@ export default function Observed() {
                 Order Book Online
             </a>
 
-            <a
-                href="https://gallery.bobbaker.art/portfolio/all-galleries/observed-light-1?ct=2"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="action-button print-button"
-            >
-                Order Prints
-            </a>
-
-            <section className="info-section">
+{/*             <section className="info-section">
                 <h1 className="section-header">Exhibiting</h1>
                 <h2 className="info-subheader">Images Art Gallery</h2>
                 <p className="info-text">April 16 through May 10</p>
@@ -80,7 +71,7 @@ export default function Observed() {
                     Friday, April 18, 5–8 p.m.<br />
                     Historic Downtown Overland Park, Kansas
                 </p>
-            </section>
+            </section> */}
 
             <section className="info-section">
                 <h1 className="section-header">In Print Now</h1>
@@ -92,24 +83,26 @@ export default function Observed() {
                 </p>
             </section>
             <a
-                href="https://mixam.com/print-on-demand/67e8be655221ef3072d7944e"
+                href="https://www.imagesgallery.org/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="action-button book-button"
             >
-                Order Book Online
-            </a>
-
-            <a
-                href="https://gallery.bobbaker.art/portfolio/all-galleries/observed-light-1?ct=2"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="action-button print-button"
-            >
-                Order Prints
+                Pick Up in Person
             </a>
 
         </div>
+
+            <br>
+            </br>
+            <br>
+            </br>
+            <br>
+            </br>
+            <br>
+            </br>
+            <br>
+            </br>
 
       </div>
       </div>

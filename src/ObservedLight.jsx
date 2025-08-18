@@ -1,6 +1,6 @@
 // ///////////////////////////////////////////////////////
 // Bob Baker - Bob Baker Art, April 2025
-// Observed Light - Parallax Background Scroll Fix
+// Observed Light
 // ///////////////////////////////////////////////////////
 
 import React, { useState, useEffect, useRef } from 'react';
@@ -112,7 +112,7 @@ export default function ObservedLight() {
             Buy Book Online
           </a>
 
-          <section
+{/*           <section
             className={`book-section exhibiting-section ${animateExhibiting ? 'animate' : ''}`}
             ref={exhibitingRef}
           >
@@ -131,7 +131,7 @@ export default function ObservedLight() {
                 Historic Downtown Overland Park, Kansas
               </p>
             </div>
-          </section>
+          </section> */}
 
           <section
             className={`book-section print-section ${animatePrint ? 'animate' : ''}`}

@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+
 import './styles/Landing.css';
 
 const images = [
@@ -52,18 +52,6 @@ const Landing = ({ isMenuOpen }) => {
       setFadeClass('fade-in');
       setTimeout(() => setFadeClass(''), 1000);
     }, 300);
-  };
-
-  const handleDotClick = (index) => {
-    const dot = document.getElementById(`dot-${index}`);
-    if (dot) {
-      dot.classList.remove('ripple');
-      void dot.offsetWidth;
-      dot.classList.add('ripple');
-      setTimeout(() => {
-        dot.classList.remove('ripple');
-      }, 1200);
-    }
   };
 
   const handleWheel = (e) => {

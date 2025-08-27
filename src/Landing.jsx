@@ -4,15 +4,18 @@ import './styles/Landing.css';
 
 const images = [
 
-  '/images/20240902_303_OWL0639.jpg',
-  '/images/20240725_303_OWL9909.jpg',
-  '/images/20250324_303_OWL5570.jpg',
-  '/images/20250429_303_OWL6695.jpg',
-  '/images/20240725_303_OWL9897.jpg',
-  '/images/20240720_303_OWL9829.jpg',
-  '/images/20240704_303_OWL8744.jpg',
-  '/images/20240627_303_OWL8355.jpg',
-  '/images/20240615_303_OWL7727.jpg',
+  '/images/landing/20250823_303_OWL7329.jpg',
+  '/images/landing/20250823_303_OWL7359.jpg',
+  '/images/landing/20250823_303_OWL7366.jpg',
+  '/images/landing/20250823_303_OWL7388.jpg',
+  '/images/landing/20240902_303_OWL0639.jpg',
+  '/images/landing/20240725_303_OWL9909.jpg',
+  '/images/landing/20250324_303_OWL5570.jpg',
+  '/images/landing/20250429_303_OWL6695.jpg',
+  '/images/landing/20240725_303_OWL9897.jpg',
+  '/images/landing/20240704_303_OWL8744.jpg',
+  '/images/landing/20240627_303_OWL8355.jpg',
+  '/images/landing/20240615_303_OWL7727.jpg',
 ];
 
 const Landing = ({ isMenuOpen }) => {

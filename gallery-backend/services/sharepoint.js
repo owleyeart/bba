@@ -102,35 +102,38 @@ class SharePointService {
   }
 
   async getGalleryImages(galleryId) {
-    try {
-      // Get all image files from the gallery folder
-      const endpoint = `/sites/${this.siteId}/drives/${this.driveId}/items/${galleryId}/children?$filter=file ne null and (endswith(name,'.jpg') or endswith(name,'.jpeg') or endswith(name,'.png') or endswith(name,'.tiff') or endswith(name,'.tif'))&$orderby=name desc`;
+  try {
+    // Simplified query - get all files, then filter in JavaScript
+    const endpoint = `/sites/${this.siteId}/drives/${this.driveId}/items/${galleryId}/children?$filter=file ne null&$orderby=name desc`;
+    
+    const response = await this.makeGraphRequest(endpoint);
+    
+    // Filter image files in JavaScript instead of OData
+    const imageFiles = response.value.filter(file => this.isImageFile(file.name));
+    
+    return imageFiles.map(file => {
+      const metadata = this.parseFilename(file.name);
       
-      const response = await this.makeGraphRequest(endpoint);
-      
-      return response.value.map(file => {
-        const metadata = this.parseFilename(file.name);
-        
-        return {
-          id: file.id,
-          name: file.name,
-          displayName: metadata.displayName,
-          dateTaken: metadata.dateTaken,
-          signature: metadata.signature,
-          originalFilename: metadata.originalFilename,
-          size: file.size,
-          lastModified: file.lastModifiedDateTime,
-          downloadUrl: file['@microsoft.graph.downloadUrl'],
-          webUrl: file.webUrl,
-          thumbnails: file.thumbnails,
-          galleryId: galleryId
-        };
-      });
-    } catch (error) {
-      console.error('Error fetching gallery images:', error);
-      throw new Error('Failed to fetch images from gallery');
-    }
+      return {
+        id: file.id,
+        name: file.name,
+        displayName: metadata.displayName,
+        dateTaken: metadata.dateTaken,
+        signature: metadata.signature,
+        originalFilename: metadata.originalFilename,
+        size: file.size,
+        lastModified: file.lastModifiedDateTime,
+        downloadUrl: file['@microsoft.graph.downloadUrl'],
+        webUrl: file.webUrl,
+        thumbnails: file.thumbnails,
+        galleryId: galleryId
+      };
+    });
+  } catch (error) {
+    console.error('Error fetching gallery images:', error);
+    throw new Error('Failed to fetch images from gallery');
   }
+}
 
   async searchImages({ query = '', startDate, endDate, page = 1, limit = 20, galleries = [] }) {
     try {

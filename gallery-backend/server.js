@@ -26,8 +26,25 @@ const rateLimiter = new RateLimiterMemory({
 
 // Middleware
 app.use(helmet());
+const allowedOrigins = [
+  'https://gallery.bobbaker.art',
+  'http://localhost:5173',
+  'http://localhost:5174',
+  'http://localhost:3000'
+];
+
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'https://gallery.bobbaker.art',
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+      return callback(new Error(msg), false);
+    }
+  },
   credentials: true
 }));
 app.use(express.json({ limit: '10mb' }));

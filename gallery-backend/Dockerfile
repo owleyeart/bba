@@ -1,13 +1,15 @@
-# Railway Dockerfile for Gallery API
-FROM node:18-alpine
+# Railway Dockerfile for Gallery API - Ubuntu base for better Sharp support
+FROM node:18-bullseye-slim
 
-# Install build dependencies for native modules
-RUN apk add --no-cache \
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
     python3 \
-    make \
-    g++ \
-    sqlite \
-    vips-dev
+    python3-pip \
+    python3-dev \
+    build-essential \
+    sqlite3 \
+    libvips-dev \
+    && rm -rf /var/lib/apt/lists/*
 
 # Create app directory
 WORKDIR /app
@@ -15,11 +17,8 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies with platform-specific sharp
-RUN npm ci --include=optional
-
-# Rebuild sharp for the current platform
-RUN npm rebuild sharp
+# Install dependencies
+RUN npm ci --only=production
 
 # Copy source code
 COPY . .

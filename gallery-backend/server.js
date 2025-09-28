@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const helmet = require('helmet');
+// const helmet = require('helmet'); // TEMPORARILY COMMENTED OUT
 const dotenv = require('dotenv');
 const { RateLimiterMemory } = require('rate-limiter-flexible');
 const NodeCache = require('node-cache');
@@ -25,9 +25,9 @@ const rateLimiter = new RateLimiterMemory({
 });
 
 // Middleware
-app.use(helmet());
+// app.use(helmet()); // TEMPORARILY DISABLED FOR CORS TESTING
 
-// OPTION 2: Simple wildcard CORS for testing
+// Simple wildcard CORS for testing
 app.use(cors({
   origin: '*',
   credentials: false

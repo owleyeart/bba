@@ -36,7 +36,7 @@ const Gallery = () => {
     hasPrev: false
   });
 
-  const API_BASE = process.env.REACT_APP_API_URL || 'https://bba-production-6aed.up.railway.app/api';
+  const API_BASE = import.meta.env.VITE_API_URL || 'https://bba-production-6aed.up.railway.app/api';
 
   useEffect(() => {
     loadGalleries();

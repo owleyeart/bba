@@ -101,15 +101,18 @@ class SharePointService {
     }
   }
 
-  async getGalleryImages(galleryId) {
+async getGalleryImages(galleryId) {
   try {
-    // Simplified query - get all files, then filter in JavaScript
-    const endpoint = `/sites/${this.siteId}/drives/${this.driveId}/items/${galleryId}/children?$filter=file ne null&$orderby=name desc`;
+    // Simplest possible query - just get all children, no filtering
+    const endpoint = `/sites/${this.siteId}/drives/${this.driveId}/items/${galleryId}/children`;
     
     const response = await this.makeGraphRequest(endpoint);
     
-    // Filter image files in JavaScript instead of OData
-    const imageFiles = response.value.filter(file => this.isImageFile(file.name));
+    // Filter for files only and then for image files in JavaScript
+    const imageFiles = response.value
+      .filter(item => item.file) // Only files, not folders
+      .filter(file => this.isImageFile(file.name)) // Only image files
+      .sort((a, b) => b.name.localeCompare(a.name)); // Sort by name descending
     
     return imageFiles.map(file => {
       const metadata = this.parseFilename(file.name);

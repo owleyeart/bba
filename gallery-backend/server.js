@@ -26,27 +26,13 @@ const rateLimiter = new RateLimiterMemory({
 
 // Middleware
 app.use(helmet());
-const allowedOrigins = [
-  'https://gallery.bobbaker.art',
-  'http://localhost:5173',
-  'http://localhost:5174',
-  'http://localhost:3000'
-];
 
+// OPTION 2: Simple wildcard CORS for testing
 app.use(cors({
-  origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
-    
-    if (allowedOrigins.includes(origin)) {
-      return callback(null, true);
-    } else {
-      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
-      return callback(new Error(msg), false);
-    }
-  },
-  credentials: true
+  origin: '*',
+  credentials: false
 }));
+
 app.use(express.json({ limit: '10mb' }));
 app.use(express.static('public'));
 
@@ -201,9 +187,9 @@ app.get('/api/images/:imageId', async (req, res) => {
       'Content-Type': 'image/jpeg',
       'Cache-Control': 'public, max-age=86400',
       'ETag': `"${imageId}-${size}-${quality}"`,
-      'Access-Control-Allow-Origin': '*',  // Add this
-      'Access-Control-Allow-Methods': 'GET', // Add this
-      'Access-Control-Allow-Headers': 'Content-Type' // Add this
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET',
+      'Access-Control-Allow-Headers': 'Content-Type'
     });
     
     res.send(imageBuffer);

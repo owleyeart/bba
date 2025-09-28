@@ -199,8 +199,11 @@ app.get('/api/images/:imageId', async (req, res) => {
     
     res.set({
       'Content-Type': 'image/jpeg',
-      'Cache-Control': 'public, max-age=86400', // 24 hours
-      'ETag': `"${imageId}-${size}-${quality}"`
+      'Cache-Control': 'public, max-age=86400',
+      'ETag': `"${imageId}-${size}-${quality}"`,
+      'Access-Control-Allow-Origin': '*',  // Add this
+      'Access-Control-Allow-Methods': 'GET', // Add this
+      'Access-Control-Allow-Headers': 'Content-Type' // Add this
     });
     
     res.send(imageBuffer);

@@ -11,6 +11,10 @@ import Lightbox from './components/Lightbox';
 import LoadingSpinner from './components/LoadingSpinner';
 import './Gallery.css';
 
+const API_BASE = import.meta.env.VITE_API_URL || 'https://bba-production-6aed.up.railway.app/api';
+console.log('Gallery API_BASE:', API_BASE);
+console.log('Environment VITE_API_URL:', import.meta.env.VITE_API_URL);
+
 const Gallery = () => {
   const { galleryId } = useParams();
   const navigate = useNavigate();

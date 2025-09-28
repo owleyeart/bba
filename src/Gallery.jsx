@@ -1,6 +1,7 @@
-// src/Gallery.jsx
-// Bob Baker - September 2025
-// SharePoint-powered photo gallery
+// ///////////////////////////////////////////////////////
+// Bob Baker - Bob Baker Art, September 28, 2025       //
+// SharePoint-powered photo gallery                    //
+// ///////////////////////////////////////////////////////
 
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -10,10 +11,6 @@ import SearchBar from './components/SearchBar';
 import Lightbox from './components/Lightbox';
 import LoadingSpinner from './components/LoadingSpinner';
 import './Gallery.css';
-
-const API_BASE = import.meta.env.VITE_API_URL || 'https://bba-production-6aed.up.railway.app/api';
-console.log('Gallery API_BASE:', API_BASE);
-console.log('Environment VITE_API_URL:', import.meta.env.VITE_API_URL);
 
 const Gallery = () => {
   const { galleryId } = useParams();
@@ -40,7 +37,10 @@ const Gallery = () => {
     hasPrev: false
   });
 
+  // API Base URL - only declare once, inside the component
   const API_BASE = import.meta.env.VITE_API_URL || 'https://bba-production-6aed.up.railway.app/api';
+  console.log('Gallery API_BASE:', API_BASE);
+  console.log('Environment VITE_API_URL:', import.meta.env.VITE_API_URL);
 
   useEffect(() => {
     loadGalleries();

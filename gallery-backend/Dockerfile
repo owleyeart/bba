@@ -6,7 +6,8 @@ RUN apk add --no-cache \
     python3 \
     make \
     g++ \
-    sqlite
+    sqlite \
+    vips-dev
 
 # Create app directory
 WORKDIR /app
@@ -14,8 +15,11 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies
-RUN npm ci --only=production
+# Install dependencies with platform-specific sharp
+RUN npm ci --include=optional
+
+# Rebuild sharp for the current platform
+RUN npm rebuild sharp
 
 # Copy source code
 COPY . .

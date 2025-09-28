@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-// const helmet = require('helmet'); // TEMPORARILY COMMENTED OUT
+const helmet = require('helmet');
 const dotenv = require('dotenv');
 const { RateLimiterMemory } = require('rate-limiter-flexible');
 const NodeCache = require('node-cache');
@@ -25,12 +25,33 @@ const rateLimiter = new RateLimiterMemory({
 });
 
 // Middleware
-// app.use(helmet()); // TEMPORARILY DISABLED FOR CORS TESTING
+// Configure Helmet to work with CORS
+app.use(helmet({
+  crossOriginResourcePolicy: { policy: "cross-origin" },
+  crossOriginEmbedderPolicy: false
+}));
 
-// Simple wildcard CORS for testing
+// Restore proper CORS configuration now that we know it works
+const allowedOrigins = [
+  'https://gallery.bobbaker.art',
+  'http://localhost:5173',
+  'http://localhost:5174',
+  'http://localhost:3000'
+];
+
 app.use(cors({
-  origin: '*',
-  credentials: false
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+      return callback(new Error(msg), false);
+    }
+  },
+  credentials: true
 }));
 
 app.use(express.json({ limit: '10mb' }));
@@ -186,10 +207,7 @@ app.get('/api/images/:imageId', async (req, res) => {
     res.set({
       'Content-Type': 'image/jpeg',
       'Cache-Control': 'public, max-age=86400',
-      'ETag': `"${imageId}-${size}-${quality}"`,
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET',
-      'Access-Control-Allow-Headers': 'Content-Type'
+      'ETag': `"${imageId}-${size}-${quality}"`
     });
     
     res.send(imageBuffer);

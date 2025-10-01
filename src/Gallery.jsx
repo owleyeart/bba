@@ -47,14 +47,14 @@ const Gallery = () => {
   }, []);
 
   useEffect(() => {
-    if (galleryId) {
+    if (galleryId && galleries.length > 0) {
       loadGalleryImages(galleryId);
-    } else {
+    } else if (!galleryId) {
       setCurrentGallery(null);
       setImages([]);
       setSearchResults(null);
     }
-  }, [galleryId]);
+  }, [galleryId, galleries.length]);
 
   const loadGalleries = async () => {
     try {
@@ -77,8 +77,20 @@ const Gallery = () => {
       setLoading(true);
       setError(null);
       
-      const gallery = galleries.find(g => g.id === id);
-      setCurrentGallery(gallery);
+      // Try to find gallery in existing list
+      let gallery = galleries.find(g => g.id === id);
+      
+      // If not found and galleries list is empty, fetch it
+      if (!gallery && galleries.length === 0) {
+        const galleriesResponse = await fetch(`${API_BASE}/galleries`);
+        if (galleriesResponse.ok) {
+          const galleriesData = await galleriesResponse.json();
+          setGalleries(galleriesData);
+          gallery = galleriesData.find(g => g.id === id);
+        }
+      }
+      
+      setCurrentGallery(gallery || { id, displayName: 'Gallery', name: 'Gallery' });
       
       const response = await fetch(
         `${API_BASE}/galleries/${id}/images?page=${page}&limit=20&sortBy=date&sortOrder=desc`
@@ -109,7 +121,10 @@ const Gallery = () => {
         limit: 20,
         ...(searchParams.startDate && { startDate: searchParams.startDate }),
         ...(searchParams.endDate && { endDate: searchParams.endDate }),
-        ...(searchParams.galleries?.length && { galleries: searchParams.galleries.join(',') })
+        ...(searchParams.year?.length && { year: searchParams.year.join(',') }),
+        ...(searchParams.month?.length && { month: searchParams.month.join(',') }),
+        ...(searchParams.orientation && searchParams.orientation !== 'any' && { orientation: searchParams.orientation }),
+        ...(searchParams.collectionsOnly && { collectionsOnly: 'true' })
       });
 
       const response = await fetch(`${API_BASE}/search?${queryParams}`);
@@ -120,7 +135,7 @@ const Gallery = () => {
       setCurrentGallery(null);
       
       // Update URL to reflect search
-      if (searchParams.query || searchParams.startDate || searchParams.endDate) {
+      if (searchParams.query || searchParams.startDate || searchParams.endDate || searchParams.collectionsOnly) {
         navigate('/gallery/search');
       }
     } catch (err) {

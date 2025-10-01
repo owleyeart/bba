@@ -34,6 +34,8 @@ app.use(helmet({
 // Restore proper CORS configuration now that we know it works
 const allowedOrigins = [
   'https://gallery.bobbaker.art',
+  'https://www.bobbaker.art',
+  'https://bobbaker.art',
   'http://localhost:5173',
   'http://localhost:5174',
   'http://localhost:3000'

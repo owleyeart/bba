@@ -72,29 +72,35 @@ class SharePointService {
       
       const response = await this.makeGraphRequest(endpoint);
       
-      return response.value.map(folder => {
-        const name = folder.name;
-        const dateMatch = name.match(/^(\d{8})/);
-        const date = dateMatch ? this.parseDate(dateMatch[1]) : null;
-        const description = name.replace(/^\d{8}\s*/, '') || 'Untitled Gallery';
-        
-        return {
-          id: folder.id,
-          name: folder.name,
-          displayName: description,
-          date: date,
-          dateString: dateMatch ? dateMatch[1] : null,
-          itemCount: folder.folder?.childCount || 0,
-          lastModified: folder.lastModifiedDateTime,
-          webUrl: folder.webUrl
-        };
-      }).sort((a, b) => {
-        // Sort by date descending, then by name
-        if (a.date && b.date) {
-          return new Date(b.date) - new Date(a.date);
-        }
-        return a.name.localeCompare(b.name);
-      });
+      return response.value
+        .filter(folder => {
+          // Exclude hidden/system folders that start with .
+          return !folder.name.startsWith('.');
+        })
+        .map(folder => {
+          const name = folder.name;
+          const dateMatch = name.match(/^(\d{8})/);
+          const date = dateMatch ? this.parseDate(dateMatch[1]) : null;
+          const description = name.replace(/^\d{8}\s*/, '') || 'Untitled Gallery';
+          
+          return {
+            id: folder.id,
+            name: folder.name,
+            displayName: description,
+            date: date,
+            dateString: dateMatch ? dateMatch[1] : null,
+            itemCount: folder.folder?.childCount || 0,
+            lastModified: folder.lastModifiedDateTime,
+            webUrl: folder.webUrl
+          };
+        })
+        .sort((a, b) => {
+          // Sort by date descending, then by name
+          if (a.date && b.date) {
+            return new Date(b.date) - new Date(a.date);
+          }
+          return a.name.localeCompare(b.name);
+        });
     } catch (error) {
       console.error('Error fetching galleries:', error);
       throw new Error('Failed to fetch galleries from SharePoint');

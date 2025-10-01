@@ -1,7 +1,8 @@
 // src/components/GalleryGrid.jsx
-// Bob Baker - September 2025
+// Bob Baker - October 2025
 
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import LoadingSpinner from './LoadingSpinner';
 
 const GalleryGrid = ({ 
@@ -12,6 +13,7 @@ const GalleryGrid = ({
   loading, 
   apiBase 
 }) => {
+  const navigate = useNavigate();
   const [loadingImages, setLoadingImages] = useState(new Set());
   const [failedImages, setFailedImages] = useState(new Set());
 
@@ -49,22 +51,24 @@ const GalleryGrid = ({
     }
   };
 
-  const formatFileSize = (bytes) => {
-    if (!bytes) return '';
-    const sizes = ['B', 'KB', 'MB', 'GB'];
-    if (bytes === 0) return '0 B';
-    const i = Math.floor(Math.log(bytes) / Math.log(1024));
-    return Math.round(bytes / Math.pow(1024, i) * 100) / 100 + ' ' + sizes[i];
+  const handleItemClick = (item, index) => {
+    if (item.type === 'collection') {
+      // Navigate to the collection view
+      navigate(`/gallery/${item.id}`);
+    } else {
+      // Open lightbox for individual image
+      onImageClick(index);
+    }
   };
 
   if (loading && !images.length) {
-    return <LoadingSpinner message="Loading images..." />;
+    return <LoadingSpinner message="Loading..." />;
   }
 
   if (!images.length) {
     return (
       <div className="empty-state">
-        <p>No images found in this gallery.</p>
+        <p>No results found. Try adjusting your filters.</p>
       </div>
     );
   }
@@ -72,51 +76,73 @@ const GalleryGrid = ({
   return (
     <>
       <div className="image-grid">
-        {images.map((image, index) => (
-          <div 
-            key={image.id} 
-            className="image-card"
-            onClick={() => onImageClick(index)}
-          >
-            {loadingImages.has(image.id) && (
-              <div className="image-loading">
-                <div className="spinner"></div>
+        {images.map((item, index) => {
+          // Render collection card
+          if (item.type === 'collection') {
+            return (
+              <div 
+                key={item.id} 
+                className="collection-card-result"
+                onClick={() => handleItemClick(item, index)}
+              >
+                <div className="collection-card-content">
+                  <div className="collection-icon">
+                    📁
+                  </div>
+                  <h3 className="collection-title">{item.displayName || item.name}</h3>
+                  <div className="collection-info">
+                    <span className="collection-count">{item.itemCount} photos</span>
+                    {item.date && (
+                      <span className="collection-date">{formatDate(item.date)}</span>
+                    )}
+                  </div>
+                </div>
               </div>
-            )}
-            
-            {failedImages.has(image.id) ? (
-              <div className="image-error">
-                <span>Failed to load</span>
-              </div>
-            ) : (
-              <img
-                src={`${apiBase}/images/${image.id}?size=medium&quality=85`}
-                alt={image.displayName || image.name}
-                loading="lazy"
-                onLoadStart={() => handleImageStartLoad(image.id)}
-                onLoad={() => handleImageLoad(image.id)}
-                onError={() => handleImageError(image.id)}
-              />
-            )}
-            
-            <div className="image-overlay">
-              <h4 className="image-title">
-                {image.displayName || image.name}
-              </h4>
-              <div className="image-meta">
-                {image.dateTaken && (
-                  <span>{formatDate(image.dateTaken)}</span>
+            );
+          }
+
+          // Render individual image thumbnail
+          return (
+            <div 
+              key={item.id} 
+              className="image-card-result"
+              onClick={() => handleItemClick(item, index)}
+            >
+              {loadingImages.has(item.id) && (
+                <div className="image-loading">
+                  <div className="spinner"></div>
+                </div>
+              )}
+              
+              {failedImages.has(item.id) ? (
+                <div className="image-error">
+                  <span>Failed to load</span>
+                </div>
+              ) : (
+                <img
+                  src={`${apiBase}/images/${item.id}?size=medium&quality=85`}
+                  alt={item.displayName || item.name}
+                  loading="lazy"
+                  onLoadStart={() => handleImageStartLoad(item.id)}
+                  onLoad={() => handleImageLoad(item.id)}
+                  onError={() => handleImageError(item.id)}
+                />
+              )}
+              
+              <div className="image-info">
+                <div className="image-filename">{item.name}</div>
+                {item.collectionName && (
+                  <div className="image-collection">
+                    📁 {item.collectionName.replace(/^\d{8}\s*/, '')}
+                  </div>
                 )}
-                {image.size && (
-                  <span>{formatFileSize(image.size)}</span>
-                )}
-                {image.width && image.height && (
-                  <span>{image.width} × {image.height}</span>
+                {!item.collectionName && item.dateTaken && (
+                  <div className="image-date">{formatDate(item.dateTaken)}</div>
                 )}
               </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {/* Pagination */}
@@ -133,7 +159,7 @@ const GalleryGrid = ({
           <div className="pagination-info">
             Page {pagination.currentPage} of {pagination.totalPages}
             {pagination.totalImages && (
-              <span> • {pagination.totalImages} images</span>
+              <span> • {pagination.totalImages} results</span>
             )}
           </div>
           
@@ -149,7 +175,7 @@ const GalleryGrid = ({
 
       {loading && (
         <div className="loading-overlay">
-          <LoadingSpinner message="Loading more images..." />
+          <LoadingSpinner message="Loading..." />
         </div>
       )}
     </>

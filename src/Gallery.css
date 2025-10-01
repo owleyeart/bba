@@ -90,7 +90,7 @@
 
 /* Gallery Content */
 .gallery-content {
-  padding: 0 1.5rem 2rem;
+  padding: 0 1.5rem 1rem;
   max-width: 1400px;
   margin: 0 auto;
 }
@@ -239,6 +239,121 @@
   margin-bottom: 3rem;
 }
 
+/* Collection Card in Results */
+.collection-card-result {
+  aspect-ratio: 1/1;
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: linear-gradient(135deg, rgba(168, 109, 168, 0.3), rgba(72, 27, 72, 0.3));
+  border: 2px solid rgba(168, 109, 168, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.collection-card-result:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 8px 32px rgba(168, 109, 168, 0.4);
+  border-color: rgba(168, 109, 168, 0.6);
+}
+
+.collection-card-content {
+  text-align: center;
+  padding: 1.5rem;
+}
+
+.collection-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.8;
+}
+
+.collection-title {
+  font-family: "fino-sans", sans-serif;
+  font-size: 1.3rem;
+  font-weight: 400;
+  margin: 0 0 0.75rem 0;
+  color: white;
+  line-height: 1.3;
+}
+
+.collection-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: "minion-pro", serif;
+}
+
+.collection-count {
+  font-weight: 600;
+}
+
+.collection-date {
+  font-size: 0.85rem;
+}
+
+/* Individual Image Card in Results */
+.image-card-result {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+}
+
+.image-card-result:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.image-card-result img {
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  transition: all 0.3s ease;
+}
+
+.image-card-result:hover img {
+  filter: brightness(1.1) contrast(1.05);
+}
+
+.image-info {
+  padding: 0.75rem;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.image-filename {
+  font-family: "minion-pro", serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 0.25rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.image-collection,
+.image-date {
+  font-family: "minion-pro", serif;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Legacy image card styles (for inside collection view) */
 .image-card {
   position: relative;
   border-radius: 12px;
@@ -319,6 +434,18 @@
   font-size: 0.9rem;
 }
 
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.empty-state p {
+  font-family: "minion-pro", serif;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
 /* Search Bar Styles */
 .search-container {
   background: rgba(0, 0, 0, 0.2);
@@ -348,9 +475,11 @@
 }
 
 .search-field label {
-  font-family: "fino-sans", sans-serif;
-  font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.8);
+  font-family: "minion-pro", serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: 0.3px;
 }
 
 .search-field input {
@@ -382,11 +511,13 @@
   border-radius: 8px;
   padding: 0.8rem 1.5rem;
   color: white;
-  font-family: "fino-sans", sans-serif;
-  font-size: 0.9rem;
+  font-family: "minion-pro", serif;
+  font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
   height: fit-content;
+  letter-spacing: 0.5px;
 }
 
 .clear-button {
@@ -420,12 +551,65 @@
   padding: 0.5rem 1rem;
   border-radius: 6px;
   cursor: pointer;
-  font-family: "fino-sans", sans-serif;
-  font-size: 0.9rem;
+  font-family: "minion-pro", serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
 }
 
 .filter-content {
   margin-top: 1rem;
+}
+
+.filter-section {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.filter-section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.filter-label {
+  display: block;
+  font-family: "minion-pro", serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.3px;
+}
+
+.filter-checkboxes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0.5rem;
+}
+
+.month-grid {
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+.collections-checkbox {
+  padding: 0.75rem;
+  background: rgba(168, 109, 168, 0.2);
+  border-radius: 8px;
+  border: 1px solid rgba(168, 109, 168, 0.3);
+  transition: all 0.3s ease;
+}
+
+.collections-checkbox:hover {
+  background: rgba(168, 109, 168, 0.3);
+  border-color: rgba(168, 109, 168, 0.5);
+}
+
+.orientation-options {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
 }
 
 .gallery-checkboxes {
@@ -441,10 +625,34 @@
   gap: 0.5rem;
   cursor: pointer;
   font-size: 0.9rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
 }
 
-.checkbox-text {
+.checkbox-label:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.radio-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-size: 0.95rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.radio-label:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.checkbox-text,
+.radio-text {
   color: rgba(255, 255, 255, 0.8);
+  font-family: "minion-pro", serif;
 }
 
 /* Pagination Styles */

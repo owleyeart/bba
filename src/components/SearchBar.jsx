@@ -1,23 +1,70 @@
 // src/components/SearchBar.jsx
-// Bob Baker - September 2025
+// Bob Baker - October 2025
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const SearchBar = ({ onSearch, galleries, isSearching }) => {
   const [searchParams, setSearchParams] = useState({
     query: '',
     startDate: '',
     endDate: '',
-    galleries: []
+    year: [],
+    month: [],
+    orientation: 'any',
+    collectionsOnly: false
   });
 
   const [showAdvanced, setShowAdvanced] = useState(false);
+  
+  // Get unique years from galleries for filter options
+  const [availableYears, setAvailableYears] = useState([]);
+  
+  useEffect(() => {
+    // Extract unique years from galleries
+    const years = new Set();
+    galleries.forEach(gallery => {
+      if (gallery.date) {
+        const year = new Date(gallery.date).getFullYear();
+        years.add(year.toString());
+      }
+    });
+    setAvailableYears(Array.from(years).sort((a, b) => b - a));
+  }, [galleries]);
+
+  const months = [
+    { value: '1', label: 'January' },
+    { value: '2', label: 'February' },
+    { value: '3', label: 'March' },
+    { value: '4', label: 'April' },
+    { value: '5', label: 'May' },
+    { value: '6', label: 'June' },
+    { value: '7', label: 'July' },
+    { value: '8', label: 'August' },
+    { value: '9', label: 'September' },
+    { value: '10', label: 'October' },
+    { value: '11', label: 'November' },
+    { value: '12', label: 'December' }
+  ];
 
   const handleInputChange = (field, value) => {
     setSearchParams(prev => ({
       ...prev,
       [field]: value
     }));
+  };
+  
+  const handleArrayToggle = (field, value) => {
+    setSearchParams(prev => {
+      const currentArray = prev[field] || [];
+      const newArray = currentArray.includes(value)
+        ? currentArray.filter(item => item !== value)
+        : [...currentArray, value];
+      
+      return {
+        ...prev,
+        [field]: newArray
+      };
+    });
   };
 
   const handleSubmit = (e) => {
@@ -29,17 +76,18 @@ const SearchBar = ({ onSearch, galleries, isSearching }) => {
   };
 
   const clearSearch = () => {
-    setSearchParams({
+    const clearedParams = {
       query: '',
       startDate: '',
       endDate: '',
-      galleries: []
-    });
+      year: [],
+      month: [],
+      orientation: 'any',
+      collectionsOnly: false
+    };
+    setSearchParams(clearedParams);
     onSearch({
-      query: '',
-      startDate: '',
-      endDate: '',
-      galleries: [],
+      ...clearedParams,
       page: 1
     });
   };
@@ -47,7 +95,10 @@ const SearchBar = ({ onSearch, galleries, isSearching }) => {
   const hasActiveSearch = searchParams.query || 
                          searchParams.startDate || 
                          searchParams.endDate || 
-                         searchParams.galleries.length > 0;
+                         searchParams.year.length > 0 ||
+                         searchParams.month.length > 0 ||
+                         searchParams.orientation !== 'any' ||
+                         searchParams.collectionsOnly;
 
   return (
     <div className="search-container">
@@ -109,7 +160,7 @@ const SearchBar = ({ onSearch, galleries, isSearching }) => {
               onClick={clearSearch}
               disabled={isSearching}
             >
-              Clear
+              Clear Filters
             </button>
           )}
         </div>
@@ -127,26 +178,90 @@ const SearchBar = ({ onSearch, galleries, isSearching }) => {
         
         {showAdvanced && (
           <div className="filter-content">
-            <div className="search-field">
-              <label>Filter by Galleries</label>
-              <div className="gallery-checkboxes">
-                {galleries.map(gallery => (
-                  <label key={gallery.id} className="checkbox-label">
+            {/* Collections Only */}
+            <div className="filter-section">
+              <label className="checkbox-label collections-checkbox">
+                <input
+                  type="checkbox"
+                  checked={searchParams.collectionsOnly}
+                  onChange={(e) => handleInputChange('collectionsOnly', e.target.checked)}
+                />
+                <span className="checkbox-text">
+                  <strong>Collections Only</strong> - Show only event folders
+                </span>
+              </label>
+            </div>
+            
+            {/* Year Filter */}
+            {availableYears.length > 0 && (
+              <div className="filter-section">
+                <label className="filter-label">Year</label>
+                <div className="filter-checkboxes">
+                  {availableYears.map(year => (
+                    <label key={year} className="checkbox-label">
+                      <input
+                        type="checkbox"
+                        checked={searchParams.year.includes(year)}
+                        onChange={() => handleArrayToggle('year', year)}
+                      />
+                      <span className="checkbox-text">{year}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            )}
+            
+            {/* Month Filter */}
+            <div className="filter-section">
+              <label className="filter-label">Month</label>
+              <div className="filter-checkboxes month-grid">
+                {months.map(month => (
+                  <label key={month.value} className="checkbox-label">
                     <input
                       type="checkbox"
-                      checked={searchParams.galleries.includes(gallery.id)}
-                      onChange={(e) => {
-                        const newGalleries = e.target.checked
-                          ? [...searchParams.galleries, gallery.id]
-                          : searchParams.galleries.filter(id => id !== gallery.id);
-                        handleInputChange('galleries', newGalleries);
-                      }}
+                      checked={searchParams.month.includes(month.value)}
+                      onChange={() => handleArrayToggle('month', month.value)}
                     />
-                    <span className="checkbox-text">
-                      {gallery.displayName || gallery.name}
-                    </span>
+                    <span className="checkbox-text">{month.label}</span>
                   </label>
                 ))}
+              </div>
+            </div>
+            
+            {/* Orientation Filter */}
+            <div className="filter-section">
+              <label className="filter-label">Orientation</label>
+              <div className="orientation-options">
+                <label className="radio-label">
+                  <input
+                    type="radio"
+                    name="orientation"
+                    value="any"
+                    checked={searchParams.orientation === 'any'}
+                    onChange={(e) => handleInputChange('orientation', e.target.value)}
+                  />
+                  <span className="radio-text">Any</span>
+                </label>
+                <label className="radio-label">
+                  <input
+                    type="radio"
+                    name="orientation"
+                    value="landscape"
+                    checked={searchParams.orientation === 'landscape'}
+                    onChange={(e) => handleInputChange('orientation', e.target.value)}
+                  />
+                  <span className="radio-text">Landscape</span>
+                </label>
+                <label className="radio-label">
+                  <input
+                    type="radio"
+                    name="orientation"
+                    value="portrait"
+                    checked={searchParams.orientation === 'portrait'}
+                    onChange={(e) => handleInputChange('orientation', e.target.value)}
+                  />
+                  <span className="radio-text">Portrait</span>
+                </label>
               </div>
             </div>
           </div>

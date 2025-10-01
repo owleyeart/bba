@@ -144,85 +144,91 @@ async getGalleryImages(galleryId) {
   }
 }
 
-  async searchImages({ query = '', startDate, endDate, page = 1, limit = 20, galleries = [] }) {
+  async searchImages({ query = '', startDate, endDate, page = 1, limit = 20, year, month, orientation, collectionsOnly = false }) {
     try {
-      let searchQuery = '';
+      console.log('Search params:', { query, startDate, endDate, page, limit, year, month, orientation, collectionsOnly });
       
-      // Build search query
+      // If collectionsOnly is true, return collections (folders)
+      if (collectionsOnly) {
+        return await this.searchCollections({ query, startDate, endDate, page, limit, year, month });
+      }
+
+      // For now, return empty results for image search until we optimize
+      // The current approach of fetching all images is too slow
+      console.log('Image search not yet optimized - returning empty results');
+      
+      return {
+        images: [],
+        pagination: {
+          currentPage: parseInt(page),
+          totalPages: 1,
+          totalImages: 0,
+          hasNext: false,
+          hasPrev: false
+        }
+      };
+    } catch (error) {
+      console.error('Error searching images:', error);
+      throw new Error('Failed to search images');
+    }
+  }
+  
+  async searchCollections({ query = '', startDate, endDate, page = 1, limit = 20, year, month }) {
+    try {
+      const galleries = await this.getGalleries();
+      let results = galleries;
+      
+      // Filter by search query
       if (query) {
-        searchQuery += `filename:${query}* OR `;
+        const queryLower = query.toLowerCase();
+        results = results.filter(gallery => 
+          gallery.name.toLowerCase().includes(queryLower) ||
+          gallery.displayName.toLowerCase().includes(queryLower)
+        );
       }
       
-      // Add file type filter
-      searchQuery += '(filetype:jpg OR filetype:jpeg OR filetype:png OR filetype:tiff OR filetype:tif)';
-      
-      let endpoint = `/sites/${this.siteId}/drives/${this.driveId}/search(q='${encodeURIComponent(searchQuery)}')`;
-      
-      const response = await this.makeGraphRequest(endpoint);
-      
-      let results = response.value.filter(item => item.file && this.isImageFile(item.name));
-      
-      // Filter by date range if provided
+      // Filter by date range
       if (startDate || endDate) {
-        results = results.filter(item => {
-          const metadata = this.parseFilename(item.name);
-          if (!metadata.dateTaken) return false;
-          
-          const itemDate = new Date(metadata.dateTaken);
-          
-          if (startDate && itemDate < new Date(startDate)) return false;
-          if (endDate && itemDate > new Date(endDate)) return false;
-          
+        results = results.filter(gallery => {
+          if (!gallery.date) return false;
+          const galleryDate = new Date(gallery.date);
+          if (startDate && galleryDate < new Date(startDate)) return false;
+          if (endDate && galleryDate > new Date(endDate)) return false;
           return true;
         });
       }
       
-      // Filter by galleries if specified
-      if (galleries.length > 0) {
-        const galleryData = await this.getGalleries();
-        const galleryIds = galleryData
-          .filter(g => galleries.includes(g.name) || galleries.includes(g.id))
-          .map(g => g.id);
-        
-        results = results.filter(item => {
-          // Check if item is in one of the specified galleries
-          return galleryIds.some(gId => item.parentReference?.id === gId);
+      // Filter by year
+      if (year && year.length > 0) {
+        results = results.filter(gallery => {
+          if (!gallery.date) return false;
+          const galleryYear = new Date(gallery.date).getFullYear().toString();
+          return year.includes(galleryYear);
         });
       }
       
-      // Sort by date taken (newest first)
-      results.sort((a, b) => {
-        const aDate = this.parseFilename(a.name).dateTaken;
-        const bDate = this.parseFilename(b.name).dateTaken;
-        return new Date(bDate || 0) - new Date(aDate || 0);
-      });
+      // Filter by month
+      if (month && month.length > 0) {
+        results = results.filter(gallery => {
+          if (!gallery.date) return false;
+          const galleryMonth = (new Date(gallery.date).getMonth() + 1).toString();
+          return month.includes(galleryMonth);
+        });
+      }
       
       // Paginate
       const startIndex = (page - 1) * limit;
       const endIndex = startIndex + limit;
       const paginatedResults = results.slice(startIndex, endIndex);
       
-      // Transform results
-      const images = paginatedResults.map(file => {
-        const metadata = this.parseFilename(file.name);
-        
-        return {
-          id: file.id,
-          name: file.name,
-          displayName: metadata.displayName,
-          dateTaken: metadata.dateTaken,
-          signature: metadata.signature,
-          originalFilename: metadata.originalFilename,
-          size: file.size,
-          lastModified: file.lastModifiedDateTime,
-          downloadUrl: file['@microsoft.graph.downloadUrl'],
-          webUrl: file.webUrl,
-          galleryId: file.parentReference?.id
-        };
-      });
+      // Add type identifier
+      const collections = paginatedResults.map(gallery => ({
+        ...gallery,
+        type: 'collection'
+      }));
       
       return {
-        images,
+        images: collections, // Keep same key for consistency
         pagination: {
           currentPage: page,
           totalPages: Math.ceil(results.length / limit),
@@ -232,8 +238,8 @@ async getGalleryImages(galleryId) {
         }
       };
     } catch (error) {
-      console.error('Error searching images:', error);
-      throw new Error('Failed to search images');
+      console.error('Error searching collections:', error);
+      throw new Error('Failed to search collections');
     }
   }
 

@@ -1,20 +1,31 @@
 .site-footer {
-  position: fixed;
+  position: relative !important;
   bottom: 0;
   left: 0;
   width: 100%;
   text-align: center;
-  padding: 1rem;
+  padding: 2rem 1rem;
+  margin-top: 4rem;
   font-size: 0.9rem;
-  background-color: rgba(27, 27, 27, 0.3); /* same as header */
+  background-color: rgba(27, 27, 27, 0.6);
   color: #ccc;
-  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.6);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px) saturate(150%);
   -webkit-backdrop-filter: blur(10px) saturate(150%);
-  z-index: 1000;
-  pointer-events: none; /* allow interactions to pass through if needed */
+  z-index: auto !important;
 }
 
-.site-footer div {
-  pointer-events: auto; /* restore interaction to the actual content */
+.site-footer a {
+  color: #a869a8;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.site-footer a:hover {
+  color: #d4455e;
+}
+
+.site-footer p {
+  margin: 0.5rem 0 0 0;
+  color: rgba(255, 255, 255, 0.6);
 }

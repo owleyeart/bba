@@ -155,10 +155,6 @@ app.get('/api/galleries/:galleryId/images', async (req, res) => {
 // Search images across all galleries
 app.get('/api/search', async (req, res) => {  
   try {
-    console.log('Search request received:', req.query);
-    console.log('collectionsOnly raw value:', req.query.collectionsOnly);
-    console.log('collectionsOnly type:', typeof req.query.collectionsOnly);
-    
     const { 
       q = '', 
       startDate, 
@@ -171,14 +167,9 @@ app.get('/api/search', async (req, res) => {
       collectionsOnly = 'false'
     } = req.query;
     
-    console.log('collectionsOnly after destructuring:', collectionsOnly);
-    console.log('collectionsOnly === "true":', collectionsOnly === 'true');
-    
     // Parse arrays from query strings
     const yearArray = year ? (Array.isArray(year) ? year : year.split(',').filter(Boolean)) : [];
     const monthArray = month ? (Array.isArray(month) ? month : month.split(',').filter(Boolean)) : [];
-    
-    console.log('Parsed params:', { q, yearArray, monthArray, collectionsOnly });
     
     const cacheKey = `search_${q}_${startDate}_${endDate}_${page}_${limit}_${yearArray.join('_')}_${monthArray.join('_')}_${orientation}_${collectionsOnly}`;
     let result = cache.get(cacheKey);
@@ -203,7 +194,6 @@ app.get('/api/search', async (req, res) => {
     res.json(result);
   } catch (error) {
     console.error('Error searching images:', error);
-    console.error('Error stack:', error.stack);
     res.status(500).json({ error: 'Failed to search images', message: error.message });
   }
 });

@@ -146,25 +146,101 @@ async getGalleryImages(galleryId) {
 
   async searchImages({ query = '', startDate, endDate, page = 1, limit = 20, year, month, orientation, collectionsOnly = false }) {
     try {
-      console.log('Search params:', { query, startDate, endDate, page, limit, year, month, orientation, collectionsOnly });
-      
       // If collectionsOnly is true, return collections (folders)
       if (collectionsOnly) {
         return await this.searchCollections({ query, startDate, endDate, page, limit, year, month });
       }
 
-      // For now, return empty results for image search until we optimize
-      // The current approach of fetching all images is too slow
-      console.log('Image search not yet optimized - returning empty results');
+      // Simple image search: fetch galleries, then fetch images from each
+      console.log('Searching images with query:', query);
+      
+      // Get all galleries first
+      let galleries = await this.getGalleries();
+      
+      // Filter galleries by date/year/month if specified
+      if (year && year.length > 0) {
+        galleries = galleries.filter(gallery => {
+          if (!gallery.date) return false;
+          const galleryYear = new Date(gallery.date).getFullYear().toString();
+          return year.includes(galleryYear);
+        });
+      }
+      
+      if (month && month.length > 0) {
+        galleries = galleries.filter(gallery => {
+          if (!gallery.date) return false;
+          const galleryMonth = (new Date(gallery.date).getMonth() + 1).toString();
+          return month.includes(galleryMonth);
+        });
+      }
+      
+      if (startDate || endDate) {
+        galleries = galleries.filter(gallery => {
+          if (!gallery.date) return false;
+          const galleryDate = new Date(gallery.date);
+          if (startDate && galleryDate < new Date(startDate)) return false;
+          if (endDate && galleryDate > new Date(endDate)) return false;
+          return true;
+        });
+      }
+      
+      // Fetch images from all matching galleries
+      console.log(`Fetching images from ${galleries.length} galleries...`);
+      const allImagesPromises = galleries.map(gallery => 
+        this.getGalleryImages(gallery.id).catch(err => {
+          console.error(`Error fetching images from gallery ${gallery.name}:`, err.message);
+          return [];
+        })
+      );
+      
+      const allImagesArrays = await Promise.all(allImagesPromises);
+      let allImages = allImagesArrays.flat();
+      
+      console.log(`Total images fetched: ${allImages.length}`);
+      
+      // Filter by query if provided
+      if (query) {
+        const queryLower = query.toLowerCase();
+        allImages = allImages.filter(image => {
+          // Search in filename, displayName, and originalFilename
+          return (
+            image.name.toLowerCase().includes(queryLower) ||
+            image.displayName.toLowerCase().includes(queryLower) ||
+            (image.originalFilename && image.originalFilename.toLowerCase().includes(queryLower))
+          );
+        });
+      }
+      
+      console.log(`Images after query filter: ${allImages.length}`);
+      
+      // Filter by orientation if specified
+      if (orientation && orientation !== 'any') {
+        // Note: We don't have dimension data without fetching each image
+        // Skip orientation filter for now unless we add it to the image metadata
+        console.log('Orientation filter not yet implemented');
+      }
+      
+      // Sort by date descending (newest first)
+      allImages.sort((a, b) => {
+        const dateA = a.dateTaken || a.lastModified;
+        const dateB = b.dateTaken || b.lastModified;
+        return new Date(dateB) - new Date(dateA);
+      });
+      
+      // Paginate
+      const totalImages = allImages.length;
+      const startIndex = (page - 1) * limit;
+      const endIndex = startIndex + limit;
+      const paginatedImages = allImages.slice(startIndex, endIndex);
       
       return {
-        images: [],
+        images: paginatedImages,
         pagination: {
           currentPage: parseInt(page),
-          totalPages: 1,
-          totalImages: 0,
-          hasNext: false,
-          hasPrev: false
+          totalPages: Math.ceil(totalImages / limit),
+          totalImages: totalImages,
+          hasNext: endIndex < totalImages,
+          hasPrev: page > 1
         }
       };
     } catch (error) {
@@ -175,27 +251,16 @@ async getGalleryImages(galleryId) {
   
   async searchCollections({ query = '', startDate, endDate, page = 1, limit = 20, year, month }) {
     try {
-      console.log('searchCollections called with:', { query, startDate, endDate, page, limit, year, month });
-      
       const galleries = await this.getGalleries();
-      console.log('Total galleries fetched:', galleries.length);
-      console.log('First gallery:', galleries[0]);
-      
       let results = galleries;
       
       // Filter by search query
       if (query) {
         const queryLower = query.toLowerCase();
-        console.log('Searching for:', queryLower);
-        
-        results = results.filter(gallery => {
-          const nameMatch = gallery.name.toLowerCase().includes(queryLower);
-          const displayNameMatch = gallery.displayName.toLowerCase().includes(queryLower);
-          console.log(`Gallery: ${gallery.name}, nameMatch: ${nameMatch}, displayNameMatch: ${displayNameMatch}`);
-          return nameMatch || displayNameMatch;
-        });
-        
-        console.log('Results after query filter:', results.length);
+        results = results.filter(gallery => 
+          gallery.name.toLowerCase().includes(queryLower) ||
+          gallery.displayName.toLowerCase().includes(queryLower)
+        );
       }
       
       // Filter by date range

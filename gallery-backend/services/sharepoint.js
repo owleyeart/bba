@@ -106,14 +106,17 @@ class SharePointService {
       const galleriesWithThumbnails = await Promise.all(
         galleries.map(async (gallery) => {
           try {
-            // Get first image from gallery
-            const imagesEndpoint = `/sites/${this.siteId}/drives/${this.driveId}/items/${gallery.id}/children?$top=1&$filter=file ne null`;
+            // Get first few items from gallery (simpler query, no filter)
+            const imagesEndpoint = `/sites/${this.siteId}/drives/${this.driveId}/items/${gallery.id}/children?$top=5`;
             const imagesResponse = await this.makeGraphRequest(imagesEndpoint);
             
             if (imagesResponse.value && imagesResponse.value.length > 0) {
-              const firstImage = imagesResponse.value[0];
-              // Get thumbnail URL if available
-              if (firstImage['@microsoft.graph.downloadUrl']) {
+              // Find first image file (not folder)
+              const firstImage = imagesResponse.value.find(item => 
+                item.file && this.isImageFile(item.name)
+              );
+              
+              if (firstImage && firstImage['@microsoft.graph.downloadUrl']) {
                 gallery.thumbnailUrl = firstImage['@microsoft.graph.downloadUrl'];
                 gallery.thumbnailId = firstImage.id;
               }

@@ -170,45 +170,56 @@ const Lightbox = ({
         {/* Info Panel */}
         {showInfo && (
           <div className="lightbox-info">
-            <div className="info-section">
-              <h4>ARTIST:</h4>
-              <div className="info-grid">
-                <div className="info-item">
-                  <span className="info-value artist-credit">
-                    Bob Baker, © {image.dateTaken ? new Date(image.dateTaken).getFullYear() : new Date().getFullYear()}
-                  </span>
-                </div>
-              </div>
+            <div className="info-header">
+              <h4>Image Information</h4>
+              <button
+                className="info-close"
+                onClick={() => setShowInfo(false)}
+                title="Close Info"
+              >
+                ✕
+              </button>
             </div>
-
-            <div className="info-section">
-              <h4>FILENAME:</h4>
-              <div className="info-grid">
-                <div className="info-item">
-                  <span className="info-value">{image.originalFilename ? image.originalFilename.replace(/\.(jpg|jpeg|png|tiff|tif)$/i, '') : image.displayName}</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="info-section">
-              <h4>Date Taken:</h4>
-              <div className="info-grid">
-                <div className="info-item">
-                  <span className="info-value">{formatDate(image.dateTaken || image.lastModified)}</span>
-                </div>
-              </div>
-            </div>
-
-            {metadata?.keywords && metadata.keywords.length > 0 && (
+            
+            <div className="info-content">
               <div className="info-section">
-                <h4>KEYWORDS:</h4>
-                <div className="info-grid">
-                  <div className="info-item keywords-list">
-                    <span className="info-value">{metadata.keywords.join(', ')}</span>
-                  </div>
-                </div>
+                <h4>ARTIST:</h4>
+                <p className="info-value artist-credit">
+                  Bob Baker, © {image.dateTaken ? new Date(image.dateTaken).getFullYear() : new Date().getFullYear()}
+                </p>
               </div>
-            )}
+
+              <div className="info-section">
+                <h4>FILENAME:</h4>
+                <p className="info-value">{image.name.replace(/\.(jpg|jpeg|png|tiff|tif)$/i, '')}</p>
+              </div>
+
+              <div className="info-section">
+                <h4>Date Taken:</h4>
+                <p className="info-value">{formatDate(image.dateTaken || image.lastModified)}</p>
+              </div>
+              
+              {image.galleryId && (
+                <div className="info-section">
+                  <h4>Collection:</h4>
+                  <button 
+                    className="collection-link"
+                    onClick={() => {
+                      onClose();
+                      window.location.href = `/gallery/${image.galleryId}`;
+                    }}
+                  >
+                    View Collection →
+                  </button>
+                </div>
+              )}
+
+              {metadata?.keywords && metadata.keywords.length > 0 && (
+                <div className="info-section">
+                  <h4>KEYWORDS:</h4>
+                  <p className="info-value keywords-list">{metadata.keywords.join(', ')}</p>
+                </div>
+              )}
 
             {metadata && (
               <>

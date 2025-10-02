@@ -1,6 +1,7 @@
 /* src/Header.css */
 
 .global-header {
+  display: none; /* Hidden - no longer using overlay header */
   position: absolute; 
   top: 0;
   left: 0;

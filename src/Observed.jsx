@@ -5,7 +5,6 @@
 
 import React, { useState } from 'react';
 import './Observed.css';
-import Header from './Header';
 
 const TOTAL_PAGES = 42;
 
@@ -22,7 +21,6 @@ export default function Observed() {
 
   return (
     <>
-    <Header />
     <div className="observed-wrapper">
     <div className="glass-panel">
         <div className="carousel">

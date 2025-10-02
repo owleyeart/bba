@@ -1,0 +1,38 @@
+  async searchImages({ query = '', startDate, endDate, page = 1, limit = 20, year, month, orientation, collectionsOnly = false }) {
+    try {
+      console.log('Search params:', { query, startDate, endDate, page, limit, year, month, orientation, collectionsOnly });
+      
+      // If collectionsOnly is true, return collections (folders)
+      if (collectionsOnly) {
+        return await this.searchCollections({ query, startDate, endDate, page, limit, year, month });
+      }
+
+      // For now, return empty results for image search
+      // Image search across all collections is disabled until we implement proper indexing
+      console.log('Image search is temporarily disabled - returning empty results');
+      
+      return {
+        images: [],
+        pagination: {
+          currentPage: parseInt(page),
+          totalPages: 1,
+          totalImages: 0,
+          hasNext: false,
+          hasPrev: false
+        }
+      };
+    } catch (error) {
+      console.error('Error in searchImages:', error.message);
+      // Don't throw - return empty results instead
+      return {
+        images: [],
+        pagination: {
+          currentPage: parseInt(page),
+          totalPages: 1,
+          totalImages: 0,
+          hasNext: false,
+          hasPrev: false
+        }
+      };
+    }
+  }

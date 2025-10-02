@@ -5,7 +5,6 @@
 
 import React, { useEffect } from 'react';
 import './Transfix.css';
-import Header from '../Header';
 
 export default function Transfix() {
   useEffect(() => {
@@ -15,7 +14,6 @@ export default function Transfix() {
 
   return (
     <>
-      <Header />
       <div className="route-container transfix-wrapper">
         <div className="glass-panel">
 

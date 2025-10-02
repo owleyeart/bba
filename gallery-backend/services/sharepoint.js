@@ -175,16 +175,27 @@ async getGalleryImages(galleryId) {
   
   async searchCollections({ query = '', startDate, endDate, page = 1, limit = 20, year, month }) {
     try {
+      console.log('searchCollections called with:', { query, startDate, endDate, page, limit, year, month });
+      
       const galleries = await this.getGalleries();
+      console.log('Total galleries fetched:', galleries.length);
+      console.log('First gallery:', galleries[0]);
+      
       let results = galleries;
       
       // Filter by search query
       if (query) {
         const queryLower = query.toLowerCase();
-        results = results.filter(gallery => 
-          gallery.name.toLowerCase().includes(queryLower) ||
-          gallery.displayName.toLowerCase().includes(queryLower)
-        );
+        console.log('Searching for:', queryLower);
+        
+        results = results.filter(gallery => {
+          const nameMatch = gallery.name.toLowerCase().includes(queryLower);
+          const displayNameMatch = gallery.displayName.toLowerCase().includes(queryLower);
+          console.log(`Gallery: ${gallery.name}, nameMatch: ${nameMatch}, displayNameMatch: ${displayNameMatch}`);
+          return nameMatch || displayNameMatch;
+        });
+        
+        console.log('Results after query filter:', results.length);
       }
       
       // Filter by date range

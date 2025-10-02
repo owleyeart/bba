@@ -153,18 +153,34 @@ app.get('/api/galleries/:galleryId/images', async (req, res) => {
 });
 
 // Search images across all galleries
-app.get('/api/search', async (req, res) => {
+app.get('/api/search', async (req, res) => {  
   try {
+    console.log('Search request received:', req.query);
+    console.log('collectionsOnly raw value:', req.query.collectionsOnly);
+    console.log('collectionsOnly type:', typeof req.query.collectionsOnly);
+    
     const { 
       q = '', 
       startDate, 
       endDate, 
       page = 1, 
       limit = 20,
-      galleries = [] 
+      year, // comma-separated string or array
+      month, // comma-separated string or array
+      orientation,
+      collectionsOnly = 'false'
     } = req.query;
     
-    const cacheKey = `search_${q}_${startDate}_${endDate}_${page}_${limit}_${galleries.join('_')}`;
+    console.log('collectionsOnly after destructuring:', collectionsOnly);
+    console.log('collectionsOnly === "true":', collectionsOnly === 'true');
+    
+    // Parse arrays from query strings
+    const yearArray = year ? (Array.isArray(year) ? year : year.split(',').filter(Boolean)) : [];
+    const monthArray = month ? (Array.isArray(month) ? month : month.split(',').filter(Boolean)) : [];
+    
+    console.log('Parsed params:', { q, yearArray, monthArray, collectionsOnly });
+    
+    const cacheKey = `search_${q}_${startDate}_${endDate}_${page}_${limit}_${yearArray.join('_')}_${monthArray.join('_')}_${orientation}_${collectionsOnly}`;
     let result = cache.get(cacheKey);
     
     if (!result) {
@@ -174,16 +190,21 @@ app.get('/api/search', async (req, res) => {
         endDate,
         page: parseInt(page),
         limit: parseInt(limit),
-        galleries: Array.isArray(galleries) ? galleries : galleries.split(',').filter(Boolean)
+        year: yearArray,
+        month: monthArray,
+        orientation,
+        collectionsOnly: collectionsOnly === 'true'
       });
       
       cache.set(cacheKey, result, 300); // 5 min cache for searches
     }
     
+    console.log('Search successful, returning', result.images.length, 'results');
     res.json(result);
   } catch (error) {
     console.error('Error searching images:', error);
-    res.status(500).json({ error: 'Failed to search images' });
+    console.error('Error stack:', error.stack);
+    res.status(500).json({ error: 'Failed to search images', message: error.message });
   }
 });
 

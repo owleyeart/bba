@@ -184,24 +184,60 @@ async getGalleryImages(galleryId) {
         });
       }
       
-      // Fetch images from all matching galleries
-      console.log(`Fetching images from ${galleries.length} galleries...`);
-      const allImagesPromises = galleries.map(gallery => 
+      // Identify galleries that match the search query
+      let matchingGalleries = [];
+      let nonMatchingGalleries = [];
+      
+      if (query) {
+        const queryLower = query.toLowerCase();
+        galleries.forEach(gallery => {
+          const nameMatch = gallery.name.toLowerCase().includes(queryLower);
+          const displayNameMatch = gallery.displayName.toLowerCase().includes(queryLower);
+          
+          if (nameMatch || displayNameMatch) {
+            matchingGalleries.push(gallery);
+          } else {
+            nonMatchingGalleries.push(gallery);
+          }
+        });
+      } else {
+        // No query, all galleries are "non-matching" (will check individual images)
+        nonMatchingGalleries = galleries;
+      }
+      
+      console.log(`Galleries matching query: ${matchingGalleries.length}`);
+      console.log(`Galleries to search individually: ${nonMatchingGalleries.length}`);
+      
+      // Fetch images from matching galleries (all images)
+      const matchingGalleryImagesPromises = matchingGalleries.map(gallery => 
         this.getGalleryImages(gallery.id).catch(err => {
           console.error(`Error fetching images from gallery ${gallery.name}:`, err.message);
           return [];
         })
       );
       
-      const allImagesArrays = await Promise.all(allImagesPromises);
-      let allImages = allImagesArrays.flat();
+      // Fetch images from non-matching galleries (will filter by query)
+      const nonMatchingGalleryImagesPromises = nonMatchingGalleries.map(gallery => 
+        this.getGalleryImages(gallery.id).catch(err => {
+          console.error(`Error fetching images from gallery ${gallery.name}:`, err.message);
+          return [];
+        })
+      );
       
-      console.log(`Total images fetched: ${allImages.length}`);
+      const [matchingGalleryImagesArrays, nonMatchingGalleryImagesArrays] = await Promise.all([
+        Promise.all(matchingGalleryImagesPromises),
+        Promise.all(nonMatchingGalleryImagesPromises)
+      ]);
       
-      // Filter by query if provided
+      // All images from matching galleries
+      let imagesFromMatchingGalleries = matchingGalleryImagesArrays.flat();
+      
+      // Images from non-matching galleries that match the query in their filename
+      let imagesFromNonMatchingGalleries = nonMatchingGalleryImagesArrays.flat();
+      
       if (query) {
         const queryLower = query.toLowerCase();
-        allImages = allImages.filter(image => {
+        imagesFromNonMatchingGalleries = imagesFromNonMatchingGalleries.filter(image => {
           // Search in filename, displayName, and originalFilename
           return (
             image.name.toLowerCase().includes(queryLower) ||
@@ -211,7 +247,10 @@ async getGalleryImages(galleryId) {
         });
       }
       
-      console.log(`Images after query filter: ${allImages.length}`);
+      // Combine all matching images
+      let allImages = [...imagesFromMatchingGalleries, ...imagesFromNonMatchingGalleries];
+      
+      console.log(`Total images: ${allImages.length} (${imagesFromMatchingGalleries.length} from matching galleries, ${imagesFromNonMatchingGalleries.length} from filename matches)`);
       
       // Filter by orientation if specified
       if (orientation && orientation !== 'any') {

@@ -171,32 +171,44 @@ const Lightbox = ({
         {showInfo && (
           <div className="lightbox-info">
             <div className="info-section">
-              <h4>File Information</h4>
+              <h4>ARTIST:</h4>
               <div className="info-grid">
                 <div className="info-item">
-                  <span className="info-label">Filename:</span>
-                  <span className="info-value">{image.name}</span>
+                  <span className="info-value artist-credit">
+                    Bob Baker, © {image.dateTaken ? new Date(image.dateTaken).getFullYear() : new Date().getFullYear()}
+                  </span>
                 </div>
-                {image.originalFilename && (
-                  <div className="info-item">
-                    <span className="info-label">Original:</span>
-                    <span className="info-value">{image.originalFilename}</span>
-                  </div>
-                )}
-                {image.size && (
-                  <div className="info-item">
-                    <span className="info-label">Size:</span>
-                    <span className="info-value">{formatFileSize(image.size)}</span>
-                  </div>
-                )}
-                {metadata?.width && metadata?.height && (
-                  <div className="info-item">
-                    <span className="info-label">Dimensions:</span>
-                    <span className="info-value">{metadata.width} × {metadata.height}</span>
-                  </div>
-                )}
               </div>
             </div>
+
+            <div className="info-section">
+              <h4>FILENAME:</h4>
+              <div className="info-grid">
+                <div className="info-item">
+                  <span className="info-value">{image.originalFilename ? image.originalFilename.replace(/\.(jpg|jpeg|png|tiff|tif)$/i, '') : image.displayName}</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="info-section">
+              <h4>Date Taken:</h4>
+              <div className="info-grid">
+                <div className="info-item">
+                  <span className="info-value">{formatDate(image.dateTaken || image.lastModified)}</span>
+                </div>
+              </div>
+            </div>
+
+            {metadata?.keywords && metadata.keywords.length > 0 && (
+              <div className="info-section">
+                <h4>KEYWORDS:</h4>
+                <div className="info-grid">
+                  <div className="info-item keywords-list">
+                    <span className="info-value">{metadata.keywords.join(', ')}</span>
+                  </div>
+                </div>
+              </div>
+            )}
 
             {metadata && (
               <>

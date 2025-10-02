@@ -208,6 +208,22 @@
   word-break: break-word;
 }
 
+.artist-credit {
+  font-weight: 600;
+  font-size: 1rem;
+  text-align: left;
+}
+
+.keywords-list {
+  display: block;
+  width: 100%;
+}
+
+.keywords-list .info-value {
+  text-align: left;
+  line-height: 1.5;
+}
+
 .info-loading {
   display: flex;
   flex-direction: column;

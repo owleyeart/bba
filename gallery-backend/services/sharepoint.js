@@ -72,7 +72,7 @@ class SharePointService {
       
       const response = await this.makeGraphRequest(endpoint);
       
-      return response.value
+      const galleries = response.value
         .filter(folder => {
           // Exclude hidden/system folders that start with .
           return !folder.name.startsWith('.');
@@ -101,6 +101,31 @@ class SharePointService {
           }
           return a.name.localeCompare(b.name);
         });
+      
+      // Fetch first image thumbnail for each gallery
+      const galleriesWithThumbnails = await Promise.all(
+        galleries.map(async (gallery) => {
+          try {
+            // Get first image from gallery
+            const imagesEndpoint = `/sites/${this.siteId}/drives/${this.driveId}/items/${gallery.id}/children?$top=1&$filter=file ne null`;
+            const imagesResponse = await this.makeGraphRequest(imagesEndpoint);
+            
+            if (imagesResponse.value && imagesResponse.value.length > 0) {
+              const firstImage = imagesResponse.value[0];
+              // Get thumbnail URL if available
+              if (firstImage['@microsoft.graph.downloadUrl']) {
+                gallery.thumbnailUrl = firstImage['@microsoft.graph.downloadUrl'];
+                gallery.thumbnailId = firstImage.id;
+              }
+            }
+          } catch (err) {
+            console.error(`Error fetching thumbnail for gallery ${gallery.name}:`, err.message);
+          }
+          return gallery;
+        })
+      );
+      
+      return galleriesWithThumbnails;
     } catch (error) {
       console.error('Error fetching galleries:', error);
       throw new Error('Failed to fetch galleries from SharePoint');

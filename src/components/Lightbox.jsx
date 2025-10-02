@@ -221,108 +221,109 @@ const Lightbox = ({
                 </div>
               )}
 
-            {metadata && (
-              <>
-                {/* Camera Information */}
-                {(metadata.camera?.make || metadata.camera?.model || metadata.camera?.lens) && (
-                  <div className="info-section">
-                    <h4>Camera & Lens</h4>
-                    <div className="info-grid">
-                      {metadata.camera.make && (
-                        <div className="info-item">
-                          <span className="info-label">Make:</span>
-                          <span className="info-value">{metadata.camera.make}</span>
-                        </div>
-                      )}
-                      {metadata.camera.model && (
-                        <div className="info-item">
-                          <span className="info-label">Model:</span>
-                          <span className="info-value">{metadata.camera.model}</span>
-                        </div>
-                      )}
-                      {metadata.camera.lens && (
-                        <div className="info-item">
-                          <span className="info-label">Lens:</span>
-                          <span className="info-value">{metadata.camera.lens}</span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                )}
-
-                {/* Shooting Settings */}
-                {(metadata.settings?.focalLength || metadata.settings?.aperture || 
-                  metadata.settings?.shutterSpeed || metadata.settings?.iso) && (
-                  <div className="info-section">
-                    <h4>Camera Settings</h4>
-                    <div className="info-grid">
-                      {metadata.settings.focalLength && (
-                        <div className="info-item">
-                          <span className="info-label">Focal Length:</span>
-                          <span className="info-value">{metadata.settings.focalLength}</span>
-                        </div>
-                      )}
-                      {metadata.settings.aperture && (
-                        <div className="info-item">
-                          <span className="info-label">Aperture:</span>
-                          <span className="info-value">{metadata.settings.aperture}</span>
-                        </div>
-                      )}
-                      {metadata.settings.shutterSpeed && (
-                        <div className="info-item">
-                          <span className="info-label">Shutter Speed:</span>
-                          <span className="info-value">{metadata.settings.shutterSpeed}</span>
-                        </div>
-                      )}
-                      {metadata.settings.iso && (
-                        <div className="info-item">
-                          <span className="info-label">ISO:</span>
-                          <span className="info-value">{metadata.settings.iso}</span>
-                        </div>
-                      )}
-                      {metadata.settings.flash && (
-                        <div className="info-item">
-                          <span className="info-label">Flash:</span>
-                          <span className="info-value">{metadata.settings.flash}</span>
-                        </div>
-                      )}
-                      {metadata.settings.whiteBalance && (
-                        <div className="info-item">
-                          <span className="info-label">White Balance:</span>
-                          <span className="info-value">{metadata.settings.whiteBalance}</span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                )}
-
-                {/* Location Information */}
-                {metadata.location && (
-                  <div className="info-section">
-                    <h4>Location</h4>
-                    <div className="info-grid">
-                      <div className="info-item">
-                        <span className="info-label">Coordinates:</span>
-                        <span className="info-value">{formatLocation(metadata.location)}</span>
+              {metadata && (
+                <>
+                  {/* Camera Information */}
+                  {(metadata.camera?.make || metadata.camera?.model || metadata.camera?.lens) && (
+                    <div className="info-section">
+                      <h4>Camera & Lens</h4>
+                      <div className="info-grid">
+                        {metadata.camera.make && (
+                          <div className="info-item">
+                            <span className="info-label">Make:</span>
+                            <span className="info-value">{metadata.camera.make}</span>
+                          </div>
+                        )}
+                        {metadata.camera.model && (
+                          <div className="info-item">
+                            <span className="info-label">Model:</span>
+                            <span className="info-value">{metadata.camera.model}</span>
+                          </div>
+                        )}
+                        {metadata.camera.lens && (
+                          <div className="info-item">
+                            <span className="info-label">Lens:</span>
+                            <span className="info-value">{metadata.camera.lens}</span>
+                          </div>
+                        )}
                       </div>
-                      {metadata.location.altitude && (
-                        <div className="info-item">
-                          <span className="info-label">Altitude:</span>
-                          <span className="info-value">{metadata.location.altitude}m</span>
-                        </div>
-                      )}
                     </div>
-                  </div>
-                )}
-              </>
-            )}
+                  )}
 
-            {loadingMetadata && (
-              <div className="info-loading">
-                <div className="spinner"></div>
-                <span>Loading metadata...</span>
-              </div>
-            )}
+                  {/* Shooting Settings */}
+                  {(metadata.settings?.focalLength || metadata.settings?.aperture || 
+                    metadata.settings?.shutterSpeed || metadata.settings?.iso) && (
+                    <div className="info-section">
+                      <h4>Camera Settings</h4>
+                      <div className="info-grid">
+                        {metadata.settings.focalLength && (
+                          <div className="info-item">
+                            <span className="info-label">Focal Length:</span>
+                            <span className="info-value">{metadata.settings.focalLength}</span>
+                          </div>
+                        )}
+                        {metadata.settings.aperture && (
+                          <div className="info-item">
+                            <span className="info-label">Aperture:</span>
+                            <span className="info-value">{metadata.settings.aperture}</span>
+                          </div>
+                        )}
+                        {metadata.settings.shutterSpeed && (
+                          <div className="info-item">
+                            <span className="info-label">Shutter Speed:</span>
+                            <span className="info-value">{metadata.settings.shutterSpeed}</span>
+                          </div>
+                        )}
+                        {metadata.settings.iso && (
+                          <div className="info-item">
+                            <span className="info-label">ISO:</span>
+                            <span className="info-value">{metadata.settings.iso}</span>
+                          </div>
+                        )}
+                        {metadata.settings.flash && (
+                          <div className="info-item">
+                            <span className="info-label">Flash:</span>
+                            <span className="info-value">{metadata.settings.flash}</span>
+                          </div>
+                        )}
+                        {metadata.settings.whiteBalance && (
+                          <div className="info-item">
+                            <span className="info-label">White Balance:</span>
+                            <span className="info-value">{metadata.settings.whiteBalance}</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Location Information */}
+                  {metadata.location && (
+                    <div className="info-section">
+                      <h4>Location</h4>
+                      <div className="info-grid">
+                        <div className="info-item">
+                          <span className="info-label">Coordinates:</span>
+                          <span className="info-value">{formatLocation(metadata.location)}</span>
+                        </div>
+                        {metadata.location.altitude && (
+                          <div className="info-item">
+                            <span className="info-label">Altitude:</span>
+                            <span className="info-value">{metadata.location.altitude}m</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </>
+              )}
+
+              {loadingMetadata && (
+                <div className="info-loading">
+                  <div className="spinner"></div>
+                  <span>Loading metadata...</span>
+                </div>
+              )}
+            </div>
           </div>
         )}
       </div>

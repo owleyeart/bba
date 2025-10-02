@@ -58,7 +58,7 @@ const GalleryList = ({ galleries, onGallerySelect }) => {
           {gallery.thumbnailUrl && (
             <div className="gallery-card-thumbnail">
               <img 
-                src={`${API_BASE}/image/${gallery.thumbnailId}`} 
+                src={`${API_BASE}/images/${gallery.thumbnailId}`} 
                 alt={gallery.displayName}
                 loading="lazy"
               />

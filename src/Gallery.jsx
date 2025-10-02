@@ -115,27 +115,40 @@ const Gallery = () => {
       setIsSearching(true);
       setError(null);
       
-      const queryParams = new URLSearchParams({
-        q: searchParams.query || '',
+      // Store search params for pagination
+      const fullSearchParams = {
+        query: searchParams.query || '',
         page: searchParams.page || 1,
+        startDate: searchParams.startDate,
+        endDate: searchParams.endDate,
+        year: searchParams.year,
+        month: searchParams.month,
+        orientation: searchParams.orientation,
+        collectionsOnly: searchParams.collectionsOnly
+      };
+      
+      const queryParams = new URLSearchParams({
+        q: fullSearchParams.query,
+        page: fullSearchParams.page,
         limit: 20,
-        ...(searchParams.startDate && { startDate: searchParams.startDate }),
-        ...(searchParams.endDate && { endDate: searchParams.endDate }),
-        ...(searchParams.year?.length && { year: searchParams.year.join(',') }),
-        ...(searchParams.month?.length && { month: searchParams.month.join(',') }),
-        ...(searchParams.orientation && searchParams.orientation !== 'any' && { orientation: searchParams.orientation }),
-        ...(searchParams.collectionsOnly && { collectionsOnly: 'true' })
+        ...(fullSearchParams.startDate && { startDate: fullSearchParams.startDate }),
+        ...(fullSearchParams.endDate && { endDate: fullSearchParams.endDate }),
+        ...(fullSearchParams.year?.length && { year: fullSearchParams.year.join(',') }),
+        ...(fullSearchParams.month?.length && { month: fullSearchParams.month.join(',') }),
+        ...(fullSearchParams.orientation && fullSearchParams.orientation !== 'any' && { orientation: fullSearchParams.orientation }),
+        ...(fullSearchParams.collectionsOnly && { collectionsOnly: 'true' })
       });
 
       const response = await fetch(`${API_BASE}/search?${queryParams}`);
       if (!response.ok) throw new Error('Search failed');
       
       const data = await response.json();
+      data.lastQuery = fullSearchParams; // Store for pagination
       setSearchResults(data);
       setCurrentGallery(null);
       
       // Update URL to reflect search
-      if (searchParams.query || searchParams.startDate || searchParams.endDate || searchParams.collectionsOnly) {
+      if (fullSearchParams.query || fullSearchParams.startDate || fullSearchParams.endDate || fullSearchParams.collectionsOnly) {
         navigate('/gallery/search');
       }
     } catch (err) {

@@ -227,43 +227,6 @@ const SearchBar = ({ onSearch, galleries, isSearching }) => {
                 ))}
               </div>
             </div>
-            
-            {/* Orientation Filter */}
-            <div className="filter-section">
-              <label className="filter-label">Orientation</label>
-              <div className="orientation-options">
-                <label className="radio-label">
-                  <input
-                    type="radio"
-                    name="orientation"
-                    value="any"
-                    checked={searchParams.orientation === 'any'}
-                    onChange={(e) => handleInputChange('orientation', e.target.value)}
-                  />
-                  <span className="radio-text">Any</span>
-                </label>
-                <label className="radio-label">
-                  <input
-                    type="radio"
-                    name="orientation"
-                    value="landscape"
-                    checked={searchParams.orientation === 'landscape'}
-                    onChange={(e) => handleInputChange('orientation', e.target.value)}
-                  />
-                  <span className="radio-text">Landscape</span>
-                </label>
-                <label className="radio-label">
-                  <input
-                    type="radio"
-                    name="orientation"
-                    value="portrait"
-                    checked={searchParams.orientation === 'portrait'}
-                    onChange={(e) => handleInputChange('orientation', e.target.value)}
-                  />
-                  <span className="radio-text">Portrait</span>
-                </label>
-              </div>
-            </div>
           </div>
         )}
       </div>

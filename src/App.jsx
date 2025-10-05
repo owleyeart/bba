@@ -3,7 +3,7 @@
 // Gallery integration with SharePoint API             //
 // ///////////////////////////////////////////////////////
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 
 import Landing from './Landing';
@@ -11,6 +11,7 @@ import Projects from './Projects.jsx';
 import About from './About.jsx';
 import Observed from './Observed';
 import Newsletter from './Newsletter.jsx';
+import News from './News.jsx';
 import Footer from './Footer';
 import Gallery from './Gallery.jsx'; // Import the new Gallery component
 import Transfix from './Projects/Transfix';
@@ -33,7 +34,12 @@ const navItems = [
   {
     label: 'Gallery',
     color: 'rgba(124, 19, 89, 0.63)',
-    link: '/gallery', // Changed from Instagram to internal gallery
+    link: '/gallery',
+  },
+  {
+    label: 'News',
+    color: 'rgba(148, 15, 99, 0.63)',
+    link: '/news',
   },
   //{ label: 'Contact', link: 'https://www.instagram.com/owleyeart', color: 'rgba(178, 11, 105, 0.63)' },
 ];
@@ -45,6 +51,38 @@ function AppWrapper() {
   const [isMenuExiting, setIsMenuExiting] = useState(false);
   const [isMenuReady, setIsMenuReady] = useState(false);
   const [expandedItem, setExpandedItem] = useState(null);
+  const menuRef = useRef(null);
+  const hamburgerRef = useRef(null);
+
+  // Close menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isMenuOpen && 
+          menuRef.current && 
+          !menuRef.current.contains(event.target) &&
+          hamburgerRef.current &&
+          !hamburgerRef.current.contains(event.target)) {
+        // Close the menu
+        setIsMenuExiting(true);
+        setTimeout(() => {
+          setIsMenuOpen(false);
+          setIsMenuReady(false);
+          setIsMenuExiting(false);
+          setExpandedItem(null);
+        }, 500);
+      }
+    };
+
+    if (isMenuOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('touchstart', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
+  }, [isMenuOpen]);
 
   const handleNavItemClick = (item) => {
     if (item.submenu) {
@@ -89,11 +127,11 @@ function AppWrapper() {
 
   return (
     <>
-      <button className="hamburger-menu" onClick={handleHamburgerClick}>
+      <button ref={hamburgerRef} className="hamburger-menu" onClick={handleHamburgerClick}>
         {isMenuOpen ? '✕' : '☰'}
       </button>
 
-      <div className={`menu-overlay 
+      <div ref={menuRef} className={`menu-overlay 
         ${isMenuOpen ? 'show' : ''} 
         ${isMenuReady && !isMenuExiting ? 'menu-ready' : ''} 
         ${isMenuExiting ? 'menu-exiting' : ''}`}>
@@ -168,6 +206,7 @@ function AppWrapper() {
         <Route path="/About" element={<About />} />
         <Route path="/Observed" element={<Observed />} />
         <Route path="/Newsletter" element={<Newsletter />} />
+        <Route path="/News" element={<News />} />
         <Route path="/Transfix" element={<Transfix />} />
         
         {/* Gallery Routes */}

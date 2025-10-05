@@ -47,23 +47,37 @@ const SearchBar = ({ onSearch, galleries, isSearching }) => {
   ];
 
   const handleInputChange = (field, value) => {
-    setSearchParams(prev => ({
-      ...prev,
+    const newParams = {
+      ...searchParams,
       [field]: value
-    }));
+    };
+    setSearchParams(newParams);
+    
+    // Trigger search on the fly for advanced filters
+    if (field !== 'query') {
+      onSearch({
+        ...newParams,
+        page: 1
+      });
+    }
   };
   
   const handleArrayToggle = (field, value) => {
-    setSearchParams(prev => {
-      const currentArray = prev[field] || [];
-      const newArray = currentArray.includes(value)
-        ? currentArray.filter(item => item !== value)
-        : [...currentArray, value];
-      
-      return {
-        ...prev,
-        [field]: newArray
-      };
+    const currentArray = searchParams[field] || [];
+    const newArray = currentArray.includes(value)
+      ? currentArray.filter(item => item !== value)
+      : [...currentArray, value];
+    
+    const newParams = {
+      ...searchParams,
+      [field]: newArray
+    };
+    setSearchParams(newParams);
+    
+    // Trigger search on the fly
+    onSearch({
+      ...newParams,
+      page: 1
     });
   };
 
@@ -109,7 +123,7 @@ const SearchBar = ({ onSearch, galleries, isSearching }) => {
             <input
               id="search-query"
               type="text"
-              placeholder="Search by filename, camera, lens..."
+              placeholder="Search by filename, event, or date..."
               value={searchParams.query}
               onChange={(e) => handleInputChange('query', e.target.value)}
             />

@@ -115,6 +115,25 @@ const Gallery = () => {
       setIsSearching(true);
       setError(null);
       
+      // Check if any filters are active
+      const hasActiveFilters = searchParams.query || 
+                              searchParams.startDate || 
+                              searchParams.endDate || 
+                              searchParams.year?.length > 0 ||
+                              searchParams.month?.length > 0 ||
+                              (searchParams.orientation && searchParams.orientation !== 'any') ||
+                              searchParams.collectionsOnly;
+      
+      // If no filters are active, clear search and show all galleries
+      if (!hasActiveFilters) {
+        setSearchResults(null);
+        setCurrentGallery(null);
+        setImages([]);
+        navigate('/gallery');
+        setIsSearching(false);
+        return;
+      }
+      
       // Store search params for pagination
       const fullSearchParams = {
         query: searchParams.query || '',
@@ -229,7 +248,15 @@ const Gallery = () => {
               </p>
             </div>
           ) : (
-            <h1>Photo Galleries</h1>
+            <div className="gallery-title-header">
+              <button 
+                className="back-btn" 
+                onClick={() => navigate('/')}
+              >
+                ← Home
+              </button>
+              <h1>Photo Galleries</h1>
+            </div>
           )}
         </div>
         

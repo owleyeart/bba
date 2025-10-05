@@ -1,7 +1,16 @@
 {
+  "buildCommand": "vite build",
+  "outputDirectory": "dist",
+  "devCommand": "vite --port $PORT",
   "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/$1" },
     { "source": "/assets/(.*)", "destination": "/assets/$1" },
     { "source": "/(.*)", "destination": "/index.html" }
-  ]
+  ],
+  "functions": {
+    "api/substack.js": {
+      "memory": 1024,
+      "maxDuration": 10
+    }
+  }
 }
-  

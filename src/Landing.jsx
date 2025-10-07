@@ -5,18 +5,21 @@ import './styles/Landing.css';
 const images = [
   '/images/landing/20220301_303_IMG_1121.jpg',
   '/images/landing/20250823_303_OWL7329.jpg',
-  '/images/landing/20250823_303_OWL7388.jpg',
+  '/images/landing/20250304_303_OWL4767.jpg',
+  '/images/landing/20240129_303_OWL1966.jpg',
+  '/images/landing/20240907_303_OWL0880.jpg',
   '/images/landing/20240725_303_OWL9909.jpg',
   '/images/landing/20240131_303_OWL2196.jpg',
   '/images/landing/20250429_303_OWL6695.jpg',
   '/images/landing/20240725_303_OWL9897.jpg',
-  '/images/landing/20240704_303_OWL8744.jpg',
+  '/images/landing/20240228_303_OWL3792.jpg',
+  '/images/landing/20250823_303_OWL7388.jpg',
   '/images/landing/20240627_303_OWL8355.jpg',
 ];
 
 // Mark which images are panoramas (very wide landscapes that should be scrollable)
 // These will fit to height and allow horizontal scrolling
-const panoramaIndices = [0]; // Add indices of panorama images here
+const panoramaIndices = [0, 4]; // Add indices of panorama images here
 
 const Landing = ({ isMenuOpen }) => {
   const containerRef = useRef(null);

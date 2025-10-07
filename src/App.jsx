@@ -13,7 +13,7 @@ import Observed from './Observed';
 import Newsletter from './Newsletter.jsx';
 import News from './News.jsx';
 import Footer from './Footer';
-import Gallery from './Gallery.jsx'; // Import the new Gallery component
+import Gallery from './Gallery.jsx'; 
 import Transfix from './Projects/Transfix';
 
 import './PageBackgrounds.css';
@@ -33,15 +33,14 @@ const navItems = [
   },
   {
     label: 'Gallery',
-    color: 'rgba(124, 19, 89, 0.63)',
+    color: 'rgba(176, 11, 105, 0.63)',
     link: '/gallery',
   },
   {
     label: 'News',
-    color: 'rgba(148, 15, 99, 0.63)',
+    color: 'rgba(212, 69, 94, 0.63)',
     link: '/news',
   },
-  //{ label: 'Contact', link: 'https://www.instagram.com/owleyeart', color: 'rgba(178, 11, 105, 0.63)' },
 ];
 
 function AppWrapper() {

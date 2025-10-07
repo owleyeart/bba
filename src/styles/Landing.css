@@ -15,32 +15,74 @@
   }
   
   /* ---------------------------------------------------------
-     🪞 Landing Page Container
-  ---------------------------------------------------------- */
-  .landing-container {
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-    position: relative;
-    background-size: auto 100%;
-    background-repeat: no-repeat;
-    background-position: 50% center;
-    touch-action: none;
-    user-select: none;
-    transition: background-image 0.6s ease-in-out;
-    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
-  }
+  🪞 Landing Page Container
+---------------------------------------------------------- */
+.landing-container {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+  touch-action: none;
+  user-select: none;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+}
+
+.landing-image {
+  position: absolute;
+  inset: 0;
+  background-repeat: no-repeat;
+  transition: background-image 0.6s ease-in-out;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Portrait mode with blurred background */
+.portrait-blur-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  filter: blur(40px);
+  transform: scale(1.1);
+  opacity: 0.8;
+  z-index: 0;
+}
+
+/* Portrait mode: Fit to height, centered horizontally */
+.landing-container.mode-portrait .landing-image {
+  background-size: auto 100%;
+  background-position: center center;
+}
+
+/* Panorama mode: Fit to height, scrollable horizontally */
+.landing-container.mode-panorama .landing-image {
+  background-size: auto 100%;
+  background-position: 50% center;
+}
+
+/* Standard landscape mode: Cover (fit to width), centered vertically */
+.landing-container.mode-standard-landscape .landing-image {
+  background-size: cover;
+  background-position: center center;
+}
+
+/* Landscape scrollable mode: Fit to height when viewport is too narrow */
+.landing-container.mode-landscape-scrollable .landing-image {
+  background-size: auto 100%;
+  background-position: 50% center;
+}
   
   .landing-container::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.19);
-    pointer-events: none;
-    z-index: 1;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.19);
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
   
   .landing-container.first-block::before {
     opacity: 1;

@@ -7,11 +7,16 @@ const images = [
   '/images/landing/20250823_303_OWL7329.jpg',
   '/images/landing/20250823_303_OWL7388.jpg',
   '/images/landing/20240725_303_OWL9909.jpg',
+  '/images/landing/20240131_303_OWL2196.jpg',
   '/images/landing/20250429_303_OWL6695.jpg',
   '/images/landing/20240725_303_OWL9897.jpg',
   '/images/landing/20240704_303_OWL8744.jpg',
   '/images/landing/20240627_303_OWL8355.jpg',
 ];
+
+// Mark which images are panoramas (very wide landscapes that should be scrollable)
+// These will fit to height and allow horizontal scrolling
+const panoramaIndices = [0]; // Add indices of panorama images here
 
 const Landing = ({ isMenuOpen }) => {
   const containerRef = useRef(null);
@@ -24,6 +29,10 @@ const Landing = ({ isMenuOpen }) => {
   const [dragDirection, setDragDirection] = useState('none');
   const [fadeClass, setFadeClass] = useState('');
   const [controlsVisible, setControlsVisible] = useState(false);
+  const [imageOrientations, setImageOrientations] = useState({});
+  const [imageAspectRatios, setImageAspectRatios] = useState({});
+  const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
+  const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
 
   const DRAG_DIRECTION_THRESHOLD = 20;
   const VERTICAL_SWIPE_THRESHOLD = 50;
@@ -41,6 +50,47 @@ const Landing = ({ isMenuOpen }) => {
   useEffect(() => {
     hideTimerRef.current = setTimeout(() => setControlsVisible(false), 900);
     return () => clearTimeout(hideTimerRef.current);
+  }, []);
+
+  // Detect image orientations and aspect ratios on mount
+  useEffect(() => {
+    const detectOrientations = async () => {
+      const orientations = {};
+      const aspectRatios = {};
+      
+      for (let i = 0; i < images.length; i++) {
+        const img = new Image();
+        await new Promise((resolve) => {
+          img.onload = () => {
+            orientations[i] = img.width > img.height ? 'landscape' : 'portrait';
+            aspectRatios[i] = img.width / img.height;
+            resolve();
+          };
+          img.onerror = () => {
+            orientations[i] = 'landscape';
+            aspectRatios[i] = 16 / 9; // Default aspect ratio
+            resolve();
+          };
+          img.src = images[i];
+        });
+      }
+      
+      setImageOrientations(orientations);
+      setImageAspectRatios(aspectRatios);
+    };
+    
+    detectOrientations();
+  }, []);
+
+  // Track viewport size changes
+  useEffect(() => {
+    const handleResize = () => {
+      setViewportWidth(window.innerWidth);
+      setViewportHeight(window.innerHeight);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   const triggerFade = (updateFn) => {
@@ -120,6 +170,9 @@ const Landing = ({ isMenuOpen }) => {
     const deltaX = e.clientX - startX;
     const deltaY = e.clientY - startY;
 
+    // Determine if current image should be scrollable
+    const shouldBeScrollable = isPanorama || (isStandardLandscape && needsScrolling);
+
     if (isDragging) {
       if (dragDirection === 'none') {
         if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > DRAG_DIRECTION_THRESHOLD) {
@@ -129,11 +182,11 @@ const Landing = ({ isMenuOpen }) => {
         }
       }
 
-      if (dragDirection === 'horizontal') {
+      if (dragDirection === 'horizontal' && shouldBeScrollable) {
         const newPosX = initialPosX + (deltaX / containerWidth) * 100;
         setBgPosX(Math.max(0, Math.min(100, newPosX)));
       }
-    } else {
+    } else if (shouldBeScrollable) {
       const ratio = e.clientX / containerWidth;
       setBgPosX(Math.max(0, Math.min(100, ratio * 100)));
     }
@@ -156,27 +209,52 @@ const Landing = ({ isMenuOpen }) => {
     setDragDirection('none');
   };
 
+  const currentOrientation = imageOrientations[currentIndex] || 'landscape';
+  const isPortrait = currentOrientation === 'portrait';
+  const isPanorama = panoramaIndices.includes(currentIndex);
+  const isStandardLandscape = !isPortrait && !isPanorama;
+
+  // Determine if standard landscape needs scrolling based on viewport
+  // When viewport aspect ratio is narrower than image aspect ratio, enable scrolling
+  const viewportAspectRatio = viewportWidth / viewportHeight;
+  const imageAspectRatio = imageAspectRatios[currentIndex] || 16 / 9;
+  const needsScrolling = isStandardLandscape && (viewportAspectRatio < imageAspectRatio);
+
+  // Determine display mode class
+  let displayMode = 'standard-landscape';
+  if (isPortrait) displayMode = 'portrait';
+  else if (isPanorama) displayMode = 'panorama';
+  else if (needsScrolling) displayMode = 'landscape-scrollable';
+
   return (
     <div
-      className={`landing-container ${currentIndex === 0 ? 'first-block' : ''}`}
+      className={`landing-container ${currentIndex === 0 ? 'first-block' : ''} mode-${displayMode}`}
       ref={containerRef}
       onWheel={handleWheel}
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUpOrLeave}
       onPointerLeave={handlePointerUpOrLeave}
-      style={{
-        backgroundImage: `url(${images[currentIndex]})`,
-        backgroundPosition: `${bgPosX}% center`,
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-        width: '100vw',
-        height: '100vh',
-        overflow: 'hidden',
-        position: 'relative',
-        cursor: 'default',
-      }}
     >
+      {/* Blurred background for portrait images */}
+      {isPortrait && (
+        <div 
+          className="portrait-blur-bg"
+          style={{
+            backgroundImage: `url(${images[currentIndex]})`,
+          }}
+        />
+      )}
+      
+      {/* Main image */}
+      <div 
+        className="landing-image"
+        style={{
+          backgroundImage: `url(${images[currentIndex]})`,
+          backgroundPosition: (isPanorama || needsScrolling) ? `${bgPosX}% center` : 'center center',
+          backgroundSize: isStandardLandscape && !needsScrolling ? 'cover' : 'auto 100%',
+        }}
+      />
       {/* Intro Card */}
       <div className={`landing-intro-card ${currentIndex === 0 ? 'centered' : 'bottom'}`}>
         <div className="intro-card-content">

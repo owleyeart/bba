@@ -31,15 +31,19 @@ app.use(helmet({
   crossOriginEmbedderPolicy: false
 }));
 
-// Restore proper CORS configuration now that we know it works
+// Get allowed origins from environment variable or use defaults
+const frontendUrls = process.env.FRONTEND_URL 
+  ? process.env.FRONTEND_URL.split(',').map(url => url.trim())
+  : [];
+
 const allowedOrigins = [
-  'https://gallery.bobbaker.art',
-  'https://www.bobbaker.art',
-  'https://bobbaker.art',
+  ...frontendUrls,
   'http://localhost:5173',
   'http://localhost:5174',
   'http://localhost:3000'
 ];
+
+console.log('Allowed CORS origins:', allowedOrigins);
 
 app.use(cors({
   origin: function (origin, callback) {
